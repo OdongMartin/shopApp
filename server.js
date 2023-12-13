@@ -13,6 +13,8 @@ app.use(upload.array());
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : true}));
 
+app.use(express.static('public'));
+
 const cors = require('cors');
 
 const bcrypt = require('bcrypt');
