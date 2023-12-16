@@ -107,7 +107,7 @@ passport.deserializeUser(function(userObj, done) {
 
 function checkLoggedIn(req, res, next){
     if (req.isAuthenticated()) { 
-        return res.redirect("/api");
+        return res.redirect("/shop");
     }
    next();
 }
