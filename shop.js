@@ -7,22 +7,24 @@ const mongoose = require('mongoose');
 const productSchema = mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
+    currency: { type: String, required: true },
     price: { type: Number, required: true },
-    quantity: { type: Number, default: 0 },
-    category: { type: String },
-    image: { type: String, data: Buffer }, // Base64-encoded image data
+    //quantity: { type: Number, default: 0 },
+    //category: { type: String },
+    //image: { type: String, data: Buffer }, // Base64-encoded image data
 });
 
 const Product = mongoose.model('Product', productSchema);
 
 //homepage -- /shop/
 router.get('/', (req, res)=>{
-    Product.find({}).then((data)=>{
-        console.log(data);
+    Product.find({}).then((productData)=>{
+        console.log(productData);
+        res.render('home', {products: productData});
     }).catch((err)=>{
         console.log(err);
     })
-    res.render('home');
+
 })
 
 //create products
@@ -33,6 +35,7 @@ router.post('/product/create', (req, res)=>{
     var newProduct = new Product({
         name: req.body.title,
         description: req.body.description,
+        currency: req.body.currency,
         price: req.body.price,
         //quantity: "3",
         //category: "shoes",

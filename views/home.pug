@@ -2,4 +2,5 @@ extends layout
 
 block content
     div 
-        p Hello shooop
+        each product in products 
+            p #{product.name}
