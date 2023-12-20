@@ -3,7 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose');
-//prodcut db
+//mongoose.set('strictQuery', false);
+//mongoose.connect('mongodb://127.0.0.1/shop_db');
+
+//prodcut database
 const productSchema = mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
@@ -16,16 +19,27 @@ const productSchema = mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-//homepage -- /shop/
+const userInfo = require('./server');
+
+//homepage -- /shop/ ......should display items
 router.get('/', (req, res)=>{
-    Product.find({}).then((productData)=>{
+    /*Product.find().then((productData)=>{
         console.log(productData);
         res.render('home', {products: productData});
     }).catch((err)=>{
         console.log(err);
-    })
+        res.status(500).send('Internal Server Error');
+    })*/
 
-})
+    userInfo.find()
+        .then((user)=>{
+            console.log(user);
+        }).catch((err)=>{
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+    });
+
+});
 
 //create products
 router.get('/product/create', (req, res)=>{

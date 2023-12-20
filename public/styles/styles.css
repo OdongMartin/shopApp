@@ -508,6 +508,9 @@ video {
 .h-screen {
   height: 100vh;
 }
+.w-96 {
+  width: 24rem;
+}
 .cursor-pointer {
   cursor: pointer;
 }
@@ -526,6 +529,9 @@ video {
 .rounded-full {
   border-radius: 9999px;
 }
+.rounded-xl {
+  border-radius: 0.75rem;
+}
 .border {
   border-width: 1px;
 }
@@ -540,6 +546,10 @@ video {
 .bg-gray-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 .bg-green-600 {
   --tw-bg-opacity: 1;
@@ -562,6 +572,10 @@ video {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 .text-xs {
   font-size: 0.75rem;

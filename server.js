@@ -135,7 +135,7 @@ app.post('/login', function(req, res, next){
                     if (err) {
                         return next(err);
                     }
-                    return res.redirect('/api');
+                    return res.redirect('/shop');
                 });
             }
 
@@ -206,7 +206,8 @@ app.get('/', (req, res)=>{
         .then((user)=>{
             console.log(user);
         }).catch((err)=>{
-            console.log('error: ' + err);
+            console.log(err);
+            res.status(500).send('Internal Server Error');
     });
     res.redirect('/home');
 })
@@ -215,8 +216,11 @@ app.get('/home', (req, res)=>{
     res.render('login');
 })
 
+
 app.use('/shop', shop);
 
 app.listen(PORT, () =>{
     console.log(`listening on port 3000`)
 })
+
+module.exports = userInfo;
