@@ -22,31 +22,39 @@ router.get('/', (req, res)=>{
     }).catch((err)=>{
         console.log(err);
     })
-    console.log('home');
+    res.render('home');
 })
 
 //create products
 router.get('/product/create', (req, res)=>{
-    console.log('create proucts');
+    res.render('create-product');
 })
 router.post('/product/create', (req, res)=>{
     var newProduct = new Product({
-        name: "shpes",
-        description: "good shoes",
-        price: "1 usd",
-        quantity: "3",
-        category: "shoes",
+        name: req.body.title,
+        description: req.body.description,
+        price: req.body.price,
+        //quantity: "3",
+        //category: "shoes",
         //image: { type: String, data: Buffer },
     });
 
-        newProduct.save(function(err, task) {
-            if(err){
-                res.send("error saving user to database");
-            }
-            else {
-                res.redirect('/tasks/' + req.user.username);
-            }
-        });
+    newProduct.save()
+    .then(()=>{
+        res.redirect('/shop')
+    })
+    .catch((err)=>{
+        res.send("error saving user to database");
+    })
+
+    /*newProduct.save(function(err, task) {
+        if(err){
+            res.send("error saving user to database");
+        }
+        else {
+            res.redirect('/');
+        }
+    });*/
         /*task.find(function(err, response) {
             console.log(response);
         });*/
