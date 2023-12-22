@@ -4,12 +4,32 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 
-const userInfo = require('../models/userInfoDB');
+//const userInfo = require('../models/userInfoDB');
 
 const Product = require('../models/productDB');
 
 //const checkLoggedIn = require('../routes/authentication');
 
+router.get('/productsDB/delete', function(req, res) {
+    Product.deleteMany().then(()=>{
+        console.log ("removed all task data");
+    }).catch((err)=>{
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    })
+});
+
+//note: this deletes entire database
+/*app.get('/delete', function(req, res) {
+    userInfo.deleteMany({})
+    .then(function(user) {
+        console.log ("removed all data");
+    })
+    .catch(function(err) {
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    });
+});*/
 
 //create products
 router.get('/:userId/products/create', (req, res)=>{
@@ -64,11 +84,21 @@ router.get('/orders', /* ... */);
 router.get('/admin/products', /* ... */);
 router.get('/admin/orders', /* ... */);
 
+router.get('/', (req, res)=>{
+    Product.find().then((productData)=>{
+        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
+        res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    })
+});
+
 //homepage -- /shop/ ......should display items
 router.get('/:userId/products', (req, res)=>{
     Product.find().then((productData)=>{
-        console.log('productid' + productData[0]._id.toHexString());
-        res.render('home', { products: productData, userId: req.params.userId });
+        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
+        res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile 
     }).catch((err)=>{
         console.log(err);
         res.status(500).send('Internal Server Error');
