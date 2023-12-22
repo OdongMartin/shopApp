@@ -10,32 +10,15 @@ const Product = require('../models/productDB');
 
 //const checkLoggedIn = require('../routes/authentication');
 
-//homepage -- /shop/ ......should display items
-router.get('/', (req, res)=>{
-    /*Product.find().then((productData)=>{
-        console.log(productData);
-        //res.render('home', {products: productData});
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-    })*/
-    //console.log("shop home boys");
-    userInfo.findOne({username: req.user.username}).then((user)=>{
-            //console.log("user: "+ user.username + " id: " + user._id)
-            console.log(user._id);
-        }).catch((err)=>{
-            console.log(err);
-            res.status(500).send('Internal Server Error');
-    });
-
-});
 
 //create products
-router.get('/product/create', (req, res)=>{
-    res.render('create-product');
+router.get('/:userId/products/create', (req, res)=>{
+    res.render('create-product', {userId: req.params.userId});
 })
-router.post('/product/create', (req, res)=>{
+router.post('/:userId/products/create', (req, res)=>{
     var newProduct = new Product({
+        //productId: (...).toHexString() 
+        ownerId: req.params.userId,
         name: req.body.title,
         description: req.body.description,
         currency: req.body.currency,
@@ -47,23 +30,12 @@ router.post('/product/create', (req, res)=>{
 
     newProduct.save()
     .then(()=>{
-        res.redirect('/shop')
+        res.redirect('/shop/'+ req.params.userId + '/products')
     })
     .catch((err)=>{
-        res.send("error saving user to database");
+        console.log(err);
+        res.status(500).send('error saving user to database');
     })
-
-    /*newProduct.save(function(err, task) {
-        if(err){
-            res.send("error saving user to database");
-        }
-        else {
-            res.redirect('/');
-        }
-    });*/
-        /*task.find(function(err, response) {
-            console.log(response);
-        });*/
 });
 
 
@@ -91,5 +63,27 @@ router.get('/orders', /* ... */);
 // Admin
 router.get('/admin/products', /* ... */);
 router.get('/admin/orders', /* ... */);
+
+//homepage -- /shop/ ......should display items
+router.get('/:userId/products', (req, res)=>{
+    Product.find().then((productData)=>{
+        console.log('productid' + productData[0]._id.toHexString());
+        res.render('home', { products: productData, userId: req.params.userId });
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    })
+    //console.log("shop home boys");
+    /*userInfo.find().then((user)=>{
+            //console.log("user: "+ user.username + " id: " + user._id)
+            console.log(user[0].id);
+        }).catch((err)=>{
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+    });*/
+
+    console.log(req.params.userId);
+
+});
 
 module.exports = router;

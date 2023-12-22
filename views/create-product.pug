@@ -3,7 +3,7 @@ extends layout
 block content
   h1.font-bold.text-xl Create Product
   div
-    form(action='/shop/product/create', method='POST')
+    form(action=`/shop/${userId}/products/create`, method='POST')
       div
         div
           label(for='title') New Product:

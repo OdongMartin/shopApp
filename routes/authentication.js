@@ -92,7 +92,7 @@ router.post('/login', function(req, res, next){
 
         bcrypt.compare(req.body.password, user.password, function(err, result) {
 
-            console.log(result);
+            //console.log(result);
             if (err || !result) {
                 return res.render('login', { message: 'Enter correct details or just sign up' });
             }
@@ -103,7 +103,8 @@ router.post('/login', function(req, res, next){
                     if (err) {
                         return next(err);
                     }
-                    return res.redirect('/shop');
+                    //console.log('woked ' + req.user._id);
+                    return res.redirect('/shop/'+ req.user._id + '/products');
                 });
             }
         });
