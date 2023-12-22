@@ -8,6 +8,8 @@ const userInfo = require('../models/userInfoDB');
 
 const Product = require('../models/productDB');
 
+//const checkLoggedIn = require('../routes/authentication');
+
 //homepage -- /shop/ ......should display items
 router.get('/', (req, res)=>{
     /*Product.find().then((productData)=>{
@@ -18,7 +20,7 @@ router.get('/', (req, res)=>{
         res.status(500).send('Internal Server Error');
     })*/
     //console.log("shop home boys");
-    userInfo.findOne({username: "om"}).then((user)=>{
+    userInfo.findOne({username: req.user.username}).then((user)=>{
             //console.log("user: "+ user.username + " id: " + user._id)
             console.log(user._id);
         }).catch((err)=>{

@@ -81,7 +81,7 @@ router.get('/', (req, res)=>{
     res.redirect('/auth/login');
 });
 
-router.get('/login', /*checkLoggedIn,*/ function(req, res){
+router.get('/login', checkLoggedIn, function(req, res){
     res.render('login');
 });
 router.post('/login', function(req, res, next){
@@ -119,7 +119,7 @@ router.get('/logout', function(req, res){
     });
 });
 
-router.get('/signup', function(req, res){
+router.get('/signup', checkLoggedIn, function(req, res){
     res.render('signup');
 });
 router.post('/signup', function(req, res){
