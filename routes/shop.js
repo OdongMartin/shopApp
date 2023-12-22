@@ -3,37 +3,24 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose');
-//mongoose.set('strictQuery', false);
-//mongoose.connect('mongodb://127.0.0.1/shop_db');
 
-//prodcut database
-const productSchema = mongoose.Schema({
-    name: { type: String, required: true },
-    description: { type: String },
-    currency: { type: String, required: true },
-    price: { type: Number, required: true },
-    //quantity: { type: Number, default: 0 },
-    //category: { type: String },
-    //image: { type: String, data: Buffer }, // Base64-encoded image data
-});
+const userInfo = require('../models/userInfoDB');
 
-const Product = mongoose.model('Product', productSchema);
-
-const userInfo = require('./server');
+const Product = require('../models/productDB');
 
 //homepage -- /shop/ ......should display items
 router.get('/', (req, res)=>{
     /*Product.find().then((productData)=>{
         console.log(productData);
-        res.render('home', {products: productData});
+        //res.render('home', {products: productData});
     }).catch((err)=>{
         console.log(err);
         res.status(500).send('Internal Server Error');
     })*/
-
-    userInfo.find()
-        .then((user)=>{
-            console.log(user);
+    //console.log("shop home boys");
+    userInfo.findOne({username: "om"}).then((user)=>{
+            //console.log("user: "+ user.username + " id: " + user._id)
+            console.log(user._id);
         }).catch((err)=>{
             console.log(err);
             res.status(500).send('Internal Server Error');

@@ -10,7 +10,7 @@ html
                     H3 Sign up
                 br
                 div
-                    form(action = "/signup" method = "POST")
+                    form(action = "/auth/signup" method = "POST")
                         input(name = "id" type = "text" required placeholder = "Name" class="mb-3 p-2 rounded-full")
                         br 
                         input(name = "password" type = "password" required placeholder = "Password" class="mb-3 p-2 rounded-full")
@@ -21,7 +21,7 @@ html
                             button(type = "Submit" class="bg-green-600 text-white px-4 py-2 rounded-full border border-blue-900 hover:bg-green-800") Sign up
 
                 nav.flex.justify-center.mb-5
-                    a(href='/login' class=" bg-green-600 text-white px-4 py-1 rounded-full cursor-pointer border border-blue-900 hover:bg-green-800") Login 
+                    a(href='/auth/login' class=" bg-green-600 text-white px-4 py-1 rounded-full cursor-pointer border border-blue-900 hover:bg-green-800") Login 
                 br
                 if(message)
                     h.text-white #{message}
