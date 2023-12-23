@@ -39,6 +39,10 @@ router.get('/:userId/products/create', (req, res)=>{
 })
 router.post('/:userId/products/create', upload.single('image'), async(req, res)=>{
     try {
+        // Check if there were errors related to file size
+        if (req.fileValidationError) {
+            return res.status(400).send(req.fileValidationError);
+      }
         var newProduct = new Product({
             //productId: (...).toHexString() 
             ownerId: req.params.userId,
