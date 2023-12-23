@@ -5,6 +5,9 @@ html(lang="en")
         title Shop
     body
         nav 
+            a(href=`/shop/${userId}`) Home
             a(href=`/shop/${userId}/products/create`) Create Product
+            a(href=`/shop/${userId}/products`) My Products
+            a(href='/auth/logout') Logout
         main 
         block content

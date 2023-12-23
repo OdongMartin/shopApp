@@ -3,6 +3,7 @@ extends layout
 block content
     div 
         each product in products 
+            img(src=`${product.imagePath}`, alt=`${product.name}` width=200)
             p #{product.name}
             p #{product.description}
             p #{product.currency} #{product.price}

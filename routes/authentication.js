@@ -104,7 +104,7 @@ router.post('/login', function(req, res, next){
                         return next(err);
                     }
                     //console.log('woked ' + req.user._id);
-                    return res.redirect('/shop/'+ req.user._id + '/products');
+                    return res.redirect('/shop/'+ req.user._id);
                 });
             }
         });

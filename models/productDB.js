@@ -11,7 +11,7 @@ const productSchema = mongoose.Schema({
     price: { type: Number, required: true },
     //quantity: { type: Number, default: 0 },
     //category: { type: String },
-    //image: { type: String, data: Buffer }, // Base64-encoded image data
+    imagePath: { type: String},  // Base64-encoded image data
 });
 
 const Product = mongoose.model('Product', productSchema);

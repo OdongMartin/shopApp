@@ -8,16 +8,18 @@ const mongoose = require('mongoose');
 
 const Product = require('../models/productDB');
 
+const upload = require('../middleware/upload');
+
 //const checkLoggedIn = require('../routes/authentication');
 
-router.get('/productsDB/delete', function(req, res) {
+/*router.get('/productsDB/delete', function(req, res) {
     Product.deleteMany().then(()=>{
-        console.log ("removed all task data");
+        console.log ("removed all data in products");
     }).catch((err)=>{
         console.error("Error removing data:", err);
         res.status(500).send("Internal Server Error");
     })
-});
+});*/
 
 //note: this deletes entire database
 /*app.get('/delete', function(req, res) {
@@ -35,27 +37,32 @@ router.get('/productsDB/delete', function(req, res) {
 router.get('/:userId/products/create', (req, res)=>{
     res.render('create-product', {userId: req.params.userId});
 })
-router.post('/:userId/products/create', (req, res)=>{
-    var newProduct = new Product({
-        //productId: (...).toHexString() 
-        ownerId: req.params.userId,
-        name: req.body.title,
-        description: req.body.description,
-        currency: req.body.currency,
-        price: req.body.price,
-        //quantity: "3",
-        //category: "shoes",
-        //image: { type: String, data: Buffer },
-    });
+router.post('/:userId/products/create', upload.single('image'), async(req, res)=>{
+    try {
+        var newProduct = new Product({
+            //productId: (...).toHexString() 
+            ownerId: req.params.userId,
+            name: req.body.title,
+            description: req.body.description,
+            currency: req.body.currency,
+            price: req.body.price,
+            //quantity: "3",
+            //category: "shoes",
+            imagePath: '/uploads/' + req.file.filename,
+        });
 
-    newProduct.save()
-    .then(()=>{
-        res.redirect('/shop/'+ req.params.userId + '/products')
-    })
-    .catch((err)=>{
-        console.log(err);
-        res.status(500).send('error saving user to database');
-    })
+        await newProduct.save()
+        .then(()=>{
+            res.redirect('/shop/'+ req.params.userId + '/products')
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(500).send('error saving user to database');
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 
@@ -84,7 +91,7 @@ router.get('/orders', /* ... */);
 router.get('/admin/products', /* ... */);
 router.get('/admin/orders', /* ... */);
 
-router.get('/', (req, res)=>{
+router.get('/:userId', (req, res)=>{
     Product.find().then((productData)=>{
         //console.log('productid' + productData[0]._id.toHexString()); //product id to string
         res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
@@ -96,8 +103,9 @@ router.get('/', (req, res)=>{
 
 //homepage -- /shop/ ......should display items
 router.get('/:userId/products', (req, res)=>{
-    Product.find().then((productData)=>{
+    Product.find({ownerId: req.params.userId}).then((productData)=>{
         //console.log('productid' + productData[0]._id.toHexString()); //product id to string
+        //console.log('these prods belong to personid' + req.params.userId);
         res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile 
     }).catch((err)=>{
         console.log(err);

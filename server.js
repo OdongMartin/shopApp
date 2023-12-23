@@ -10,7 +10,7 @@ const auth = require('./routes/authentication.js');
 
 const multer = require('multer');
 const upload = multer();
-app.use(upload.array()); 
+//app.use(upload.array()); 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : true}));
 
