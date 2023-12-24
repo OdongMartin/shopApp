@@ -141,7 +141,7 @@ router.get('/:userId/cart', isAuthenticated, (req, res)=>{
 
         //get prodcts from myCart array and display them
         Product.find({ _id: { $in: myCart } }).then((productData)=>{
-            res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
+            res.render('cart', { products: productData, userId: req.params.userId }); //should be person's profile
         }).catch((err)=>{
             console.log(err);
             res.status(500).send('Internal Server Error');
