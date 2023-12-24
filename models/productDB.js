@@ -6,12 +6,18 @@ mongoose.connect('mongodb://127.0.0.1/shop_db');
 const productSchema = mongoose.Schema({
     ownerId : { type: String, required: true },
     name: { type: String, required: true },
-    description: { type: String },
+    category: {type: String, required: true},
+    condition: {type: String, required: true},
+    size: {type: String, required: true},
+    description: { type: String, required: true },
     currency: { type: String, required: true },
     price: { type: Number, required: true },
+    formattedPrice:{ type: String, required: true },
+    timePosted: { type: Date, default: Date.now },
+    //hoursPosted: { type: Date},
+
     //quantity: { type: Number, default: 0 },
-    //category: { type: String },
-    imagePath: { type: String},  // Base64-encoded image data
+    imagePath: { type: String, required: true},
 });
 
 const Product = mongoose.model('Product', productSchema);

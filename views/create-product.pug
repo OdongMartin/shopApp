@@ -6,21 +6,42 @@ block content
     form(action=`/shop/${userId}/products/create`, method='POST', enctype='multipart/form-data')
       div
         div
-          label(for='image') Image:
-          p Image maximum size is 5MB
-        div  
-          input(type='file', name='image', required)
-        br
-        div
-          label(for='title') New Product:
+          label(for='title') Name:
         div
           input(type='text', name='title', id='title', maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-      div
+        br
+        div
+          label(for='category') Category:
+        div
+          select(name='category', id='category', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+            option(value='head gear') Head Gear
+            option(value='footwear') Footware  
+            option(value='jerseys and kits') Jerseys and Kits
+        br
+        div
+          label(for='condition') Condition:
+        div
+          select(name='condition', id='condition', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+            option(value='brand new') Brand New
+            option(value='refurbished') Refurbished
+            option(value='used') Used
+        br
+        div
+          label(for='size') Size:
+        div
+          input(type='text', name='size', id='size', maxlength="15",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+        br
+        div
+          label(for='image') Image:
+        div  
+          input(type='file', name='image', required)
+          span Image maximum size is 5MB
+        br            
         div
           label(for='description') Product Description:
         div
           textarea(cols='50' rows='5' type='text', name='description', id='description', maxlength="55", required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-      div
+        br
         div
           label(for='price') Price:
         div  
@@ -28,6 +49,6 @@ block content
             option(value='UGX') UGX
             option(value='USD') USD
           input(type='number', name='price', id='price', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-
-      div
-        button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Product
+        br
+        div
+          button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Product

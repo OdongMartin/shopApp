@@ -4,6 +4,9 @@ block content
     div 
         each product in products 
             img(src=`${product.imagePath}`, alt=`${product.name}` width=200)
-            p #{product.name}
-            p #{product.description}
-            p #{product.currency} #{product.price}
+            p Name: #{product.name}
+            p Description: #{product.description}
+            p Price: #{product.currency} #{product.formattedPrice}
+            p Posted at At: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+
+

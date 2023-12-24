@@ -9,5 +9,12 @@ html(lang="en")
             a(href=`/shop/${userId}/products/create`) Create Product
             a(href=`/shop/${userId}/products`) My Products
             a(href='/auth/logout') Logout
+
+        form(action=`/shop/${userId}/products/search`, method='GET')
+            input(type='text', name='q', placeholder='Search products...')
+            button(type='submit') Search
+        if(searchTerm)
+            h Showing Results for #{searchTerm}
+        br
         main 
         block content
