@@ -9,8 +9,7 @@ const Product = require('../models/productDB');
 const cart = require('../models/cartDB');
 
 const upload = require('../middleware/upload');
-
-//const checkLoggedIn = require('../routes/authentication');
+const isAuthenticated = require('../middleware/authMiddleware');
 
 // Delete product route //try this later plrease
 /*router.post('/products/delete/:productId', async (req, res) => {
@@ -36,9 +35,16 @@ const upload = require('../middleware/upload');
     }
 });
 */
+/*function Authenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+  
+    res.redirect('/auth/login');
+}*/
 
 //delete entire product DB
-router.get('/productsDB/delete', function(req, res) {
+/*router.get('/productsDB/delete', function(req, res) {
     Product.deleteMany().then(()=>{
         console.log ("removed all data in products");
     }).catch((err)=>{
@@ -55,7 +61,7 @@ router.get('/cartDB/delete', function(req, res) {
         console.error("Error removing data:", err);
         res.status(500).send("Internal Server Error");
     })
-});
+});*/
 
 //note: this deletes entire database
 /*app.get('/delete', function(req, res) {
@@ -70,10 +76,16 @@ router.get('/cartDB/delete', function(req, res) {
 });*/
 
 //create products
-router.get('/:userId/products/create', (req, res)=>{
+router.get('/:userId/products/create', isAuthenticated, (req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
     res.render('create-product', {userId: req.params.userId});
 })
 router.post('/:userId/products/create', upload.single('image'), async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
     try {
         //Check if there were errors related to file size
         if (req.fileValidationError) {
@@ -112,7 +124,14 @@ router.post('/:userId/products/create', upload.single('image'), async(req, res)=
 
 // Shopping Cart
 
-router.get('/:userId/cart', (req, res)=>{
+router.get('/:userId/cart', isAuthenticated, (req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    /*cart.find()
+    .then((productCart)=>{
+        console.log("cart " + productCart)
+    })*/
     var myCart = [];
     cart.find({ownerId: req.params.userId})
     .then((productCart)=>{
@@ -133,7 +152,10 @@ router.get('/:userId/cart', (req, res)=>{
         res.status(500).send('Internal Server Error');
     });
 });
-router.post('/:userId/cart/add/:productId', async(req, res)=>{
+router.post('/:userId/cart/add/:productId', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
     try {
         //Check if the product is already in the cart
         const existingCartItem = await cart.findOne({ ownerId: req.params.userId, productId: req.params.productId });
@@ -178,9 +200,27 @@ router.get('/admin/products', /* ... */);
 router.get('/admin/orders', /* ... */);
 
 //homepage -- /shop/ ......should display items
-router.get('/:userId', (req, res)=>{
+router.get('/', (req, res)=>{
+    //console.log("is authenticated "+ req.isAuthenticated())
+    //console.log("username "+ req.user);
     Product.find().then((productData)=>{
-        console.log(productData);
+        //console.log(productData);
+        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
+        res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    })
+});
+router.get('/:userId', (req, res)=>{
+    //stop unauthorized creation of items
+    if(!isAuthenticated){
+        res.redirect('/shop');
+    }
+    //console.log("is authenticated "+ req.isAuthenticated())
+    //console.log("username "+ req.user);
+    Product.find().then((productData)=>{
+        //console.log(productData);
         //console.log('productid' + productData[0]._id.toHexString()); //product id to string
         res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
     }).catch((err)=>{
@@ -191,6 +231,9 @@ router.get('/:userId', (req, res)=>{
 
 //User Product Listings
 router.get('/:userId/products/search', (req, res)=>{
+    /*if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }*/
     const searchTerm = req.query.q;
     Product.find({name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
     .then((productData)=>{
@@ -203,11 +246,14 @@ router.get('/:userId/products/search', (req, res)=>{
     })
 });
 
-router.get('/:userId/products', (req, res)=>{
+router.get('/:userId/products', isAuthenticated, (req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
     Product.find({ownerId: req.params.userId}).then((productData)=>{
         //console.log('productid' + productData[0]._id.toHexString()); //product id to string
         //console.log('these prods belong to personid' + req.params.userId);
-        res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile 
+        res.render('my-products', { products: productData, userId: req.params.userId }); //should be person's profile 
     }).catch((err)=>{
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -224,19 +270,25 @@ router.get('/:userId/products', (req, res)=>{
     //console.log(req.params.userId);
 
 });
-router.get('/:userId/products/:id', /* ... */); //list specific product
+
+//list specific product
+router.get('/:userId/products/:productId',isAuthenticated, (req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    Product.findById(req.params.productId)
+    .then((productData)=>{
+        res.render('product-page', { products: productData, userId: req.params.userId });
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    })
+}); 
 
 //Function to format price with commas
 function formatPriceWithCommas(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
-//minutes with zero before eg (15:07) // do later
-/*function formatTime(time) {
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    return `${hours}:${paddedMinutes}`;
-}*/
-
 
 module.exports = router;
