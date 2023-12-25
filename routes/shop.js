@@ -4,7 +4,7 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 
-//const userInfo = require('../models/userInfoDB');
+const userInfo = require('../models/userInfoDB');
 const Product = require('../models/productDB');
 const cart = require('../models/cartDB');
 
@@ -212,11 +212,43 @@ router.get('/', (req, res)=>{
         res.status(500).send('Internal Server Error');
     })
 });
-router.get('/:userId', (req, res)=>{
-    //stop unauthorized creation of items
-    if(!isAuthenticated){
-        res.redirect('/shop');
+router.get('/:userId', async (req, res)=>{
+    try {
+        //check if userid in dtabase and valid //if no authentication needed
+        if (req.params.userId === 'undefined') {
+            return res.redirect('/shop');
+        }
+
+        if (!mongoose.isValidObjectId(req.params.userId)) {
+            //return res.status(400).send('Invalid user ID');
+            return res.redirect('/shop');
+        }
+
+        const user = await userInfo.findOne({ _id: req.params.userId });
+
+        if (!user) {
+            //return res.status(404).send('User not found');
+            return res.redirect('/shop');
+        }
+
+        const productData = await Product.find();
+        res.render('home', { products: productData, userId: req.params.userId });
+    } catch (error) {
+        console.error('Error fetching user or products:', error);
+        res.status(500).send('Internal Server Error');
     }
+    //stop unauthorized creation of items
+    /*if(req.params.userId == "undefined"){
+        return res.redirect('/shop');
+    }
+
+    //check if user is in DB
+    const user = userInfo.findOne({ _id: req.params.userId });
+    console.log(user)
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
     //console.log("is authenticated "+ req.isAuthenticated())
     //console.log("username "+ req.user);
     Product.find().then((productData)=>{
@@ -226,24 +258,21 @@ router.get('/:userId', (req, res)=>{
     }).catch((err)=>{
         console.log(err);
         res.status(500).send('Internal Server Error');
-    })
+    })*/
 });
 
 //User Product Listings
-router.get('/:userId/products/search', (req, res)=>{
-    /*if (req.params.userId != req.user._id){
-        res.redirect('/auth/logout');
-    }*/
-    const searchTerm = req.query.q;
-    Product.find({name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
-    .then((productData)=>{
-        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
-        //console.log('these prods belong to personid' + req.params.userId);
+
+//search product
+router.get('/:userId/products/search', async (req, res)=>{
+    try {
+        const searchTerm = req.query.q;
+        const productData = await Product.find({name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
         res.render('home', { products: productData, userId: req.params.userId, searchTerm }); //should be person's profile 
-    }).catch((err)=>{
+    } catch(err){
         console.log(err);
-        res.status(500).send('Internal Server Error');
-    })
+        res.status(500).send('Internal Server Error')
+    }
 });
 
 router.get('/:userId/products', isAuthenticated, (req, res)=>{
