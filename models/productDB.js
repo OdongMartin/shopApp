@@ -4,6 +4,7 @@ mongoose.connect('mongodb://127.0.0.1/shop_db');
 
 //prodcut database
 const productSchema = mongoose.Schema({
+    //shopId : { type: String, required: true },
     ownerId : { type: String, required: true },
     name: { type: String, required: true },
     category: {type: String, required: true},

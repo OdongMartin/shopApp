@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1.font-bold.text-xl Create Store
+  div
+    form(action=`/shop/${userId}/stores/create`, method='POST', enctype='multipart/form-data')
+      div
+        div
+          label(for='title') Name:
+        div
+          input(type='text', name='title', id='title', maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+        br
+        div
+          label(for='category') Category:
+        div
+          select(name='category', id='category', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+            option(value='Fashion and Apparel') Fashion and Apparel
+            option(value='Electronics and Gadgets') Electronics and Gadgets  
+            option(value='Home and Furniture') Home and Furniture
+            option(value='Beauty and Personal Care') Beauty and Personal Care
+            option(value='Books and Stationery') Books and Stationery
+            option(value='Sports and Outdoors') Sports and Outdoors
+            option(value='Toys and Games') Toys and Games
+            option(value='Health and Wellness') Health and Wellness
+            option(value='Food and Beverages') Food and Beverages
+            option(value='Pet Supplies') Pet Supplies
+            option(value='Jewelry and Accessories') Jewelry and Accessories
+            option(value='Art and Crafts') Art and Crafts
+            option(value='Automotive') Automotive
+            option(value='Tech and Gadgets') Tech and Gadgets
+            option(value='Gifts and Specialty Items') Gifts and Specialty Items
+        br
+        div
+          label(for='image') Image:
+        div  
+          input(type='file', name='image', required)
+          span Image maximum size is 5MB
+        br            
+        div
+          label(for='description') Store Description:
+        div
+          textarea(cols='50' rows='5' type='text', name='description', id='description', maxlength="55", required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+        br
+        div
+          button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Store

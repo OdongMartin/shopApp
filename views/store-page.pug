@@ -1,0 +1,16 @@
+extends layout 
+
+block content
+    div 
+        div
+            img(src=`${stores.imagePath}`, alt=`${stores.name}` width=200)
+            p Name: #{stores.name}
+            p Description: #{stores.description}
+         
+            //-p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+        //- div
+        //-     form(action=`/shop/${userId}/stores/create` method='GET')
+        //-         div
+        //-             button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Store
+
+

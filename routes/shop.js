@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const userInfo = require('../models/userInfoDB');
 const Product = require('../models/productDB');
 const cart = require('../models/cartDB');
+const store = require('../models/storeDB');
 
 const upload = require('../middleware/upload');
 const isAuthenticated = require('../middleware/authMiddleware');
@@ -82,7 +83,7 @@ router.get('/:userId/products/create', isAuthenticated, (req, res)=>{
     }
     res.render('create-product', {userId: req.params.userId});
 })
-router.post('/:userId/products/create', upload.single('image'), async(req, res)=>{
+router.post('/:userId/products/create', isAuthenticated, upload.single('image'), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -92,6 +93,7 @@ router.post('/:userId/products/create', upload.single('image'), async(req, res)=
             return res.status(400).send(req.fileValidationError);
       }
         var newProduct = new Product({
+            //shopId: //shop id
             //productId: (...).toHexString() 
             ownerId: req.params.userId,
             name: req.body.title,
@@ -114,7 +116,7 @@ router.post('/:userId/products/create', upload.single('image'), async(req, res)=
         })
         .catch((err)=>{
             console.log(err);
-            res.status(500).send('error saving user to database');
+            res.status(500).send('error saving product to database');
         })
     } catch (error) {
         console.error(error);
@@ -237,32 +239,85 @@ router.get('/:userId', async (req, res)=>{
         console.error('Error fetching user or products:', error);
         res.status(500).send('Internal Server Error');
     }
-    //stop unauthorized creation of items
-    /*if(req.params.userId == "undefined"){
-        return res.redirect('/shop');
-    }
-
-    //check if user is in DB
-    const user = userInfo.findOne({ _id: req.params.userId });
-    console.log(user)
-    if (!user) {
-        return res.status(404).send('User not found');
-    }
-
-    //console.log("is authenticated "+ req.isAuthenticated())
-    //console.log("username "+ req.user);
-    Product.find().then((productData)=>{
-        //console.log(productData);
-        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
-        res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-    })*/
 });
 
-//User Product Listings
+//stores
+router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
 
+    try{
+        // const storreeeees = await store.find();
+        // console.log(storreeeees);
+        const storesData = await store.find({ownerId: req.params.userId});
+        res.render('stores', { stores: storesData, userId: req.params.userId } )
+        
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
+    }
+})
+//create store
+router.get('/:userId/stores/create', isAuthenticated, async(req, res)=>{
+    res.render('create-store', {userId: req.params.userId})
+})
+router.post('/:userId/stores/create', isAuthenticated, upload.single('image'), async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    try {
+        //Check if there were errors related to file size
+        if (req.fileValidationError) {
+            return res.status(400).send(req.fileValidationError);
+      }
+        var newStore = new store({
+            ownerId: req.params.userId,
+            name: req.body.title,
+            category: req.body.category,
+            description: req.body.description,
+            imagePath: '/uploads/' + req.file.filename,
+        });
+
+        await newStore.save()
+        .then(()=>{
+            res.redirect('/shop/'+ req.params.userId + '/stores')
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(500).send('error saving store to database');
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId + '/stores');
+    }
+
+    try{
+        //check if store exists for user
+        const storeExists = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeExists){
+            return res.redirect('/shop/'+ req.params.userId + '/stores');
+        }
+
+        const storesData = await store.findById(req.params.storeId);
+        res.render('store-page', { stores: storesData, userId: req.params.userId } )
+        
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
+    }
+})
+
+//User Product Listings
 //search product
 router.get('/:userId/products/search', async (req, res)=>{
     try {
@@ -301,18 +356,25 @@ router.get('/:userId/products', isAuthenticated, (req, res)=>{
 });
 
 //list specific product
-router.get('/:userId/products/:productId',isAuthenticated, (req, res)=>{
+router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
-    Product.findById(req.params.productId)
-    .then((productData)=>{
+    if (!mongoose.isValidObjectId(req.params.productId)) { //if product id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId);
+    }
+
+    try{
+        const productData = await Product.findById(req.params.productId)
+        if(!productData){
+            res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
+        }
         res.render('product-page', { products: productData, userId: req.params.userId });
-    })
-    .catch((err)=>{
+    } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
-    })
+    }
 }); 
 
 //Function to format price with commas
