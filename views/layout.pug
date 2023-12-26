@@ -5,11 +5,11 @@ html(lang="en")
         title Shop
     body
         nav 
-            a(href=`/shop/${userId}`) Home
-            a(href=`/shop/${userId}/products/create`) Create Product
-            a(href=`/shop/${userId}/products`) My Products
-            a(href=`/shop/${userId}/cart`) Cart
-            a(href=`/shop/${userId}/stores`) My Store
+            a(href=`/shop/${userId}`) Home 
+            //-a(href=`/shop/${userId}/myStores/:storeId/products/create`) Create Product
+            a(href=`/shop/${userId}/stores`) Stores 
+            a(href=`/shop/${userId}/cart`) Cart 
+            a(href=`/shop/${userId}/myStores`) My Store(s) 
             a(href='/auth/logout') Logout
 
         form(action=`/shop/${userId}/products/search`, method='GET')

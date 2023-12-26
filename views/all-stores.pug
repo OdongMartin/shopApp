@@ -3,17 +3,16 @@ extends layout
 block content
     div 
         div
-            h My Products
+            h Stores
         br
         div
-            each product in products 
-                div
-                    a(href= `/shop/${userId}/products/${product._id}`)
+            if(stores)
+                each store in stores 
+                    a(href= `/shop/${userId}/stores/${store._id}`)
                         div
-                            img(src=`${product.imagePath}`, alt=`${product.name}` width=200)
-                            p Name: #{product.name}
-                            p Description: #{product.description}
-                            p Price: #{product.currency} #{product.formattedPrice}
+                            img(src=`${store.imagePath}`, alt=`${store.name}` width=200)
+                            p Name: #{store.name}
+                            p Description: #{store.description}
                             //- p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
                             //- form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
                             //-     div

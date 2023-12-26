@@ -77,20 +77,20 @@ router.get('/cartDB/delete', function(req, res) {
 });*/
 
 //create products
-router.get('/:userId/stores/:storeId/products/create', isAuthenticated, async(req, res)=>{
+router.get('/:userId/myStores/:storeId/products/create', isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
     if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
         //return res.status(400).send('Invalid user ID');
-        return res.redirect('/shop/'+ req.params.userId + '/stores');
+        return res.redirect('/shop/'+ req.params.userId + '/myStores');
     }
 
     try{
         //check if store exists for user
         const storeExists = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
         if(!storeExists){
-            return res.redirect('/shop/'+ req.params.userId + '/stores');
+            return res.redirect('/shop/'+ req.params.userId + '/myStores');
         }
         res.render('create-product', {userId: req.params.userId, storeId: req.params.storeId});
     } catch(err){
@@ -98,7 +98,7 @@ router.get('/:userId/stores/:storeId/products/create', isAuthenticated, async(re
         res.status(500).send('Internal Server Error');
     }
 })
-router.post('/:userId/stores/:storeId/products/create', isAuthenticated, upload.single('image'), async(req, res)=>{
+router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, upload.single('image'), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -126,7 +126,7 @@ router.post('/:userId/stores/:storeId/products/create', isAuthenticated, upload.
 
         await newProduct.save()
         .then(()=>{
-            res.redirect('/shop/'+ req.params.userId + '/products')
+            res.redirect('/shop/'+ req.params.userId + '/myStores/'+ req.params.storeId)
         })
         .catch((err)=>{
             console.log(err);
@@ -255,8 +255,25 @@ router.get('/:userId', async (req, res)=>{
     }
 });
 
-//stores
+//Stores
+//all stores
 router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+
+    try{
+        // const storreeeees = await store.find();
+        // console.log(storreeeees);
+        const storesData = await store.find();
+        res.render('all-stores', { stores: storesData, userId: req.params.userId } )
+        
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
+    }
+})
+router.get('/:userId/myStores', isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -273,10 +290,10 @@ router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
     }
 })
 //create store
-router.get('/:userId/stores/create', isAuthenticated, async(req, res)=>{
+router.get('/:userId/myStores/create', isAuthenticated, async(req, res)=>{
     res.render('create-store', {userId: req.params.userId})
 })
-router.post('/:userId/stores/create', isAuthenticated, upload.single('image'), async(req, res)=>{
+router.post('/:userId/myStores/create', isAuthenticated, upload.single('image'), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -294,16 +311,36 @@ router.post('/:userId/stores/create', isAuthenticated, upload.single('image'), a
         });
 
         await newStore.save()
-        .then(()=>{
-            res.redirect('/shop/'+ req.params.userId + '/stores')
-        })
-        .catch((err)=>{
-            console.log(err);
-            res.status(500).send('error saving store to database');
-        })
+        res.redirect('/shop/'+ req.params.userId + '/myStores')
+
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
+    }
+})
+router.get('/:userId/myStores/:storeId', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId + '/myStores');
+    }
+
+    try{
+        //check if store exists for user
+        const storeExists = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeExists){
+            return res.redirect('/shop/'+ req.params.userId + '/myStores');
+        }
+
+        const storesData = await store.findById(req.params.storeId);
+        const productData = await Product.find({storeId: req.params.storeId})
+        res.render('admin-store-page', { stores: storesData, userId: req.params.userId, products:productData })
+        
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
     }
 })
 router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
@@ -316,8 +353,8 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
     }
 
     try{
-        //check if store exists for user
-        const storeExists = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        //check if store exists
+        const storeExists = await store.findOne({_id:req.params.storeId})
         if(!storeExists){
             return res.redirect('/shop/'+ req.params.userId + '/stores');
         }
@@ -332,6 +369,7 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
     }
 })
 
+
 //User Product Listings
 //search product
 router.get('/:userId/products/search', async (req, res)=>{
@@ -345,33 +383,30 @@ router.get('/:userId/products/search', async (req, res)=>{
     }
 });
 
-router.get('/:userId/products', isAuthenticated, (req, res)=>{
-    if (req.params.userId != req.user._id){
-        res.redirect('/auth/logout');
-    }
-    Product.find({ownerId: req.params.userId}).then((productData)=>{
-        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
-        //console.log('these prods belong to personid' + req.params.userId);
-        res.render('my-products', { products: productData, userId: req.params.userId }); //should be person's profile 
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-    })
-    //console.log("shop home boys");
-    /*userInfo.find().then((user)=>{
-            //console.log("user: "+ user.username + " id: " + user._id)
-            console.log(user[0].id);
-        }).catch((err)=>{
-            console.log(err);
-            res.status(500).send('Internal Server Error');
-    });*/
-
-    //console.log(req.params.userId);
-
-});
 
 //list specific product
 router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.productId)) { //if product id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId);
+    }
+
+    try{
+        const productData = await Product.findById(req.params.productId)
+        if(!productData){
+            res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
+        }
+        res.render('product-page', { products: productData, userId: req.params.userId });
+    } catch(err){
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    }
+}); 
+
+router.get('/:userId/products/:productId/message',isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
