@@ -8,9 +8,18 @@ block content
             p Description: #{stores.description}
          
             //-p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
-        //- div
-        //-     form(action=`/shop/${userId}/stores/create` method='GET')
-        //-         div
-        //-             button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Store
-
+        div
+            form(action=`/shop/${userId}/stores/${stores._id}/products/create` method='GET')
+                div
+                    button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Post Product
+        br
+        div
+            each product in products 
+                div
+                    a(href= `/shop/${userId}/products/${product._id}`)
+                        div
+                            img(src=`${product.imagePath}`, alt=`${product.name}` width=200)
+                            p Name: #{product.name}
+                            p Description: #{product.description}
+                            p Price: #{product.currency} #{product.formattedPrice}
 

@@ -77,13 +77,28 @@ router.get('/cartDB/delete', function(req, res) {
 });*/
 
 //create products
-router.get('/:userId/products/create', isAuthenticated, (req, res)=>{
+router.get('/:userId/stores/:storeId/products/create', isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
-    res.render('create-product', {userId: req.params.userId});
+    if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId + '/stores');
+    }
+
+    try{
+        //check if store exists for user
+        const storeExists = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeExists){
+            return res.redirect('/shop/'+ req.params.userId + '/stores');
+        }
+        res.render('create-product', {userId: req.params.userId, storeId: req.params.storeId});
+    } catch(err){
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 })
-router.post('/:userId/products/create', isAuthenticated, upload.single('image'), async(req, res)=>{
+router.post('/:userId/stores/:storeId/products/create', isAuthenticated, upload.single('image'), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -93,8 +108,7 @@ router.post('/:userId/products/create', isAuthenticated, upload.single('image'),
             return res.status(400).send(req.fileValidationError);
       }
         var newProduct = new Product({
-            //shopId: //shop id
-            //productId: (...).toHexString() 
+            storeId: req.params.storeId,
             ownerId: req.params.userId,
             name: req.body.title,
             category: req.body.category,
@@ -309,7 +323,8 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
         }
 
         const storesData = await store.findById(req.params.storeId);
-        res.render('store-page', { stores: storesData, userId: req.params.userId } )
+        const productData = await Product.find({storeId: req.params.storeId})
+        res.render('store-page', { stores: storesData, userId: req.params.userId, products:productData })
         
     } catch(err){
         console.log(err);
