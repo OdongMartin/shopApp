@@ -20,6 +20,12 @@ app.use(express.static('public'));
 
 const cors = require('cors');
 
+//socket.io
+const http = require('http');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+const io = socketIo(server);
+
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -109,6 +115,21 @@ app.get('/', (req, res)=>{
 
 app.use('/auth', auth);
 app.use('/shop', shop);
+
+//Socket.io connection handling
+io.on('connection', (socket) => {
+    console.log('A user connected');
+  
+    //Broadcast a message to all connected clients
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+  
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
+  
 
 app.listen(PORT, () =>{
     console.log(`listening on port 3000`)

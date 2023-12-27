@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    div
+        h1 Chat Page
+
+        //Display chat messages
+        ul#chat-messages
+        //-Chat messages will be appended here dynamically
+
+        //Input field to send messages
+        input#message-input(type='text' placeholder='Type your message...')
+        button#send-message-btn(type='button' onclick='sendMessage()') Send
+
+    script(src="https://cdn.socket.io/4.0.1/socket.io.min.js").
+    script.
+        const socket = io();
+
+        //Function to send a message to the server
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value;
+            //console.log("message sent");
+            //Emit the message to the server
+            socket.emit('chat message', message);
+
+            //Clear the input field
+            messageInput.value = '';
+
+        }
+
+        // Function to display a new chat message
+        function displayMessage(message) {
+            const chatMessages = document.getElementById('chat-messages');
+            const li = document.createElement('li');
+            li.textContent = message;
+            chatMessages.appendChild(li);
+        }
+
+        //Listen for incoming chat messages from the server
+        socket.on('chat message', (msg) => {
+        //Display the received message
+        displayMessage(msg);
+        });

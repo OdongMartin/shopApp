@@ -420,7 +420,7 @@ router.get('/:userId/products/:productId/message',isAuthenticated, async(req, re
         if(!productData){
             res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
         }
-        res.render('product-page', { products: productData, userId: req.params.userId });
+        res.render('message', {userId: req.params.userId });
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
