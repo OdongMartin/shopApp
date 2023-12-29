@@ -132,9 +132,9 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('typing', user);
     })
   
-    /*socket.on('disconnect', () => {
+    socket.on('disconnect', () => {
         console.log('User disconnected');
-    });*/
+    });
 });
   
 
