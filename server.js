@@ -16,15 +16,15 @@ const upload = multer();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended : true}));
 
-app.use(express.static('public'));
-
 const cors = require('cors');
 
-//socket.io
+// socket.io
 const http = require('http');
 const socketIo = require('socket.io');
 const server = http.createServer(app);
 const io = socketIo(server);
+
+app.use(express.static('public'));
 
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -116,22 +116,29 @@ app.get('/', (req, res)=>{
 app.use('/auth', auth);
 app.use('/shop', shop);
 
+// server.listen(app.get(PORT, () =>{
+//     console.log(`listening on port 3000`)
+// }))
 //Socket.io connection handling
 io.on('connection', (socket) => {
     console.log('A user connected');
   
     //Broadcast a message to all connected clients
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
+    socket.on('message', (msg) => {
+        io.emit('send_message', msg);
     });
+
+    socket.on('user_typing', (user)=>{
+        socket.broadcast.emit('typing', user);
+    })
   
-    socket.on('disconnect', () => {
+    /*socket.on('disconnect', () => {
         console.log('User disconnected');
-    });
+    });*/
 });
   
 
-app.listen(PORT, () =>{
-    console.log(`listening on port 3000`)
+server.listen(PORT, () =>{
+     console.log(`listening on port 3000`)
 })
 
