@@ -8,7 +8,7 @@ block content
         div
             if(chats)
                 each chat in chats 
-                    a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message`)
+                    a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message/${chat.chatId}`)
                         div
                             p #{chat.chatId}
                             //- p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}

@@ -127,14 +127,14 @@ io.on('connection', (socket) => {
         //Associate the user's socket ID with the chat
         socket.join(chatId);
         try{
-            const chatExists = await chatDB.findOne({chatId: chatId});
+            // const chatExists = await chatDB.findOne({chatId: chatId});
 
-            if(!chatExists){
-                const newChat = new chatDB({
-                    chatId: chatId
-                })
-                await newChat.save();
-            }
+            // if(!chatExists){
+            //     const newChat = new chatDB({
+            //         chatId: chatId
+            //     })
+            //     await newChat.save();
+            // }
 
             //Retrieve and send chat history to the user
 
@@ -159,6 +159,7 @@ io.on('connection', (socket) => {
         try {
 
             var newMessage = new messageDB({
+                chatId: chatId,
                 productId: chatId.substr(0,24),
                 sender: chatId.slice(24,48),
                 receiver: chatId.substr(48,72),

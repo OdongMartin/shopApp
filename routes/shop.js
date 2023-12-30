@@ -13,6 +13,7 @@ const chatDB = require("../models/chatsDB");
 
 const upload = require('../middleware/upload');
 const isAuthenticated = require('../middleware/authMiddleware');
+const chats = require('../models/chatsDB');
 
 // Delete product route //try this later plrease
 /*router.post('/products/delete/:productId', async (req, res) => {
@@ -401,14 +402,20 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
         if(!productData){
             res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
         }
-        res.render('product-page', { products: productData, userId: req.params.userId });
+
+        //check if product belongs to user
+        if(productData.ownerId === req.params.userId){
+            return res.render('admin-product-page', { products: productData, userId: req.params.userId })
+        }
+        return res.render('product-page', { products: productData, userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
+
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
     }
 }); 
 
-router.get('/:userId/products/:productId/message',isAuthenticated, async(req, res)=>{
+router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -418,15 +425,33 @@ router.get('/:userId/products/:productId/message',isAuthenticated, async(req, re
     }
 
     try{
+        //check if product exists
         const productData = await Product.findById(req.params.productId)
         if(!productData){
-            res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
+           return res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
         }
-        //console.log messages
-        const messages = await messageDB.find({productId: req.params.productId, sender: req.params.userId, receiver: productData.ownerId})
-        console.log("messages" + messages);
 
-        res.render('message', {userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
+        //check if chatid exists and user is eithr sender or receiver
+        const chatIdExists = await chatDB.findOne({chatId: req.params.chatId});
+        if(!chatIdExists || !(req.params.userId === req.params.chatId.slice(24,48) || req.params.userId === req.params.chatId.slice(48,72))){
+            return res.redirect('/shop/'+ req.params.userId + "/products/"+ req.params.productId);
+        }
+
+        //console.log messages
+        //const messages = await messageDB.find({productId: req.params.productId, sender: req.params.userId, receiver: productData.ownerId})
+        //console.log("messages" + messages);
+
+        //check if chat already exists
+        const chatExists = await chatDB.findOne({chatId: req.params.chatId});
+
+        if(!chatExists){
+            const newChat = new chatDB({
+                chatId: req.params.chatId,
+            })
+            await newChat.save();
+        }
+
+        res.render('message', {userId: req.params.userId, chatId: req.params.chatId /*productId: req.params.productId, receiverId: productData.ownerId*/});
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -440,7 +465,7 @@ router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
     }
 
     try{
-        const chats = await chatDB.find();
+        const chats = await chatDB.find({chatId: { $regex: req.params.userId}});
         //console.log("prod id: "+ chats )
         res.render('chats', {userId: req.params.userId, chats: chats});
 

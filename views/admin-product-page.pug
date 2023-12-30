@@ -1,0 +1,10 @@
+extends layout 
+
+block content
+    div 
+        img(src=`${products.imagePath}`, alt=`${products.name}` width=200)
+        p Name: #{products.name}
+        p Description: #{products.description}
+        p Price: #{products.currency} #{products.formattedPrice}
+        p Posted: #{products.timePosted.toLocaleTimeString()} on #{products.timePosted.toDateString()}
+  
