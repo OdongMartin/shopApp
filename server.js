@@ -118,6 +118,7 @@ app.use('/shop', shop);
 
 
 const messageDB = require("./models/messageDB.js");
+const chatDB = require('./models/chatsDB.js');
 //Socket.io connection handling
 io.on('connection', (socket) => {
     console.log("user joined")
@@ -125,11 +126,30 @@ io.on('connection', (socket) => {
        
         //Associate the user's socket ID with the chat
         socket.join(chatId);
+        try{
+            const chatExists = await chatDB.findOne({chatId: chatId});
 
-        // Retrieve and send chat history to the user
-        const chatHistory = await messageDB.find({productId: chatId.substr(0,24), sender: chatId.slice(24,48), receiver: chatId.substr(48,72)});
-        console.log("chat hist: ", chatHistory);
-        socket.emit('chat history', chatHistory);
+            if(!chatExists){
+                const newChat = new chatDB({
+                    chatId: chatId
+                })
+                await newChat.save();
+            }
+
+            //Retrieve and send chat history to the user
+
+            const chatHistory = await messageDB.find({productId: chatId.substr(0,24), sender: chatId.slice(24,48), receiver: chatId.substr(48,72)});
+            socket.emit('chat history', chatHistory);
+
+            
+            // const chats = await chatDB.find();
+            // console.log("chats: ", chats)
+            //console.log("chat hist: ", chatHistory);
+
+        } catch(err){
+            console.log(err);
+        }
+
       });
     //Broadcast a message to all connected clients
     socket.on('message', async(data) => {
@@ -137,6 +157,7 @@ io.on('connection', (socket) => {
         io.to(chatId).emit('send_message', message);
 
         try {
+
             var newMessage = new messageDB({
                 productId: chatId.substr(0,24),
                 sender: chatId.slice(24,48),

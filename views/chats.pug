@@ -1,0 +1,18 @@
+extends layout 
+
+block content
+    div 
+        div
+            h Chats
+        br
+        div
+            if(chats)
+                each chat in chats 
+                    a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message`)
+                        div
+                            p #{chat.chatId}
+                            //- p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+                            //- form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
+                            //-     div
+                            //-     button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Add to Cart
+

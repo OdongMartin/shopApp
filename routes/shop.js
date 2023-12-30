@@ -9,6 +9,7 @@ const Product = require('../models/productDB');
 const cart = require('../models/cartDB');
 const store = require('../models/storeDB');
 const messageDB = require('../models/messageDB');
+const chatDB = require("../models/chatsDB");
 
 const upload = require('../middleware/upload');
 const isAuthenticated = require('../middleware/authMiddleware');
@@ -426,6 +427,32 @@ router.get('/:userId/products/:productId/message',isAuthenticated, async(req, re
         console.log("messages" + messages);
 
         res.render('message', {userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
+    } catch(err){
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    }
+}); 
+
+//list of chats
+router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
+     if (req.params.userId != req.user._id){
+         res.redirect('/auth/logout');
+    }
+
+    try{
+        const chats = await chatDB.find();
+        //console.log("prod id: "+ chats )
+        res.render('chats', {userId: req.params.userId, chats: chats});
+
+
+        // if(!productData){
+        //     res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
+        // }
+        // //console.log messages
+        // const messages = await messageDB.find({productId: req.params.productId, sender: req.params.userId, receiver: productData.ownerId})
+        // console.log("messages" + messages);
+
+        // res.render('message', {userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
