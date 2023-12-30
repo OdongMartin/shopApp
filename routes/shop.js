@@ -8,6 +8,7 @@ const userInfo = require('../models/userInfoDB');
 const Product = require('../models/productDB');
 const cart = require('../models/cartDB');
 const store = require('../models/storeDB');
+const messageDB = require('../models/messageDB');
 
 const upload = require('../middleware/upload');
 const isAuthenticated = require('../middleware/authMiddleware');
@@ -420,7 +421,11 @@ router.get('/:userId/products/:productId/message',isAuthenticated, async(req, re
         if(!productData){
             res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
         }
-        res.render('message', {userId: req.params.userId });
+        //console.log messages
+        const messages = await messageDB.find({productId: req.params.productId, sender: req.params.userId, receiver: productData.ownerId})
+        console.log("messages" + messages);
+
+        res.render('message', {userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');

@@ -1,13 +1,26 @@
 const socket = io();
 
+        const chatId = document.getElementById('chatId').innerHTML.toString();
+        // user join chat
+        socket.emit('join', chatId);
+        // Listen for chat history from the server
+        socket.on('chat history', (history) => {
+            // Display chat history on the client side
+            //history.forEach((message) => {
+            // displayMessage(message);
+            // });
+
+            for (let i=0; i<history.length; i++){
+                displayMessage(history[i].content);
+            }
+        });
         //Function to send a message to the server
         function sendMessage() {
             const messageInput = document.getElementById('message-input');
             const message = messageInput.value;
-            console.log(message);
-            //console.log("message sent");
+
             //Emit the message to the server
-            socket.emit('message', message);
+            socket.emit('message', {chatId, message});
 
             //Clear the input field
             messageInput.value = '';
@@ -23,7 +36,7 @@ const socket = io();
             const chatMessages = document.getElementById('chat-messages');
             chatMessages.innerHTML += `
             <div> 
-                <div id='message'>
+                <div>
                     <p>
                         ${message}
                     </p>
@@ -62,18 +75,18 @@ const socket = io();
 //    send()
 // })
 
-socket.on('send_message',(msg)=>{
+// socket.on('send_message',(msg)=>{
 
-    chat_window.innerHTML += `
-    <div> 
-        <div id='message'>
-            <p>
-                <strong>${msg.user}:</strong> ${msg.chat_input}
-            </p>
-        </div>
-    </div>
-    `
-})
+//     chat_window.innerHTML += `
+//     <div> 
+//         <div id='message'>
+//             <p>
+//                 <strong>${msg.user}:</strong> ${msg.chat_input}
+//             </p>
+//         </div>
+//     </div>
+//     `
+// })
 
 // User typing
 // const type = () =>{

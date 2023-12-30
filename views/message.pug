@@ -7,11 +7,11 @@ block content
         //Display chat messages
         #chat-messages
         //-Chat messages will be appended here dynamically
-
+        div.hidden#chatId #{productId}#{userId}#{receiverId}
         //Input field to send messages
         input#message-input(name='message' type="text" placeholder='Type your message...' minlength='1' maxlength='300' required)
         button#send(type='button' onclick='sendMessage()') Send
-        
+
     script(src="https://cdn.socket.io/4.0.1/socket.io.min.js").
     script(src="/javascripts/io.js").
         

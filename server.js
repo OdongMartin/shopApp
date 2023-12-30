@@ -116,18 +116,44 @@ app.get('/', (req, res)=>{
 app.use('/auth', auth);
 app.use('/shop', shop);
 
-// server.listen(app.get(PORT, () =>{
-//     console.log(`listening on port 3000`)
-// }))
+
+const messageDB = require("./models/messageDB.js");
 //Socket.io connection handling
 io.on('connection', (socket) => {
-    console.log('A user connected');
-  
+    console.log("user joined")
+    socket.on('join', async(chatId) => {
+       
+        //Associate the user's socket ID with the chat
+        socket.join(chatId);
+
+        // Retrieve and send chat history to the user
+        const chatHistory = await messageDB.find({productId: chatId.substr(0,24), sender: chatId.slice(24,48), receiver: chatId.substr(48,72)});
+        console.log("chat hist: ", chatHistory);
+        socket.emit('chat history', chatHistory);
+      });
     //Broadcast a message to all connected clients
-    socket.on('message', (msg) => {
-        io.emit('send_message', msg);
+    socket.on('message', async(data) => {
+        const { chatId, message } = data;
+        io.to(chatId).emit('send_message', message);
+
+        try {
+            var newMessage = new messageDB({
+                productId: chatId.substr(0,24),
+                sender: chatId.slice(24,48),
+                receiver: chatId.substr(48,72),
+                content: message,
+            });
+    
+            await newMessage.save();
+
+        } catch(error){
+            console.error(error);
+            //res.status(500).send('Internal Server Error');
+        }
+
     });
 
+    //not yet used
     socket.on('user_typing', (user)=>{
         socket.broadcast.emit('typing', user);
     })
