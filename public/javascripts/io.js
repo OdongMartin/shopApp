@@ -1,56 +1,25 @@
 const socket = io();
 
-        const chatId = document.getElementById('chatId').innerHTML.toString();
-        // user join chat
-        socket.emit('join', chatId);
-        // Listen for chat history from the server
-        socket.on('chat history', (history) => {
-            // Display chat history on the client side
-            //history.forEach((message) => {
-            // displayMessage(message);
-            // });
+const chatId = document.getElementById('chatId').innerHTML.toString();
+// user join chat
+socket.emit('join', chatId);
+// Listen for chat history from the server
+socket.on('chat history', (history) => {
+    // Display chat history on the client side
+    //history.forEach((message) => {
+    // displayMessage(message);
+    // });
 
-            for (let i=0; i<history.length; i++){
-                displayMessage(history[i].content);
-            }
-        });
-        //Function to send a message to the server
-        function sendMessage() {
-            const messageInput = document.getElementById('message-input');
-            const message = messageInput.value;
+    for (let i=0; i<history.length; i++){
+         displayMessage(history[i].content);
+    }
+});
 
-            //Emit the message to the server
-            socket.emit('message', {chatId, message});
-
-            //Clear the input field
-            messageInput.value = '';
-
-        }
-
-        // Function to display a new chat message
-        function displayMessage(message) {
-            //- const chatMessages = document.getElementById('chat-messages');
-            //- const li = document.createElement('li');
-            //- li.textContent = message;
-            //- chatMessages.appendChild(li);
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.innerHTML += `
-            <div> 
-                <div>
-                    <p>
-                        ${message}
-                    </p>
-                </div>
-            </div>
-            `
-        }
-        
-
-        //Listen for incoming chat messages from the server
-        socket.on('send_message', (msg) => {
-        //Display the received message
-        displayMessage(msg);
-        });
+//Listen for incoming chat messages from the server
+socket.on('send_message', (msg) => {
+    //Display the received message
+    displayMessage(msg);
+});
 
 // const socket = io()
 
@@ -89,23 +58,56 @@ const socket = io();
 // })
 
 // User typing
-// const type = () =>{
-//     chat_input.addEventListener('keypress', ()=>{
-//         if(chat_input.value.length > 1){
-//             //socket.emit('user_typing', l_online)
-//         }
-//         if (event.key === 'Enter') {
-//            send()
-//         }
-//     })
+const type = () =>{
+    message_input.addEventListener('keypress', ()=>{
+        if(message_input.value.length > 1){
+            socket.emit('user_typing')
+        }
+        //work on this
+        // if (event.key === 'Enter') {
+        //    send()
+        // }
+    })
 
-//     socket.on('typing',(use)=>{
-//         //hed.innerHTML = `${use} is typing . . .`
+    socket.on('typing',(use)=>{
+        document.getElementById('typing').innerHTML = `typing...`
 
-//         setTimeout(() => {
-//             //hed.innerHTML = l_online
-//         }, 5000);
-//     })
-// }
+        setTimeout(() => {
+            document.getElementById('typing').innerHTML = '';
+        }, 4000);
+    })
+}
 
-// type()
+type()
+
+//Function to send a message to the server
+function sendMessage() {
+    const messageInput = document.getElementById('message-input');
+    const message = messageInput.value;
+
+    //Emit the message to the server
+    socket.emit('message', {chatId, message});
+
+    //Clear the input field
+    messageInput.value = '';
+
+}
+
+// Function to display a new chat message
+function displayMessage(message) {
+    //- const chatMessages = document.getElementById('chat-messages');
+    //- const li = document.createElement('li');
+    //- li.textContent = message;
+    //- chatMessages.appendChild(li);
+    const chatMessages = document.getElementById('chat-messages');
+    chatMessages.innerHTML += `
+        <div> 
+            <div>
+                <p>
+                    ${message}
+                </p>
+            </div>
+        </div>
+        `
+}
+        

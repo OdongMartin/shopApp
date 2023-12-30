@@ -47,15 +47,43 @@ const chats = require('../models/chatsDB');
     res.redirect('/auth/login');
 }*/
 
-//delete entire product DB
-/*router.get('/productsDB/delete', function(req, res) {
+//delete entire DB expect usrDB
+/*router.get('/DB/delete', function(req, res) {
     Product.deleteMany().then(()=>{
         console.log ("removed all data in products");
     }).catch((err)=>{
         console.error("Error removing data:", err);
         res.status(500).send("Internal Server Error");
     })
-});
+
+    cart.deleteMany().then(()=>{
+        console.log ("removed all data in cart");
+    }).catch((err)=>{
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    })
+
+    store.deleteMany().then(()=>{
+        console.log ("removed all data in store");
+    }).catch((err)=>{
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    })
+    
+    chatDB.deleteMany().then(()=>{
+        console.log ("removed all data in chat");
+    }).catch((err)=>{
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    })
+
+    messageDB.deleteMany().then(()=>{
+        console.log ("removed all data in messages");
+    }).catch((err)=>{
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    })
+})*/
 
 //delete entire cart DB
 router.get('/cartDB/delete', function(req, res) {
@@ -65,7 +93,7 @@ router.get('/cartDB/delete', function(req, res) {
         console.error("Error removing data:", err);
         res.status(500).send("Internal Server Error");
     })
-});*/
+});
 
 //note: this deletes entire database
 /*app.get('/delete', function(req, res) {
@@ -431,9 +459,7 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
            return res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
         }
 
-        //check if chatid exists and user is eithr sender or receiver
-        const chatIdExists = await chatDB.findOne({chatId: req.params.chatId});
-        if(!chatIdExists || !(req.params.userId === req.params.chatId.slice(24,48) || req.params.userId === req.params.chatId.slice(48,72))){
+        if(!(req.params.userId === req.params.chatId.slice(24,48) || req.params.userId === req.params.chatId.slice(48,72))){
             return res.redirect('/shop/'+ req.params.userId + "/products/"+ req.params.productId);
         }
 

@@ -123,22 +123,11 @@ const chatDB = require('./models/chatsDB.js');
 io.on('connection', (socket) => {
     console.log("user joined")
     socket.on('join', async(chatId) => {
-       
         //Associate the user's socket ID with the chat
         socket.join(chatId);
         try{
-            // const chatExists = await chatDB.findOne({chatId: chatId});
-
-            // if(!chatExists){
-            //     const newChat = new chatDB({
-            //         chatId: chatId
-            //     })
-            //     await newChat.save();
-            // }
-
             //Retrieve and send chat history to the user
-
-            const chatHistory = await messageDB.find({productId: chatId.substr(0,24), sender: chatId.slice(24,48), receiver: chatId.substr(48,72)});
+            const chatHistory = await messageDB.find({chatId: chatId});
             socket.emit('chat history', chatHistory);
 
             
@@ -176,8 +165,8 @@ io.on('connection', (socket) => {
     });
 
     //not yet used
-    socket.on('user_typing', (user)=>{
-        socket.broadcast.emit('typing', user);
+    socket.on('user_typing', ()=>{
+        socket.broadcast.emit('typing');
     })
   
     socket.on('disconnect', () => {
