@@ -1,27 +1,41 @@
 extends layout 
 
 block content
-    div 
+    div
         div
-            img(src=`${stores.imagePath}`, alt=`${stores.name}` width=200)
-            p Name: #{stores.name}
-            p Description: #{stores.description}
-         
+            div(class="relative")
+                img(src=`${stores.imagePath2}`, alt=`${stores.name}` class="w-screen h-40 object-cover mb-2")
+                div(class="absolute bottom-0")
+                    img(src=`${stores.imagePath1}`, alt=`${stores.name}` class="w-20 h-20 rounded-2xl")
+
+            p(class="text-xl m-2") #{stores.name}
+            p(class="m-2") #{stores.description}
+            
             //-p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
-        div
+        div(class="m-2")
             form(action=`/shop/${userId}/myStores/${stores._id}/products/create` method='GET')
                 div
-                    button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Post Product
-        br
+                    button(type='submit' class="bg-green-600 hover:bg-green-900 text-white p-1.5 rounded-lg ")
+                        <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
+                        </svg> Post Product
 
-        if(products)
-            div
-                each product in products 
+
+    div(class="grid grid-cols-4")
+        each product in products
+            div(class="col-span-1 m-2 overflow-hidden shadow-xl hover:shadow-2xl")
+                a(href= `/shop/${userId}/products/${product._id}`)
                     div
-                        a(href= `/shop/${userId}/products/${product._id}`)
-                            div
-                                img(src=`${product.imagePath}`, alt=`${product.name}` width=200)
-                                p Name: #{product.name}
-                                p Description: #{product.description}
-                                p Price: #{product.currency} #{product.formattedPrice}
-
+                        img(src=`${product.imagePath}`, alt=`${product.name}` class="w-full h-40 object-cover rounded-t-lg")
+                        p(class="m-2 text-lg") #{product.name}
+                        //-p Description: #{product.description}
+                        p(class="m-2") #{product.currency} #{product.formattedPrice}
+                        //-p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+                //- submit button
+                div(class="m-2")
+                    form(action=`#` method='POST')
+                         button(type='submit' class="bg-green-600 hover:bg-green-900 text-white p-1.5 rounded-lg ")
+                            div(class="shadow-md hover:shadow-2xl")
+                                <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                </svg> Edit Product

@@ -8,7 +8,8 @@ const storeSchema = mongoose.Schema({
     name: { type: String, required: true },
     category: {type: String, required: true},
     description: { type: String, required: true },
-    imagePath: { type: String, required: true},
+    imagePath1: { type: String, required: true},
+    imagePath2: { type: String, required: true},
     timeCreated: { type: Date, default: Date.now },
 });
 

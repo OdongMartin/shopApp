@@ -7,7 +7,7 @@ block content
                 a(href= `/shop/${userId}/products/${product._id}`)
                     div
                         img(src=`${product.imagePath}`, alt=`${product.name}` class="w-full h-40 object-cover rounded-t-lg")
-                        p(class="m-2") #{product.name}
+                        p(class="m-2 text-lg") #{product.name}
                         //-p Description: #{product.description}
                         p(class="m-2") #{product.currency} #{product.formattedPrice}
                         //-p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}

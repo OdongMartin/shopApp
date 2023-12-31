@@ -31,11 +31,19 @@ block content
             option(value='Gifts and Specialty Items') Gifts and Specialty Items
         br
         div
-          label(for='image') Image:
+          label(for='image1') Store Profile Image:
         div  
-          input(type='file', name='image', required)
+          input(type='file' name='images' id="image1" accept="image/*" required)
           span Image maximum size is 5MB
-        br            
+        br
+
+        div
+          label(for="image2") Store Header Image:
+        div  
+          input(type="file" name="images" id="image2" accept="image/*" required)
+          span Image maximum size is 5MB
+        br
+        
         div
           label(for='description') Store Description:
         div

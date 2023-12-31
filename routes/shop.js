@@ -278,7 +278,8 @@ router.get('/:userId', async (req, res)=>{
             return res.redirect('/shop');
         }
 
-        const productData = await Product.find();
+        // find all products that dont belong to user
+        const productData = await Product.find({ownerId: {$ne: req.params.userId}});
         res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
     } catch (error) {
         console.error('Error fetching user or products:', error);
@@ -296,7 +297,7 @@ router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
     try{
         // const storreeeees = await store.find();
         // console.log(storreeeees);
-        const storesData = await store.find();
+        const storesData = await store.find({ownerId: {$ne: req.params.userId}});
         res.render('all-stores', { stores: storesData, userId: req.params.userId ,loggedIn: req.isAuthenticated()} )
         
     } catch(err){
@@ -313,7 +314,7 @@ router.get('/:userId/myStores', isAuthenticated, async(req, res)=>{
         // const storreeeees = await store.find();
         // console.log(storreeeees);
         const storesData = await store.find({ownerId: req.params.userId});
-        res.render('stores', { stores: storesData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()} )
+        res.render('myStores', { stores: storesData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()} )
         
     } catch(err){
         console.log(err);
@@ -324,7 +325,7 @@ router.get('/:userId/myStores', isAuthenticated, async(req, res)=>{
 router.get('/:userId/myStores/create', isAuthenticated, async(req, res)=>{
     res.render('create-store', {userId: req.params.userId ,loggedIn: req.isAuthenticated()})
 })
-router.post('/:userId/myStores/create', isAuthenticated, upload.single('image'), async(req, res)=>{
+router.post('/:userId/myStores/create', isAuthenticated, upload.array('images', 2), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -333,12 +334,18 @@ router.post('/:userId/myStores/create', isAuthenticated, upload.single('image'),
         if (req.fileValidationError) {
             return res.status(400).send(req.fileValidationError);
       }
+
+        const images = req.files;
+        const imagePath1 = '/uploads/' + images[0].filename;
+        const imagePath2 = '/uploads/' + images[1].filename;
+
         var newStore = new store({
             ownerId: req.params.userId,
             name: req.body.title,
             category: req.body.category,
             description: req.body.description,
-            imagePath: '/uploads/' + req.file.filename,
+            imagePath1: imagePath1,
+            imagePath2: imagePath2,
         });
 
         await newStore.save()
@@ -406,7 +413,7 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
 router.get('/:userId/products/search', async (req, res)=>{
     try {
         const searchTerm = req.query.q;
-        const productData = await Product.find({name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
+        const productData = await Product.find({ownerId: {$ne: req.params.userId}, name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
         res.render('home', { products: productData, userId: req.params.userId, searchTerm  ,loggedIn: req.isAuthenticated()}); //should be person's profile 
     } catch(err){
         console.log(err);

@@ -38,16 +38,6 @@ html(lang="en")
 
                         if(!loggedIn)
                             a(href='/auth/login') Login
-                    
-
-
-            //- div(class="font-serif ml-2")
-            //-     if(searchTerm)
-            //-         h Showing Results for #{searchTerm}
-            //-     br
-
-
-
 
         div(class="text-sm grid grid-cols-5 font-semibold")
             nav(class="border-r-2 border-gray-300 h-screen col-span-1 ml-4")
@@ -82,8 +72,8 @@ html(lang="en")
                             </svg> Stores 
             
             main(class="bg-gray-200 col-span-4")
-                div(class="font-serif ml-2")
-                    if(searchTerm)
-                        h Showing Results for #{searchTerm}
-                br
+                if(searchTerm)
+                    div(class="font-serif ml-2")
+                            h Showing Results for #{searchTerm}
+                    br
                 block content
