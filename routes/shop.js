@@ -123,7 +123,7 @@ router.get('/:userId/myStores/:storeId/products/create', isAuthenticated, async(
         if(!storeExists){
             return res.redirect('/shop/'+ req.params.userId + '/myStores');
         }
-        res.render('create-product', {userId: req.params.userId, storeId: req.params.storeId});
+        res.render('create-product', {userId: req.params.userId, storeId: req.params.storeId, loggedIn:req.isAuthenticated()});
     } catch(err){
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -188,7 +188,7 @@ router.get('/:userId/cart', isAuthenticated, (req, res)=>{
 
         //get prodcts from myCart array and display them
         Product.find({ _id: { $in: myCart } }).then((productData)=>{
-            res.render('cart', { products: productData, userId: req.params.userId }); //should be person's profile
+            res.render('cart', { products: productData, userId: req.params.userId, loggedIn: req.isAuthenticated() }); //should be person's profile
         }).catch((err)=>{
             console.log(err);
             res.status(500).send('Internal Server Error');
@@ -253,7 +253,7 @@ router.get('/', (req, res)=>{
     Product.find().then((productData)=>{
         //console.log(productData);
         //console.log('productid' + productData[0]._id.toHexString()); //product id to string
-        res.render('home', { products: productData, userId: req.params.userId }); //should be person's profile
+        res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()}); //should be person's profile
     }).catch((err)=>{
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -279,7 +279,7 @@ router.get('/:userId', async (req, res)=>{
         }
 
         const productData = await Product.find();
-        res.render('home', { products: productData, userId: req.params.userId });
+        res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
     } catch (error) {
         console.error('Error fetching user or products:', error);
         res.status(500).send('Internal Server Error');
@@ -297,7 +297,7 @@ router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
         // const storreeeees = await store.find();
         // console.log(storreeeees);
         const storesData = await store.find();
-        res.render('all-stores', { stores: storesData, userId: req.params.userId } )
+        res.render('all-stores', { stores: storesData, userId: req.params.userId ,loggedIn: req.isAuthenticated()} )
         
     } catch(err){
         console.log(err);
@@ -313,7 +313,7 @@ router.get('/:userId/myStores', isAuthenticated, async(req, res)=>{
         // const storreeeees = await store.find();
         // console.log(storreeeees);
         const storesData = await store.find({ownerId: req.params.userId});
-        res.render('stores', { stores: storesData, userId: req.params.userId } )
+        res.render('stores', { stores: storesData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()} )
         
     } catch(err){
         console.log(err);
@@ -322,7 +322,7 @@ router.get('/:userId/myStores', isAuthenticated, async(req, res)=>{
 })
 //create store
 router.get('/:userId/myStores/create', isAuthenticated, async(req, res)=>{
-    res.render('create-store', {userId: req.params.userId})
+    res.render('create-store', {userId: req.params.userId ,loggedIn: req.isAuthenticated()})
 })
 router.post('/:userId/myStores/create', isAuthenticated, upload.single('image'), async(req, res)=>{
     if (req.params.userId != req.user._id){
@@ -367,7 +367,7 @@ router.get('/:userId/myStores/:storeId', isAuthenticated, async(req, res)=>{
 
         const storesData = await store.findById(req.params.storeId);
         const productData = await Product.find({storeId: req.params.storeId})
-        res.render('admin-store-page', { stores: storesData, userId: req.params.userId, products:productData })
+        res.render('admin-store-page', { stores: storesData, userId: req.params.userId, products:productData  ,loggedIn: req.isAuthenticated()})
         
     } catch(err){
         console.log(err);
@@ -392,7 +392,7 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
 
         const storesData = await store.findById(req.params.storeId);
         const productData = await Product.find({storeId: req.params.storeId})
-        res.render('store-page', { stores: storesData, userId: req.params.userId, products:productData })
+        res.render('store-page', { stores: storesData, userId: req.params.userId, products:productData  ,loggedIn: req.isAuthenticated()})
         
     } catch(err){
         console.log(err);
@@ -407,7 +407,7 @@ router.get('/:userId/products/search', async (req, res)=>{
     try {
         const searchTerm = req.query.q;
         const productData = await Product.find({name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
-        res.render('home', { products: productData, userId: req.params.userId, searchTerm }); //should be person's profile 
+        res.render('home', { products: productData, userId: req.params.userId, searchTerm  ,loggedIn: req.isAuthenticated()}); //should be person's profile 
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error')
@@ -433,9 +433,9 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
 
         //check if product belongs to user
         if(productData.ownerId === req.params.userId){
-            return res.render('admin-product-page', { products: productData, userId: req.params.userId })
+            return res.render('admin-product-page', { products: productData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()})
         }
-        return res.render('product-page', { products: productData, userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
+        return res.render('product-page', { products: productData, userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId  ,loggedIn: req.isAuthenticated()});
 
     } catch(err){
         console.log(err);
@@ -477,7 +477,7 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
             await newChat.save();
         }
 
-        res.render('message', {userId: req.params.userId, chatId: req.params.chatId /*productId: req.params.productId, receiverId: productData.ownerId*/});
+        res.render('message', {userId: req.params.userId, chatId: req.params.chatId ,loggedIn: req.isAuthenticated() /*productId: req.params.productId, receiverId: productData.ownerId*/});
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -493,7 +493,7 @@ router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
     try{
         const chats = await chatDB.find({chatId: { $regex: req.params.userId}});
         //console.log("prod id: "+ chats )
-        res.render('chats', {userId: req.params.userId, chats: chats});
+        res.render('chats', {userId: req.params.userId, chats: chats ,loggedIn: req.isAuthenticated()});
 
 
         // if(!productData){
