@@ -442,7 +442,9 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
         if(productData.ownerId === req.params.userId){
             return res.render('admin-product-page', { products: productData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()})
         }
-        return res.render('product-page', { products: productData, userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId  ,loggedIn: req.isAuthenticated()});
+
+        const storeData = await store.findById(productData.storeId);
+        return res.render('product-page', { products: productData, userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId, store: storeData  ,loggedIn: req.isAuthenticated()});
 
     } catch(err){
         console.log(err);

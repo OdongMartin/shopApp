@@ -4,18 +4,37 @@ block content
     div(class="grid grid-cols-4 m-3")
         div(class="col-span-3 bg-white rounded-t-lg shadow-lg")
             img(src=`${products.imagePath}`, alt=`${products.name}` class="object-cover rounded-t-lg mb-2" style='width:900px; height:400px;' )
-            p(class="text-3xl font-bold m-2") #{products.name}
+            p(class="text-3xl font-bold m-2 mb-2") #{products.name}
 
-            div(class="m-2")
-                <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg> Posted: #{products.timePosted.toLocaleTimeString()} on #{products.timePosted.toDateString()}
+            div(class="m-2 flex items-center justify-between")
+                p By #{store.name} 
 
-            div(class="border-t border-b m-2 p-2") #{products.description}
+                div
+                    <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg> Posted: #{products.timePosted.toLocaleTimeString()} on #{products.timePosted.toDateString()}
+            
+
+            div(class="border-t border-b m-2 pt-2 pb-2")
+                div(class="flex items-center")
+                    div(class="font-bold")
+                        p(class="mb-2") Catergory 
+                        p(class="mb-2") Condition 
+                        p Size 
+                    div(class="ml-8")
+                        p(class="mb-2") #{products.category}
+                        p(class="mb-2") #{products.condition}
+                        p #{products.size}
+
+            div(class="border-b m-2 pb-2")
+                p(class="font-bold text-lg mb-2") About this product 
+                p #{products.description}
 
         div(class="col-span-1")
-            div             
-                p(class="text-2xl font-semibold m-2") #{products.currency} #{products.formattedPrice}
+            //- div(class="flex justify-center")
+            //-     img(src=`${store.imagePath1}`, alt=`${store.name}` class="w-16 h-16 rounded-full m-2")  
+            //-     p(class="block") #{store.name}        
+            p(class="text-2xl font-semibold m-2") #{products.currency} #{products.formattedPrice}
 
             div(class="m-2")
                 form(action=`/shop/${userId}/cart/add/${products._id}` method='POST')
