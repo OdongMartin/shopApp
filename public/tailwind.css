@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+button.addToCart {
+    color: rgb(255 255 255);
+    background-color: rgb(234 88 12);;
+    padding: 0.375rem;
+    border-radius: 0.5rem;
+}
+
+button.addToCart:hover {
+    background-color: rgb(124 45 18);
+}
+  
+  /* Dark mode styles */
+button.startChat {
+    color: rgb(48 51 95); /*text color*/
+    border-width: 1px;
+    border-color: rgb(48 51 95);
+    padding: 0.375rem;
+    border-radius: 0.5rem; /*rounded*/
+}
+
+button.startChat:hover{
+    background-color: rgb(48 51 95);
+    color: rgb(255 255 255);
+}
