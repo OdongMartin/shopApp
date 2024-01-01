@@ -1,25 +1,32 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4")
-        div(class="col-span-3")
-            img(src=`${products.imagePath}`, alt=`${products.name}` class="w-screen")
-            p Name: #{products.name}
-            p Description: #{products.description}
-            p Price: #{products.currency} #{products.formattedPrice}
-            p Posted: #{products.timePosted.toLocaleTimeString()} on #{products.timePosted.toDateString()}
+    div(class="grid grid-cols-4 m-3")
+        div(class="col-span-3 bg-white rounded-t-lg shadow-lg")
+            img(src=`${products.imagePath}`, alt=`${products.name}` class="object-cover rounded-t-lg mb-2" style='width:900px; height:400px;' )
+            p(class="text-3xl font-bold m-2") #{products.name}
+
+            div(class="m-2")
+                <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg> Posted: #{products.timePosted.toLocaleTimeString()} on #{products.timePosted.toDateString()}
+
+            div(class="border-t border-b m-2 p-2") #{products.description}
 
         div(class="col-span-1")
+            div             
+                p(class="text-2xl font-semibold m-2") #{products.currency} #{products.formattedPrice}
+
             div(class="m-2")
                 form(action=`/shop/${userId}/cart/add/${products._id}` method='POST')
-                    button(type='submit' class="addToCart")
+                    button(type='submit' class="addToCart w-full")
                             <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                             </svg> Add to Cart
 
             div(class="m-2")
                 form(action=`/shop/${userId}/products/${products._id}/message/${productId}${userId}${receiverId}` method='GET')
-                    button(type='submit' class="startChat")
+                    button(type='submit' class="startChat w-full")
                             <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                             </svg> Start Chat
