@@ -1,16 +1,18 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4")
+    div(class="m-4")
         if(stores)
             each store in stores
                 //-store card
-                div(class="col-span m-2 overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                div(class="m-6 overflow-hidden rounded-lg bg-white h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                     a(href= `/shop/${userId}/stores/${store._id}`)
-                        div
-                            img(src=`${store.imagePath1}`, alt=`${store.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
-                            p(class="m-2 text-lg truncate") #{store.name}
-                            p(class="m-2") #{store.description}
+                        div(class="flex")
+                            img(src=`${store.imagePath1}`, alt=`${store.name}` class="w-40 h-40 object-cover rounded-l-lg")
+                            div(class="ml-2 w-96")
+                                p(class="m-2 text-xl font-bold") #{store.name}
+                                p(class="m-2 font-bold text-lg") #{store.category}
+                                p(class="m-2 break-words") #{store.description}
                                 
 
 

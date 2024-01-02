@@ -516,6 +516,9 @@ video {
 .m-4 {
   margin: 1rem;
 }
+.m-6 {
+  margin: 1.5rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -596,17 +599,20 @@ video {
 .w-4 {
   width: 1rem;
 }
+.w-40 {
+  width: 10rem;
+}
 .w-6 {
   width: 1.5rem;
-}
-.w-64 {
-  width: 16rem;
 }
 .w-80 {
   width: 20rem;
 }
 .w-96 {
   width: 24rem;
+}
+.w-auto {
+  width: auto;
 }
 .w-full {
   width: 100%;
@@ -649,6 +655,9 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.break-words {
+  overflow-wrap: break-word;
+}
 .rounded-2xl {
   border-radius: 1rem;
 }
@@ -667,6 +676,10 @@ video {
 .rounded-l-full {
   border-top-left-radius: 9999px;
   border-bottom-left-radius: 9999px;
+}
+.rounded-l-lg {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 .rounded-r-full {
   border-top-right-radius: 9999px;
@@ -880,6 +893,10 @@ button.startChat:hover{
     background-color: rgb(48 51 95);
     color: rgb(255 255 255);
 }
+
+/* p.text-wrap{
+    text-wrap: wrap;
+} */
 
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;
