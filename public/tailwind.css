@@ -11,7 +11,7 @@ button.addToCart {
 }
 
 button.addToCart:hover {
-    background-color: rgb(124 45 18);
+    background-color: rgb(168, 55, 17);
 }
   
   /* Dark mode styles */
@@ -24,6 +24,7 @@ button.startChat {
 }
 
 button.startChat:hover{
+    /*transition-duration: 700ms;*/
     background-color: rgb(48 51 95);
     color: rgb(255 255 255);
 }
