@@ -1,21 +1,16 @@
 extends layout 
 
 block content
-    div 
-        div
-            h Stores
-        br
-        div
-            if(stores)
-                each store in stores 
+    div(class="grid grid-cols-4")
+        if(stores)
+            each store in stores
+                //-store card
+                div(class="col-span m-2 overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                     a(href= `/shop/${userId}/stores/${store._id}`)
                         div
-                            img(src=`${store.imagePath}`, alt=`${store.name}` width=200)
-                            p Name: #{store.name}
-                            p Description: #{store.description}
-                            //- p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
-                            //- form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
-                            //-     div
-                            //-     button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Add to Cart
+                            img(src=`${store.imagePath1}`, alt=`${store.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
+                            p(class="m-2 text-lg truncate") #{store.name}
+                            p(class="m-2") #{store.description}
+                                
 
 

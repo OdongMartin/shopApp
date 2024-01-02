@@ -438,12 +438,12 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
             res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
         }
 
+        const storeData = await store.findById(productData.storeId);
         //check if product belongs to user
         if(productData.ownerId === req.params.userId){
-            return res.render('admin-product-page', { products: productData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()})
+            return res.render('admin-product-page', { products: productData, userId: req.params.userId, store: storeData  ,loggedIn: req.isAuthenticated()})
         }
 
-        const storeData = await store.findById(productData.storeId);
         return res.render('product-page', { products: productData, userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId, store: storeData  ,loggedIn: req.isAuthenticated()});
 
     } catch(err){

@@ -24,7 +24,7 @@ block content
     div(class="inline-block")
         div(class="grid grid-cols-4")
             each product in products
-                div(class="col-span-1 m-2 overflow-hidden shadow-xl hover:shadow-2xl")
+                div(class="col-span-1 m-2 overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                     a(href= `/shop/${userId}/products/${product._id}`)
                         div
                             img(src=`${product.imagePath}`, alt=`${product.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")

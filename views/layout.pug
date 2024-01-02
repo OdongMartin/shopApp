@@ -7,7 +7,7 @@ html(lang="en")
         style 
             include ../public/styles/styles.css
         
-    body(class="relative")
+    body
         div(class=" text-white")
             div(class="flex justify-between items-center bg-[#30335f] w-full")
                 //-shop name
@@ -36,19 +36,21 @@ html(lang="en")
 
                         if(loggedIn)
                             div(class="bg-[#853030] rounded-lg hover:bg-[#a73d3d] transition ease-in-out duration-600")
-                                div(class="p-2")
-                                    a(href='/auth/logout') Logout
+                                a(href='/auth/logout') 
+                                    div(class="p-2")
+                                        p Logout
 
                         if(!loggedIn)
                             div(class="bg-[#3e7447] rounded-lg hover:bg-[#579b6e] transition ease-in-out duration-600")
-                                div(class="p-2")
-                                    a(href='/auth/login') Login
+                                a(href='/auth/login') 
+                                    div(class="p-2")
+                                        p Login
 
-        div(class="absolute")
+        div(class="min-h-screen flex items-center justify-center")
             div(class="text-sm grid grid-cols-5 font-semibold")
-                nav(class="h-screen col-span-1")
+                nav(class="min-h-screen w-96 col-span-1")
                     //- Home
-                    div(class="hover:bg-gray-300 transition ease- duration-200")
+                    div(class="hover:bg-gray-300  transition ease- duration-200")
                         a(href=`/shop/${userId}`)    
                             div(class="p-3 hover:scale-105") 
                                 <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
