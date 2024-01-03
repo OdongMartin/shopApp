@@ -1,18 +1,29 @@
 extends layout 
 
 block content
-    div(class="m-4")
-        if(stores)
-            each store in stores
-                //-store card
-                div(class="m-6 overflow-hidden rounded-lg bg-white h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
-                    a(href= `/shop/${userId}/stores/${store._id}`)
-                        div(class="flex")
-                            img(src=`${store.imagePath1}`, alt=`${store.name}` class="w-40 h-40 object-cover rounded-l-lg")
-                            div(class="ml-2 w-96")
-                                p(class="m-2 text-xl font-bold") #{store.name}
-                                p(class="m-2 font-bold text-lg") #{store.category}
-                                p(class="m-2 break-words") #{store.description}
+    div(class="grid grid-cols-4")
+        div(class="col-span-3 m-4")
+            if(!stores)
+                div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
+                    p No stores available at the moment. Try again later
+            if(stores)
+                    each store in stores
+                        //-store card
+                        div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                            a(href= `/shop/${userId}/stores/${store._id}`)
+                                div(class="flex")
+                                    img(src=`${store.imagePath1}`, alt=`${store.name}` class="w-40 h-40 object-cover rounded-l-lg")
+                                    div(class="ml-4 w-96")
+                                        p(class="mb-2 mt-2 text-xl font-bold truncate") #{store.name}
+                                        p(class="mb-2 font-bold text-lg truncate") #{store.category}
+                                        p(class="mb-2 break-words") #{store.description}
+
+        div(class="col-span-1 bg-white w-full h-screen ")
+            div(class="m-3")
+                h(class=" text-lg font-bold") Information 
+                ul(class="list-disc p-2")
+                    li(class="mb-2") On this page, you find stores by other people.
+                    li Your stores don't appear on this page.
                                 
 
 

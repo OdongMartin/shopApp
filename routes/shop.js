@@ -248,12 +248,14 @@ router.get('/admin/orders', /* ... */);
 
 //homepage -- /shop/ ......should display items
 router.get('/', (req, res)=>{
-    //console.log("is authenticated "+ req.isAuthenticated())
-    //console.log("username "+ req.user);
     Product.find().then((productData)=>{
-        //console.log(productData);
-        //console.log('productid' + productData[0]._id.toHexString()); //product id to string
-        res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()}); //should be person's profile
+        //no products yet
+        if(!productData[0]){
+            return res.render('home', {loggedIn: req.isAuthenticated()}); //should be person's profile
+        }
+
+        return res.render('home', { products: productData ,loggedIn: req.isAuthenticated()}); //should be person's profile
+    
     }).catch((err)=>{
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -280,7 +282,13 @@ router.get('/:userId', async (req, res)=>{
 
         // find all products that dont belong to user
         const productData = await Product.find({ownerId: {$ne: req.params.userId}});
-        res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+        //check if no products 
+        if(!productData[0]){
+            return res.render('home', { userId: req.params.userId ,loggedIn: req.isAuthenticated()}); //should be person's profile
+        }
+
+        return res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+
     } catch (error) {
         console.error('Error fetching user or products:', error);
         res.status(500).send('Internal Server Error');
@@ -298,6 +306,12 @@ router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
         // const storreeeees = await store.find();
         // console.log(storreeeees);
         const storesData = await store.find({ownerId: {$ne: req.params.userId}});
+
+        //no store data so display create stores info or some else
+        if(!storesData[0]){
+            return res.render('all-stores', { userId: req.params.userId ,loggedIn: req.isAuthenticated()} )
+        }
+
         res.render('all-stores', { stores: storesData, userId: req.params.userId ,loggedIn: req.isAuthenticated()} )
         
     } catch(err){
@@ -314,7 +328,13 @@ router.get('/:userId/myStores', isAuthenticated, async(req, res)=>{
         // const storreeeees = await store.find();
         // console.log(storreeeees);
         const storesData = await store.find({ownerId: req.params.userId});
-        res.render('myStores', { stores: storesData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()} )
+
+        //no store data so display create stores info or some else
+        if(!storesData[0]){
+            return res.render('myStores', { userId: req.params.userId  ,loggedIn: req.isAuthenticated()} )
+        }
+
+        return res.render('myStores', { stores: storesData, userId: req.params.userId  ,loggedIn: req.isAuthenticated()} )
         
     } catch(err){
         console.log(err);

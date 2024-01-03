@@ -1,21 +1,55 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4 m-2")
-        div(class="col-span-3")
-            if(stores)
-                div(class="grid grid-cols-3")
-                    each store in stores
-                        div(class="col-span-1 m-4") 
-                            a(href= `/shop/${userId}/myStores/${store._id}`)
-                                img(src=`${store.imagePath1}`, alt=`${store.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
-                                p(class="m-2 text-lg truncate") #{store.name}
-                                p(class="m-2") #{store.description}
-                            
+    div(class="grid grid-cols-4")
+        if(!stores)
+            div(class="col-span-3 m-4")
+                div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
+                    p You have no stores available at the moment. Create A Store Now
 
-        div(class="col-span-1")
-            form(action=`/shop/${userId}/myStores/create` method='GET')
-                div
-                    button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Store
+                //- create store button    
+                form(action=`/shop/${userId}/myStores/create` method='GET')
+                    div(class="flex justify-center")
+                        button(type='submit' class="startChat transition ease-out duration-700") 
+                            <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg> Create Store
+            
+            div(class="col-span-1 bg-white w-full h-screen")
+                div(class="m-3")
+                    h(class=" text-lg font-bold") Information 
+                    ul(class="list-disc p-2")
+                        li(class="mb-2") When you creata a store, it will appear on this page.
+                        li You can create multiple stores.
+
+            
+        if(stores)
+            div(class="col-span-3 m-4")
+                each store in stores
+                    //-store card
+                    div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                        a(href= `/shop/${userId}/stores/${store._id}`)
+                            div(class="flex")
+                                img(src=`${store.imagePath1}`, alt=`${store.name}` class="w-40 h-40 object-cover rounded-l-lg")
+                                div(class="ml-8 w-96")
+                                    p(class="mb-2 text-xl font-bold truncate") #{store.name}
+                                    p(class="mb-2 font-bold text-lg truncate") #{store.category}
+                                    p(class="mb-2 break-words") #{store.description}
+                        
+
+            div(class="col-span-1")
+                form(action=`/shop/${userId}/myStores/create` method='GET')
+                    div
+                        button(type='submit' class="startChat w-full transition ease-out duration-700") 
+                            <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg> Create Store
+
+                div(class="col-span-1 bg-white w-full h-screen")
+                    div(class="m-3")
+                        h(class=" text-lg font-bold") Information 
+                        ul(class="list-disc p-2")
+                            li(class="mb-2") When you creata a store, it will appear on this page.
+                            li You can create multiple stores.
 
 
