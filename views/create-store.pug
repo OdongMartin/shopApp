@@ -8,12 +8,14 @@ block content
       form(action=`/shop/${userId}/myStores/create`, method='POST', enctype='multipart/form-data')
         div
           div
-            label(for='title') Name:
+            label(for='title') Name
+            span(class=" text-red-700 font-bold") *
           div
             input(type='text', name='title', id='title', maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
           br
           div
-            label(for='category') Category:
+            label(for='category') Category
+            span(class=" text-red-700 font-bold") *
           div
             select(name='category', id='category', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
               option(value='Art and Crafts') Art and Crafts
@@ -33,21 +35,24 @@ block content
               option(value='Toys and Games') Toys and Games
           br
           div
-            label(for='image1') Store Profile Image:
+            label(for='image1') Store Profile Image
+            span(class=" text-red-700 font-bold") *
           div  
             input(type='file' name='images' id="image1" accept="image/*" required)
             span Image maximum size is 5MB
           br
 
           div
-            label(for="image2") Store Header Image:
+            label(for="image2") Store Header Image
+            span(class=" text-red-700 font-bold") *
           div  
             input(type="file" name="images" id="image2" accept="image/*" required)
             span Image maximum size is 5MB
           br
           
           div
-            label(for='description') Store Description:
+            label(for='description') Store Description
+            span(class=" text-red-700 font-bold") *
           div
             textarea(cols='50' rows='5' type='text', name='description', maxlength="99" id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
           br

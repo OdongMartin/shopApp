@@ -9,12 +9,13 @@ block content
         form(action=`/shop/${userId}/myStores/${storeId}/products/create`, method='POST', enctype='multipart/form-data')
           div
             div
-              label(for='title') Name:
+              label(for='title') Name
+              span(class=" text-red-700 font-bold") *
             div
               input(type='text', name='title', id='title', maxlength="30",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-            br
             div
-              label(for='category') Category:
+              label(for='category') Category
+              span(class=" text-red-700 font-bold") *
             div
               select(name='category', id='category', onchange="getSelectedCategory()", required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
                 option(value='Art and Crafts') Art and Crafts
@@ -34,30 +35,53 @@ block content
                 option(value='Toys and Games') Toys and Games
 
             div
-              label(for='subcategory') Sub-category:
+              label(for='subcategory') Sub-category
+              span(class=" text-red-700 font-bold") *
             div
-              select(name='subcategory', id='subcategory', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+              select(name='subcategory', id='subcategory', onchange="getSelectedSubCategory()", required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
                 option(value='Art Prints') Art Prints
                 option(value='DIY Supplies') DIY Supplies
                 option(value='Handmade Crafts') Handmade Crafts
             div
-              label(for='condition') Condition:
+              label(for='condition') Condition
+              span(class=" text-red-700 font-bold") *
             div
               select(name='condition', id='condition', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
                 option(value='brand new') Brand New
                 option(value='refurbished') Refurbished
                 option(value='used') Used
-            br
-            div
-              label(for='brand') Brand:
-            div
-              input(type='text', name='brand', id='brand', maxlength="30",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-            br
-            div
-              label(for='size') Size:
-            div
-              input(type='text', name='size', id='size', maxlength="15",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-            br
+
+            div(id="additionalFields")
+              div
+                label(for='artist') Artist
+              div 
+                input(type='text', name='artist', id='artist', maxlength="30", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+              div
+                label(for='type') Type
+              div 
+                input(type='text', name='type', id='type', maxlength="30", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+              div
+                label(for='material') Material
+              div 
+                input(type='text', name='material', id='material', maxlength="30", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+              div
+                label(for='size') Size
+              div 
+                input(type='text', name='size', id='size', maxlength="30", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+              div
+                label(for='features') Features
+              div 
+                input(type='text', name='features', id='features', maxlength="30", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            //- div
+            //-   label(for='brand') Brand
+            //- div
+            //-   input(type='text', name='brand', id='brand', maxlength="30", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            //- br
+            //- div
+            //-   label(for='size') Size
+            //- div
+            //-   input(type='text', name='size', id='size', maxlength="15", class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            //- br
             div               
               p Image maximum size is 5MB.
               br
@@ -66,39 +90,36 @@ block content
 
             div
               div
-                label(for='image1') Image 1:
+                label(for='image1') Image 1
+                span(class=" text-red-700 font-bold") *
                 br  
                 input(type='file' name='images' id="image1" accept="image/*" required)
-              br
               div
-                label(for="image2") Image 2:
+                label(for="image2") Image 2
                 br 
                 input(type="file" name="images" id="image2" accept="image/*" )
-              br
               div
-                label(for="image3") Image 3:
+                label(for="image3") Image 3
                 br 
                 input(type="file" name="images" id="image3" accept="image/*" )
-              br
               div
-                label(for="image3") Image 4:
+                label(for="image3") Image 4
                 br
                 input(type="file" name="images" id="image4" accept="image/*" )
               br
-            br
             div
-              label(for='description') Product Description:
+              label(for='description') Product Description
+              span(class=" text-red-700 font-bold") *
             div
               textarea(cols='50' rows='5' type='text', name='description', id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-            br
             div
-              label(for='price') Price:
+              label(for='price') Price
+              span(class=" text-red-700 font-bold") *
             div  
               select(name='currency', id='currency', value= `UGX`, required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
                 option(value='UGX') UGX
                 //- option(value='USD') USD
               input(type='number', name='price', id='price', required, class="ml-2 mb-3 p-2 rounded-xl bg-gray-700 text-white")
-            br
             div
               button(type='submit' class="bg-green-600 hover:bg-green-900 text-white p-1.5 rounded-lg ") 
                   <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

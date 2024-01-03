@@ -266,10 +266,10 @@ router.get('/', (req, res)=>{
     Product.find().then((productData)=>{
         //no products yet
         if(!productData[0]){
-            return res.render('home', {loggedIn: req.isAuthenticated()}); //should be person's profile
+            return res.render('home', {loggedIn: req.isAuthenticated(), current:"home"}); //should be person's profile
         }
 
-        return res.render('home', { products: productData ,loggedIn: req.isAuthenticated()}); //should be person's profile
+        return res.render('home', { products: productData ,loggedIn: req.isAuthenticated(), current:"home"}); //should be person's profile
     
     }).catch((err)=>{
         console.log(err);
