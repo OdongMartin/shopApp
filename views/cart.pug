@@ -5,7 +5,7 @@ block content
         each product in products 
             a(href= `/shop/${userId}/products/${product._id}`)
                 div
-                    img(src=`${product.imagePath}`, alt=`${product.name}` width=200)
+                    img(src=`${product.imagePath1}`, alt=`${product.name}` width=200)
                     p Name: #{product.name}
                     p Description: #{product.description}
                     p Price: #{product.currency} #{product.formattedPrice}

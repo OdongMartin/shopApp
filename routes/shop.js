@@ -119,20 +119,46 @@ router.get('/:userId/myStores/:storeId/products/create', isAuthenticated, async(
 
     try{
         //check if store exists for user
-        const storeExists = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
-        if(!storeExists){
+        const storeData = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeData){
             return res.redirect('/shop/'+ req.params.userId + '/myStores');
         }
-        res.render('create-product', {userId: req.params.userId, storeId: req.params.storeId, loggedIn:req.isAuthenticated()});
+
+        res.render('create-product', {userId: req.params.userId, storeId: req.params.storeId, loggedIn:req.isAuthenticated(), category: storeData.category});
+    
     } catch(err){
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 })
-router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, upload.single('image'), async(req, res)=>{
+router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, upload.array('images', 4), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
+
+    //if image not provided
+    if(req.files[1] === 'undefined'){
+        image_path2 = 'undefined'
+    }
+    else{
+        image_path2 = '/uploads/' + req.files[1].filename;
+    }
+    if(req.files[2] === 'undefined'){
+        image_path3 = 'undefined'
+    }
+    else{
+        image_path3 = '/uploads/' + req.files[2].filename;
+    }
+
+    console.log(req.files[3])
+    if(!req.files[3])
+    {
+        image_path4 = 'undefined'
+    }
+    else{
+        image_path4 = '/uploads/' + req.files[3].filename;
+    }
+
     try {
         //Check if there were errors related to file size
         if (req.fileValidationError) {
@@ -143,16 +169,18 @@ router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, uploa
             ownerId: req.params.userId,
             name: req.body.title,
             category: req.body.category,
+            subcategory: req.body.subcategory,
+            brand: req.body.brand,
             description: req.body.description,
             condition: req.body.condition,
             size: req.body.size,
             currency: req.body.currency,
             price: req.body.price,
             formattedPrice: formatPriceWithCommas(req.body.price),
-            //hoursPosted: formatTime(Product.timePosted),
-            //quantity: "3",
-            //category: "shoes",
-            imagePath: '/uploads/' + req.file.filename,
+            imagePath1: '/uploads/' + req.files[0].filename,
+            imagePath2: image_path2,
+            imagePath3: image_path3,
+            imagePath4: image_path4,
         });
 
         await newProduct.save()
@@ -232,19 +260,6 @@ router.post('/:userId/cart/add/:productId', isAuthenticated, async(req, res)=>{
         res.status(500).send('Internal Server Error');
     }
 });
-router.post('/cart/remove/:id', /* ... */);
-
-// Checkout
-router.get('/checkout', /* ... */);
-router.post('/checkout/process', /* ... */);
-
-// User Profile
-router.get('/profile', /* ... */);
-router.get('/orders', /* ... */);
-
-// Admin
-router.get('/admin/products', /* ... */);
-router.get('/admin/orders', /* ... */);
 
 //homepage -- /shop/ ......should display items
 router.get('/', (req, res)=>{
@@ -524,15 +539,6 @@ router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
         //console.log("prod id: "+ chats )
         res.render('chats', {userId: req.params.userId, chats: chats ,loggedIn: req.isAuthenticated()});
 
-
-        // if(!productData){
-        //     res.redirect('/shop/'+ req.params.userId) //take them to home if they change product id
-        // }
-        // //console.log messages
-        // const messages = await messageDB.find({productId: req.params.productId, sender: req.params.userId, receiver: productData.ownerId})
-        // console.log("messages" + messages);
-
-        // res.render('message', {userId: req.params.userId, productId: req.params.productId, receiverId: productData.ownerId });
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');

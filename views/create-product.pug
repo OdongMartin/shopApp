@@ -1,55 +1,111 @@
 extends layout
 
 block content
-  div(class="m-3")
-    h1.font-bold.text-xl Create Product
-    div
-      form(action=`/shop/${userId}/myStores/${storeId}/products/create`, method='POST', enctype='multipart/form-data')
-        div
+  div(class="m-4 grid grid-cols-4")
+    div(class="col-span-3")
+      h1.font-bold.text-xl Post Product
+      br
+      div
+        form(action=`/shop/${userId}/myStores/${storeId}/products/create`, method='POST', enctype='multipart/form-data')
           div
-            label(for='title') Name:
-          div
-            input(type='text', name='title', id='title', maxlength="35",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-          br
-          div
-            label(for='category') Category:
-          div
-            select(name='category', id='category', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-              option(value='Head Gear') Head Gear
-              option(value='Footware') Footware  
-              option(value='Jerseys and Kits') Jerseys and Kits
-          br
-          div
-            label(for='condition') Condition:
-          div
-            select(name='condition', id='condition', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-              option(value='brand new') Brand New
-              option(value='refurbished') Refurbished
-              option(value='used') Used
-          br
-          div
-            label(for='size') Size:
-          div
-            input(type='text', name='size', id='size', maxlength="15",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-          br
-          div
-            label(for='image') Image:
-          div  
-            input(type='file', name='image', required)
-            span Image maximum size is 5MB
-          br            
-          div
-            label(for='description') Product Description:
-          div
-            textarea(cols='50' rows='5' type='text', name='description', id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-          br
-          div
-            label(for='price') Price:
-          div  
-            select(name='currency', id='currency', value= `UGX`, required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-              option(value='UGX') UGX
-              option(value='USD') USD
-            input(type='number', name='price', id='price', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-          br
-          div
-            button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Create Product
+            div
+              label(for='title') Name:
+            div
+              input(type='text', name='title', id='title', maxlength="30",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            br
+            div
+              label(for='category') Category:
+            div
+              select(name='category', id='category', onchange="getSelectedCategory()", required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+                option(value='Art and Crafts') Art and Crafts
+                option(value='Automotive') Automotive
+                option(value='Beauty and Personal Care') Beauty and Personal Care
+                option(value='Books and Stationery') Books and Stationery
+                option(value='Electronics and Gadgets') Electronics and Gadgets
+                option(value='Fashion and Apparel') Fashion and Apparel
+                option(value='Food and Beverages') Food and Beverages
+                option(value='Gifts and Specialty Items') Gifts and Specialty Items
+                option(value='Health and Wellness') Health and Wellness
+                option(value='Home and Furniture') Home and Furniture
+                option(value='Jewelry and Accessories') Jewelry and Accessories
+                option(value='Pet Supplies') Pet Supplies
+                option(value='Sports and Outdoors') Sports and Outdoors
+                option(value='Tech and Gadgets') Tech and Gadgets
+                option(value='Toys and Games') Toys and Games
+
+            div
+              label(for='subcategory') Sub-category:
+            div
+              select(name='subcategory', id='subcategory', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+                option(value='Art Prints') Art Prints
+                option(value='DIY Supplies') DIY Supplies
+                option(value='Handmade Crafts') Handmade Crafts
+            div
+              label(for='condition') Condition:
+            div
+              select(name='condition', id='condition', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+                option(value='brand new') Brand New
+                option(value='refurbished') Refurbished
+                option(value='used') Used
+            br
+            div
+              label(for='brand') Brand:
+            div
+              input(type='text', name='brand', id='brand', maxlength="30",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            br
+            div
+              label(for='size') Size:
+            div
+              input(type='text', name='size', id='size', maxlength="15",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            br
+            div               
+              p Image maximum size is 5MB.
+              br
+              p You can upload atmost 4 images.
+              br
+
+            div
+              div
+                label(for='image1') Image 1:
+                br  
+                input(type='file' name='images' id="image1" accept="image/*" required)
+              br
+              div
+                label(for="image2") Image 2:
+                br 
+                input(type="file" name="images" id="image2" accept="image/*" )
+              br
+              div
+                label(for="image3") Image 3:
+                br 
+                input(type="file" name="images" id="image3" accept="image/*" )
+              br
+              div
+                label(for="image3") Image 4:
+                br
+                input(type="file" name="images" id="image4" accept="image/*" )
+              br
+            br
+            div
+              label(for='description') Product Description:
+            div
+              textarea(cols='50' rows='5' type='text', name='description', id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+            br
+            div
+              label(for='price') Price:
+            div  
+              select(name='currency', id='currency', value= `UGX`, required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+                option(value='UGX') UGX
+                //- option(value='USD') USD
+              input(type='number', name='price', id='price', required, class="ml-2 mb-3 p-2 rounded-xl bg-gray-700 text-white")
+            br
+            div
+              button(type='submit' class="bg-green-600 hover:bg-green-900 text-white p-1.5 rounded-lg ") 
+                  <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
+                  </svg> Post Product
+
+    div(class="col-span-1")
+
+  script(src="/javascripts/create-product.js")
+

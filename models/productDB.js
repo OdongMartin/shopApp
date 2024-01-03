@@ -8,6 +8,8 @@ const productSchema = mongoose.Schema({
     ownerId : { type: String, required: true },
     name: { type: String, required: true },
     category: {type: String, required: true},
+    subcategory: {type: String, required: true},
+    brand: {type: String, required: true},
     condition: {type: String, required: true},
     size: {type: String, required: true},
     description: { type: String, required: true },
@@ -17,8 +19,11 @@ const productSchema = mongoose.Schema({
     timePosted: { type: Date, default: Date.now },
     //hoursPosted: { type: Date},
 
-    //quantity: { type: Number, default: 0 },
-    imagePath: { type: String, required: true},
+    //images
+    imagePath1: { type: String, required: true},
+    imagePath2: { type: String }, //image for Profile picture
+    imagePath3: { type: String },
+    imagePath4: { type: String },
 });
 
 const Product = mongoose.model('Product', productSchema);

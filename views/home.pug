@@ -11,7 +11,7 @@ block content
                 div(class="col-span m-2 overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                     a(href= `/shop/${userId}/products/${product._id}`)
                         div
-                            img(src=`${product.imagePath}`, alt=`${product.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
+                            img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
                             p(class="m-2 text-lg truncate") #{product.name}
                             p(class="m-2") #{product.currency} #{product.formattedPrice}
                         
