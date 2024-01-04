@@ -221,7 +221,7 @@ router.get('/:userId/cart', isAuthenticated, (req, res)=>{
                 return res.render('cart', { userId: req.params.userId, loggedIn: req.isAuthenticated(), current:"cart" });
             }
 
-            return res.render('cart', { products: productData, userId: req.params.userId, loggedIn: req.isAuthenticated(), current:"cart" }); //should be person's profile
+            return res.render('cart', { products: productData, userId: req.params.userId, /*receiverId: productData.ownerId,*/ loggedIn: req.isAuthenticated(), current:"cart" }); //should be person's profile
         
         }).catch((err)=>{
             console.log(err);
@@ -497,7 +497,7 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
-    if (!mongoose.isValidObjectId(req.params.productId)) { //if product id is not valid
+    if (!mongoose.isValidObjectId(req.params.productId)) {//if product id is not valid
         //return res.status(400).send('Invalid user ID');
         return res.redirect('/shop/'+ req.params.userId);
     }
@@ -542,8 +542,29 @@ router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
 
     try{
         const chats = await chatDB.find({chatId: { $regex: req.params.userId}});
-        //console.log("prod id: "+ chats )
-        res.render('chats', {userId: req.params.userId, chats: chats ,loggedIn: req.isAuthenticated(), current:"messages"});
+        //do chats exixst
+        if(!chats[0]){
+            return res.render('chats', {userId: req.params.userId, loggedIn: req.isAuthenticated(), current:"messages"});
+        }
+
+        //adding information to chats page for each chat
+        var chatsData = {}
+        for(let i = 0; i < chats.length; i++){
+            //chats.chatId[i].substr(0,24)
+            //productId = chats[i].chatId.substr(0,24)
+            const productData = await Product.findById(chats[i].chatId.slice(0,24));
+
+            //const messageData = await messageDB.find({chatId: chats[i].chatId});
+
+            //console.log("message DAta " + messageData);
+
+            chatsData[chats[i].chatId] = [ productData.imagePath1/*, messageData.content*/]
+            console.log("chatasdata " + chatsData[chats[i].chatId]);
+
+        }
+   
+
+        return res.render('chats', {userId: req.params.userId, chatsIds: chats, chats: chatsData ,loggedIn: req.isAuthenticated(), current:"messages"});
 
     } catch(err){
         console.log(err);
