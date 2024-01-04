@@ -29,6 +29,8 @@ button.startChat:hover{
     color: rgb(255 255 255);
 }
 
-/* p.text-wrap{
-    text-wrap: wrap;
-} */
+div.selected{
+    border-right-width: 2px;
+    border-right-color: red;
+    background-color: rgb(165, 165, 165);
+}

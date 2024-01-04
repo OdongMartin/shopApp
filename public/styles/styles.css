@@ -689,19 +689,12 @@ video {
 .border-b {
   border-bottom-width: 1px;
 }
-.border-r-2 {
-  border-right-width: 2px;
-}
 .border-t {
   border-top-width: 1px;
 }
 .border-blue-900 {
   --tw-border-opacity: 1;
   border-color: rgb(30 58 138 / var(--tw-border-opacity));
-}
-.border-red-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(220 38 38 / var(--tw-border-opacity));
 }
 .bg-\[\#30335f\] {
   --tw-bg-opacity: 1;
@@ -913,9 +906,11 @@ button.startChat:hover{
     color: rgb(255 255 255);
 }
 
-/* p.text-wrap{
-    text-wrap: wrap;
-} */
+div.selected{
+    border-right-width: 2px;
+    border-right-color: red;
+    background-color: rgb(165, 165, 165);
+}
 
 .hover\:scale-105:hover {
   --tw-scale-x: 1.05;

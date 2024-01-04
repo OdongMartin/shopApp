@@ -1,12 +1,18 @@
 extends layout 
 
 block content
-    div 
-        each product in products 
-            a(href= `/shop/${userId}/products/${product._id}`)
-                div
-                    img(src=`${product.imagePath1}`, alt=`${product.name}` width=200)
-                    p Name: #{product.name}
-                    p Description: #{product.description}
-                    p Price: #{product.currency} #{product.formattedPrice}
-                    p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+    div(class="grid grid-cols-4 p-2")
+        if(!products)
+            div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
+                p No products available in cart. Try adding products to cart.
+        if(products)
+            each product in products 
+                a(href= `/shop/${userId}/products/${product._id}`)
+                    div
+                        img(src=`${product.imagePath1}`, alt=`${product.name}` width=200)
+                        p Name: #{product.name}
+                        p Description: #{product.description}
+                        p Price: #{product.currency} #{product.formattedPrice}
+                        p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+
+        div(class="col-span-1 m-4")

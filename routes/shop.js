@@ -86,14 +86,14 @@ const chats = require('../models/chatsDB');
 })*/
 
 //delete entire cart DB
-router.get('/cartDB/delete', function(req, res) {
-    cart.deleteMany().then(()=>{
-        console.log ("removed all data in cart");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
-});
+// router.get('/cartDB/delete', function(req, res) {
+//     cart.deleteMany().then(()=>{
+//         console.log ("removed all data in cart");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
+// });
 
 //note: this deletes entire database
 /*app.get('/delete', function(req, res) {
@@ -216,7 +216,13 @@ router.get('/:userId/cart', isAuthenticated, (req, res)=>{
 
         //get prodcts from myCart array and display them
         Product.find({ _id: { $in: myCart } }).then((productData)=>{
-            res.render('cart', { products: productData, userId: req.params.userId, loggedIn: req.isAuthenticated() }); //should be person's profile
+            //no products in cart
+            if(!productData[0]){
+                return res.render('cart', { userId: req.params.userId, loggedIn: req.isAuthenticated(), current:"cart" });
+            }
+
+            return res.render('cart', { products: productData, userId: req.params.userId, loggedIn: req.isAuthenticated(), current:"cart" }); //should be person's profile
+        
         }).catch((err)=>{
             console.log(err);
             res.status(500).send('Internal Server Error');
@@ -299,10 +305,10 @@ router.get('/:userId', async (req, res)=>{
         const productData = await Product.find({ownerId: {$ne: req.params.userId}});
         //check if no products 
         if(!productData[0]){
-            return res.render('home', { userId: req.params.userId ,loggedIn: req.isAuthenticated()}); //should be person's profile
+            return res.render('home', { userId: req.params.userId ,loggedIn: req.isAuthenticated(), current:"home"}); //should be person's profile
         }
 
-        return res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+        return res.render('home', { products: productData, userId: req.params.userId ,loggedIn: req.isAuthenticated(), current:"home"});
 
     } catch (error) {
         console.error('Error fetching user or products:', error);
@@ -324,10 +330,10 @@ router.get('/:userId/stores', isAuthenticated, async(req, res)=>{
 
         //no store data so display create stores info or some else
         if(!storesData[0]){
-            return res.render('all-stores', { userId: req.params.userId ,loggedIn: req.isAuthenticated()} )
+            return res.render('all-stores', { userId: req.params.userId ,loggedIn: req.isAuthenticated(), current:"stores"} )
         }
 
-        res.render('all-stores', { stores: storesData, userId: req.params.userId ,loggedIn: req.isAuthenticated()} )
+        res.render('all-stores', { stores: storesData, userId: req.params.userId ,loggedIn: req.isAuthenticated(), current:"stores"} )
         
     } catch(err){
         console.log(err);
@@ -537,7 +543,7 @@ router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
     try{
         const chats = await chatDB.find({chatId: { $regex: req.params.userId}});
         //console.log("prod id: "+ chats )
-        res.render('chats', {userId: req.params.userId, chats: chats ,loggedIn: req.isAuthenticated()});
+        res.render('chats', {userId: req.params.userId, chats: chats ,loggedIn: req.isAuthenticated(), current:"messages"});
 
     } catch(err){
         console.log(err);
