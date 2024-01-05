@@ -2,16 +2,18 @@ extends layout
 
 block content
     div(class="hidden")#chatId #{chatId}
-    div(class="grid grid-cols-4")
-        div(class="col-span-3 m-4 h-screen flex-col")
+    div(class=" grid grid-cols-4")
+        div(class="relative col-span-3")
             //Display chat messages
-            div#typing
-                div
+            div(class="")#typing
+
+            div(class="flex-grow overflow-y-auto bg-blue-900")
+                div(class="flex flex-col space-y-2 p-4")
                     div#chat-messages
             //-Chat messages will be appended here dynamically
             //div.hidden#chatId #{productId}#{userId}#{receiverId}
             //Input field to send messages
-            div
+            div(class=" fixed bottom-2 right-1/2 p-4 flex items-center")
                 input#message-input(name='message' type="text" placeholder='Type your message...' minlength='1' maxlength='300' required class='p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mt-4')
                 button#send(type='button' onclick='sendMessage()') Send
         
