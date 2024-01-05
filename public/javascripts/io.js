@@ -103,8 +103,8 @@ function displayMessage(message) {
     const chatMessages = document.getElementById('chat-messages');
     chatMessages.innerHTML += `
         <div> 
-            <div>
-                <p>
+            <div class="p-2">
+                <p class="break-words">
                     ${message}
                 </p>
             </div>

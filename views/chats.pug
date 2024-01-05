@@ -6,18 +6,18 @@ block content
             div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
                 p No Chats at the moment.
         if(chats)
-            div(class="col-span-3 m-4")
+            div(class="col-span-3 border-r-2 border-r-red-600 w-auto")
                 each chat in chats
-                    div(class="m-4 p-4 overflow-hidden rounded-lg bg-gray-200 h-24 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(class="m-4 p-4 overflow-hidden rounded-lg bg-gray-200 h-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                         a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message/${chat.chatId}`)
                             div(class="flex")
                                 img(src=`${chat.storeImagePath}`, alt=` ` class="w-20 h-20 object-cover rounded-full")
-                                div(class="ml-8 w-full")
+                                div(class="ml-6")
                                     div(class="flex justify-between")
-                                        p(class="font-bold") #{chat.storeName}
+                                        p(class="font-bold truncate") #{chat.storeName}
                                         p(class=" text-gray-700") #{chat.time.toLocaleTimeString()}
-                                    p(class="text-sm font-bold") #{chat.productName}
-                                    p(class=" text-gray-700 truncate") #{chat.latestMessage}
+                                    p(class="text-sm font-bold truncate") #{chat.productName}
+                                    p(class=" text-gray-700 break-words truncate") #{chat.latestMessage}
                                     
 
                         
