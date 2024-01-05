@@ -48,27 +48,27 @@ const chats = require('../models/chatsDB');
 }*/
 
 //delete entire DB expect usrDB
-/*router.get('/DB/delete', function(req, res) {
-    Product.deleteMany().then(()=>{
-        console.log ("removed all data in products");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
+ router.get('/DB/delete', function(req, res) {
+    // Product.deleteMany().then(()=>{
+    //     console.log ("removed all data in products");
+    // }).catch((err)=>{
+    //     console.error("Error removing data:", err);
+    //     res.status(500).send("Internal Server Error");
+    // })
 
-    cart.deleteMany().then(()=>{
-        console.log ("removed all data in cart");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
+    // cart.deleteMany().then(()=>{
+    //     console.log ("removed all data in cart");
+    // }).catch((err)=>{
+    //     console.error("Error removing data:", err);
+    //     res.status(500).send("Internal Server Error");
+    // })
 
-    store.deleteMany().then(()=>{
-        console.log ("removed all data in store");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
+    // store.deleteMany().then(()=>{
+    //     console.log ("removed all data in store");
+    // }).catch((err)=>{
+    //     console.error("Error removing data:", err);
+    //     res.status(500).send("Internal Server Error");
+    // })
     
     chatDB.deleteMany().then(()=>{
         console.log ("removed all data in chat");
@@ -83,17 +83,17 @@ const chats = require('../models/chatsDB');
         console.error("Error removing data:", err);
         res.status(500).send("Internal Server Error");
     })
-})*/
+ })
 
 //delete entire cart DB
-// router.get('/cartDB/delete', function(req, res) {
-//     cart.deleteMany().then(()=>{
-//         console.log ("removed all data in cart");
-//     }).catch((err)=>{
-//         console.error("Error removing data:", err);
-//         res.status(500).send("Internal Server Error");
-//     })
-// });
+router.get('/cartDB/delete', function(req, res) {
+    cart.deleteMany().then(()=>{
+        console.log ("removed all data in cart");
+    }).catch((err)=>{
+        console.error("Error removing data:", err);
+        res.status(500).send("Internal Server Error");
+    })
+});
 
 //note: this deletes entire database
 /*app.get('/delete', function(req, res) {
@@ -520,14 +520,35 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
         //check if chat already exists
         const chatExists = await chatDB.findOne({chatId: req.params.chatId});
 
+        // store owner ussing id
+        const storeData = await store.findOne({ownerId: req.params.chatId.slice(48,72)})
+        //get message data
+        const messageData = await messageDB.find({chatId: req.params.chatId})
+
+        //message message content is empty
+        if(!messageData[messageData.length-1]){
+            latest_message = 'No Messages';
+            time = Date.now();
+        }
+        if(messageData[messageData.length-1]){
+            latest_message = messageData[messageData.length-1].content;
+            time = messageData[messageData.length-1].timestamp;
+        }
+        
         if(!chatExists){
             const newChat = new chatDB({
                 chatId: req.params.chatId,
+                storeName: storeData.name,
+                productName: productData.name,
+                storeImagePath: storeData.imagePath1,
+                latestMessage: latest_message,
+                time: time,
             })
             await newChat.save();
         }
 
         res.render('message', {userId: req.params.userId, chatId: req.params.chatId ,loggedIn: req.isAuthenticated() /*productId: req.params.productId, receiverId: productData.ownerId*/});
+    
     } catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -536,8 +557,9 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
 
 //list of chats
 router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
-     if (req.params.userId != req.user._id){
-         res.redirect('/auth/logout');
+    if (req.params.userId != req.user._id){
+        //console.log("yoooooooooo")
+        res.redirect('/auth/logout');
     }
 
     try{
@@ -546,25 +568,8 @@ router.get('/:userId/messages', isAuthenticated, async(req, res)=>{
         if(!chats[0]){
             return res.render('chats', {userId: req.params.userId, loggedIn: req.isAuthenticated(), current:"messages"});
         }
-
-        //adding information to chats page for each chat
-        var chatsData = {}
-        for(let i = 0; i < chats.length; i++){
-            //chats.chatId[i].substr(0,24)
-            //productId = chats[i].chatId.substr(0,24)
-            const productData = await Product.findById(chats[i].chatId.slice(0,24));
-
-            //const messageData = await messageDB.find({chatId: chats[i].chatId});
-
-            //console.log("message DAta " + messageData);
-
-            chatsData[chats[i].chatId] = [ productData.imagePath1/*, messageData.content*/]
-            console.log("chatasdata " + chatsData[chats[i].chatId]);
-
-        }
-   
-
-        return res.render('chats', {userId: req.params.userId, chatsIds: chats, chats: chatsData ,loggedIn: req.isAuthenticated(), current:"messages"});
+  
+        return res.render('chats', {userId: req.params.userId, chats: chats ,loggedIn: req.isAuthenticated(), current:"messages"});
 
     } catch(err){
         console.log(err);

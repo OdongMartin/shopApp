@@ -116,9 +116,11 @@ app.get('/', (req, res)=>{
 app.use('/auth', auth);
 app.use('/shop', shop);
 
-
+const store = require("./models/storeDB.js")
 const messageDB = require("./models/messageDB.js");
 const chatDB = require('./models/chatsDB.js');
+const productDB = require('./models/productDB.js')
+
 //Socket.io connection handling
 io.on('connection', (socket) => {
     console.log("user joined")
@@ -156,6 +158,39 @@ io.on('connection', (socket) => {
             });
     
             await newMessage.save();
+
+            //find and update chatDB
+            // store owner ussing id
+            const storeData = await store.findOne({ownerId: chatId.slice(48,72)})
+            //get message data
+            const messageData = await messageDB.find({chatId: chatId})
+            const productData = await productDB.findById(chatId.substr(0,24))
+
+            //message message content is empty
+            if(!messageData[messageData.length-1]){
+                var latest_message = 'No Messages';
+                var time = Date.now();
+            }
+            if(messageData[messageData.length-1]){
+                var latest_message = messageData[messageData.length-1].content;
+                var time = messageData[messageData.length-1].timestamp;
+            }
+            await chatDB.findOneAndUpdate(
+                {chatId: chatId},
+
+                {$set : {
+                    storeName: storeData.name,
+                    productName: productData.name,
+                    storeImagePath: storeData.imagePath1,
+                    latestMessage: latest_message,
+                    time: time
+                    }
+                },
+
+                {new: true}
+            )
+
+
 
         } catch(error){
             console.error(error);

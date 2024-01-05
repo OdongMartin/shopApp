@@ -1,6 +1,7 @@
 const socket = io();
 
 const chatId = document.getElementById('chatId').innerHTML.toString();
+const message_input = document.getElementById('message-input')
 // user join chat
 socket.emit('join', chatId);
 // Listen for chat history from the server

@@ -7,31 +7,32 @@ block content
                 p No Chats at the moment.
         if(chats)
             div(class="col-span-3 m-4")
-                each chat in chatsIds
-                    each chatData in chats
-                        - const currentChatId = chat.chatId
-                        - const productId = chat.chatId.substr(0,24)
-                        - const imagesrc = chatData
+                each chat in chats
+                    div(class="m-4 p-4 overflow-hidden rounded-lg bg-gray-200 h-24 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                        a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message/${chat.chatId}`)
+                            div(class="flex")
+                                img(src=`${chat.storeImagePath}`, alt=` ` class="w-20 h-20 object-cover rounded-full")
+                                div(class="ml-8 w-full")
+                                    div(class="flex justify-between")
+                                        p(class="font-bold") #{chat.storeName}
+                                        p(class=" text-gray-700") #{chat.time.toLocaleTimeString()}
+                                    p(class="text-sm font-bold") #{chat.productName}
+                                    p(class=" text-gray-700 truncate") #{chat.latestMessage}
+                                    
 
-                        div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
-                            a(href= `/shop/${userId}/products/${productId}/message/${currentChatId}`)
-                                div(class="flex")
-                                    img(src=`${imagesrc}`, alt=` ` class="w-40 h-40 object-cover rounded-l-lg")
-                                    div(class="ml-8 w-96")
+                        
+                        //- div
+                        //-     p chat id #{currentChatId}
+                        //-     p product id #{productId}
+                        //-     p image link #{imagesrc}
+                        
+                        
+                            
 
-                            
-                            //- div
-                            //-     p chat id #{currentChatId}
-                            //-     p product id #{productId}
-                            //-     p image link #{imagesrc}
-                            
-                            
-                               
-
-                                //- p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
-                                //- form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
-                                //-     div
-                                //-     button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Add to Cart
+                            //- p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
+                            //- form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
+                            //-     div
+                            //-     button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Add to Cart
 
             div(class="col-span-1 bg-white w-full h-screen")
                     div(class="m-3")

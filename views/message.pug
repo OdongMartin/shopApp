@@ -1,18 +1,25 @@
 extends layout
 
 block content
-    div
-        h1 Chat Page
-
-        //Display chat messages
-        div#typing
-        div#chat-messages
-        //-Chat messages will be appended here dynamically
-        //div.hidden#chatId #{productId}#{userId}#{receiverId}
-        div#chatId #{chatId}
-        //Input field to send messages
-        input#message-input(name='message' type="text" placeholder='Type your message...' minlength='1' maxlength='300' required)
-        button#send(type='button' onclick='sendMessage()') Send
+    div(class="hidden")#chatId #{chatId}
+    div(class="grid grid-cols-4")
+        div(class="col-span-3 m-4 h-screen flex-col")
+            //Display chat messages
+            div#typing
+                div
+                    div#chat-messages
+            //-Chat messages will be appended here dynamically
+            //div.hidden#chatId #{productId}#{userId}#{receiverId}
+            //Input field to send messages
+            div
+                input#message-input(name='message' type="text" placeholder='Type your message...' minlength='1' maxlength='300' required class='p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 mt-4')
+                button#send(type='button' onclick='sendMessage()') Send
+        
+        div(class="col-span-1 bg-white w-full h-screen")
+            div(class="m-3")
+                        h(class=" text-lg font-bold") Information 
+                        ul(class="list-disc p-2")
+                            li(class="mb-2") Chat with the store and discuss how you can get the products to you.
 
     script(src="https://cdn.socket.io/4.0.1/socket.io.min.js").
     script(src="/javascripts/io.js").

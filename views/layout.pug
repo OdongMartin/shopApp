@@ -18,7 +18,7 @@ html(lang="en")
                 div(class="mt-2 hover:scale-105 transition ease-in-out duration-200")
                     form(action=`/shop/${userId}/products/search`, method='GET')
                         div(class="flex items-center")
-                            input(type='text', name='q', placeholder='Search products...' class="w-80 border rounded-l-full bg-gray-200 text-black p-1.5")
+                            input(type='text', name='q', placeholder='Search products...' class="w-80 border rounded-l-full bg-gray-200 text-black p-1.5 focus:outline-none")
                             button(type='submit')
                                 div(class="border rounded-r-full bg-gray-200 p-1.5")
                                     <svg class="w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
