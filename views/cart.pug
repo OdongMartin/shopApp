@@ -8,11 +8,11 @@ block content
         if(products)
             div(class="col-span-3 m-4")
                 each product in products
-                    div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400" style="width:auto;")
                         a(href= `/shop/${userId}/products/${product._id}`)
-                            div(class="flex justify-between")
+                            div(class="flex")
                                 img(src=`${product.imagePath1}`, alt=`${product.name}`  class="w-40 h-40 object-cover rounded-l-lg")
-                                div(class="ml-8 w-96")
+                                div(class="p-2" style="width:50%; font-size:vw;")
                                     p(class="mb-1 text-xl font-bold truncate") #{product.name}
                                     p(class="mb-1 font-bold text-lg truncate") #{product.category}
                                     p(class="mb-1 break-words") #{product.description}

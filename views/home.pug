@@ -13,7 +13,7 @@ block content
                         div
                             img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
                             p(class="m-2 text-lg truncate") #{product.name}
-                            p(class="m-2") #{product.currency} #{product.formattedPrice}
+                            p(class="m-2 truncate") #{product.currency} #{product.formattedPrice}
                         
                     //- submit button
                     div(class="m-2")
