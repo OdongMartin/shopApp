@@ -2,22 +2,22 @@ extends layout
 
 block content
     div(class="grid grid-cols-4")
-        if(!products)
-            div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
-                p No products available in cart. Try adding products to cart.
-        if(products)
-            div(class="col-span-3 m-4")
+        div(class="col-span-3 m-4")
+            if(!products)
+                div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
+                    p No products available in cart. Try adding products to cart.
+            if(products)
                 each product in products
-                    div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400" style="width:auto;")
+                    div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400" )
                         a(href= `/shop/${userId}/products/${product._id}`)
-                            div(class="flex")
+                            div(class="flex justify-between p-2")
                                 img(src=`${product.imagePath1}`, alt=`${product.name}`  class="w-40 h-40 object-cover rounded-l-lg")
-                                div(class="p-2" style="width:50%; font-size:vw;")
+                                div(class="ml-4 w-48")
                                     p(class="mb-1 text-xl font-bold truncate") #{product.name}
                                     p(class="mb-1 font-bold text-lg truncate") #{product.category}
                                     p(class="mb-1 break-words") #{product.description}
                         
-                                div(class="m-2 w-32")
+                                div(class=" w-48")
                                     p(class="mb-2 truncate") #{product.currency} #{product.formattedPrice}
                                     form(action=`/shop/${userId}/products/${product._id}/message/${product._id}${userId}${product.ownerId}` method='GET')
                                         button(type='submit' class="startChat w-full transition ease-out duration-700")
@@ -25,8 +25,8 @@ block content
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                                 </svg> Start Chat
 
-            div(class="col-span-1 bg-white w-full h-screen")
-                div(class="m-3")
-                    h(class=" text-lg font-bold") Information 
-                    ul(class="list-disc p-2")
-                        li(class="mb-2") Chat with the store and discuss how you can get the products to you.
+        div(class="col-span-1 bg-white" style="width:auto;height:590px;")
+            div(class="m-3")
+                h(class=" text-lg font-bold") Information 
+                ul(class="list-disc p-2")
+                    li(class="mb-2 break-words") Chat with the store and discuss how you can get the products to you.
