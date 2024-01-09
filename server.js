@@ -145,6 +145,8 @@ io.on('connection', (socket) => {
     //Broadcast a message to all connected clients
     socket.on('message', async(data) => {
         const { chatId, message } = data;
+        
+        //send message after saving it to database
         io.to(chatId).emit('send_message', message);
 
         try {
@@ -154,10 +156,14 @@ io.on('connection', (socket) => {
                 productId: chatId.substr(0,24),
                 sender: chatId.slice(24,48),
                 receiver: chatId.substr(48,72),
-                content: message,
+                content: message.content,
             });
     
             await newMessage.save();
+
+            // //Retrieve and send chat history to the user
+            // const chatHistory = await messageDB.find({chatId: chatId});
+            // socket.emit('chat history', chatHistory);
 
             //find and update chatDB
             // store owner ussing id

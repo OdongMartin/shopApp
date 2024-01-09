@@ -12,7 +12,7 @@ socket.on('chat history', (history) => {
     // });
 
     for (let i=0; i<history.length; i++){
-         displayMessage(history[i].content);
+         displayMessage(history[i]);
     }
 });
 
@@ -61,14 +61,17 @@ socket.on('send_message', (msg) => {
 // User typing
 const type = () =>{
     message_input.addEventListener('keypress', ()=>{
-        if(message_input.value.length > 1){
-            socket.emit('user_typing')
-        }
-        //work on this
-        // if (event.key === 'Enter') {
-        //    send()
-        // }
-    })
+        const messageInput = document.getElementById('message-input');
+
+        messageInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter' && messageInput.value.length > 0) {
+                //If enter key is pressed and the input is not empty, send the message
+                sendMessage();
+            } else if (messageInput.value.length > 1) {
+                socket.emit('user_typing');
+            }
+        });
+    });
 
     socket.on('typing',(use)=>{
         document.getElementById('typing').innerHTML = `typing...`
@@ -84,7 +87,10 @@ type()
 //Function to send a message to the server
 function sendMessage() {
     const messageInput = document.getElementById('message-input');
-    const message = messageInput.value;
+    const message = {
+        content : messageInput.value.toString(),
+        timestamp: new Date(),
+    }
 
     //Emit the message to the server
     socket.emit('message', {chatId, message});
@@ -101,14 +107,29 @@ function displayMessage(message) {
     //- li.textContent = message;
     //- chatMessages.appendChild(li);
     const chatMessages = document.getElementById('chat-messages');
+    const isScrolledToBottom = chatMessages.scrollHeight - chatMessages.clientHeight <= chatMessages.scrollTop + 1;
+
+    const timestamp = new Date(message.timestamp);
+
     chatMessages.innerHTML += `
         <div> 
             <div class="p-2">
+                <p class="truncate">
+                    ${message.sender}
+                </p>
                 <p class="break-words">
-                    ${message}
+                    ${message.content}
+                </p>
+                <p class="truncate">
+                    ${timestamp.toLocaleTimeString()}
                 </p>
             </div>
         </div>
-        `
+    `;
+
+    // Scroll to the bottom if already at the bottom before the new message
+    if (isScrolledToBottom) {
+        chatMessages.scrollTop = chatMessages.scrollHeight - chatMessages.clientHeight;
+    }
 }
         
