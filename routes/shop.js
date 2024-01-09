@@ -48,7 +48,7 @@ const chats = require('../models/chatsDB');
 }*/
 
 //delete entire DB expect usrDB
- router.get('/DB/delete', function(req, res) {
+ //router.get('/DB/delete', function(req, res) {
     // Product.deleteMany().then(()=>{
     //     console.log ("removed all data in products");
     // }).catch((err)=>{
@@ -77,23 +77,23 @@ const chats = require('../models/chatsDB');
     //     res.status(500).send("Internal Server Error");
     // })
 
-    messageDB.deleteMany().then(()=>{
-        console.log ("removed all data in messages");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
- })
+//     messageDB.deleteMany().then(()=>{
+//         console.log ("removed all data in messages");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
+//  })
 
-//delete entire cart DB
-router.get('/cartDB/delete', function(req, res) {
-    cart.deleteMany().then(()=>{
-        console.log ("removed all data in cart");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
-});
+// //delete entire cart DB
+// router.get('/cartDB/delete', function(req, res) {
+//     cart.deleteMany().then(()=>{
+//         console.log ("removed all data in cart");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
+// });
 
 //note: this deletes entire database
 /*app.get('/delete', function(req, res) {
@@ -518,7 +518,7 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
         //console.log("messages" + messages);
 
         //check if chat already exists
-        const chatExists = await chatDB.findOne({chatId: req.params.chatId});
+        const chat = await chatDB.findOne({chatId: req.params.chatId});
 
         // store owner ussing id
         const storeData = await store.findOne({ownerId: req.params.chatId.slice(48,72)})
@@ -535,7 +535,7 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
             time = messageData[messageData.length-1].timestamp;
         }
         
-        if(!chatExists){
+        if(!chat){
             const newChat = new chatDB({
                 chatId: req.params.chatId,
                 storeName: storeData.name,
@@ -547,7 +547,7 @@ router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async
             await newChat.save();
         }
 
-        res.render('message', {userId: req.params.userId, chatId: req.params.chatId ,loggedIn: req.isAuthenticated() /*productId: req.params.productId, receiverId: productData.ownerId*/});
+        res.render('message', {userId: req.params.userId, chatId: req.params.chatId, chat: chat ,loggedIn: req.isAuthenticated() /*productId: req.params.productId, receiverId: productData.ownerId*/});
     
     } catch(err){
         console.log(err);

@@ -6,15 +6,19 @@ block content
     div(class=" grid grid-cols-4")
         div(class=" col-span-3")
             //Display chat messages
-            div(class="h-screen")
+            div(class="h-screen bg-[#383c77]")
+                div
+                    //img(src=`${chat.storeImagePath}`, alt=" " class="w-5")
+                    p(class='text-white font-bold text-xl p-2')#sender
+
+                div(class='text-white text-lg pl-2') #{chat.productName}
                 div(class="")#typing
 
-                div(class=" overflow-y-auto scroll bg-blue-900" style="width:auto;height:525px;")
-                    div#chat-messages
+                div(class=" overflow-y-auto scroll bg-[#565cb6]" style="width:auto;height:450px;")#chat-messages
 
                 
                 //Input field to send messages
-                div(class=" p-4 flex items-center bg-blue-900" style="width:auto;")
+                div(class=" p-4 flex items-center" style="width:auto;")
                     input#message-input(name='message' type="text" placeholder='Type your message...' minlength='1' maxlength='300' required class='w-full p-2 rounded-l-full focus:outline-none focus:border-blue-500')
                     button#send(type='button' onclick='sendMessage()')
                         div(class="rounded-r-full bg-white p-1.5")

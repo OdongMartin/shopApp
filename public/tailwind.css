@@ -53,3 +53,8 @@ div.selected{
 .text-wrap{
     text-wrap: wrap;
 }
+
+.chatTime{
+    display: flex;
+    justify-content: flex-end;
+}

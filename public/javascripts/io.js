@@ -3,6 +3,7 @@ const socket = io();
 const chatId = document.getElementById('chatId').innerHTML.toString();
 const message_input = document.getElementById('message-input');
 const senderId = document.getElementById('senderId').innerHTML;
+const chatMessages = document.getElementById('chat-messages');
 
 // user join chat
 socket.emit('join', chatId);
@@ -73,23 +74,18 @@ function displayMessage(message) {
     //- const li = document.createElement('li');
     //- li.textContent = message;
     //- chatMessages.appendChild(li);
-    const chatMessages = document.getElementById('chat-messages');
-    const isScrolledToBottom = chatMessages.scrollHeight - chatMessages.clientHeight <= chatMessages.scrollTop + 1;
+    //const isScrolledToBottom = chatMessages.scrollHeight - chatMessages.clientHeight <= chatMessages.scrollTop + 1;
 
     const timestamp = new Date(message.timestamp);
-    console.log("message: "+message)
-    console.log("mes senderid: "+message.senderId +" senderId: "+ senderId);
+    
     if (message.senderId === senderId) {
         chatMessages.innerHTML += `
         <div class="right"> 
             <div class="p-2 bg-blue-500 text-white rounded-lg">
-                <p class="truncate">
-                    ${message.senderId}
-                </p>
-                <p class="break-words text-wrap">
+                <p class="break-words text-wrap w-80">
                     ${message.content}
                 </p>
-                <p class="truncate">
+                <p class="chatTime text-gray-600 truncate">
                     ${timestamp.toLocaleTimeString()}
                 </p>
             </div>
@@ -101,13 +97,10 @@ function displayMessage(message) {
         chatMessages.innerHTML += `
             <div class="left"> 
                 <div class="p-2 bg-gray-300 rounded-lg">
-                    <p class="truncate">
-                        ${message.senderId}
-                    </p>
-                    <p class="break-words text-wrap">
+                    <p class="break-words text-wrap w-80">
                         ${message.content}
                     </p>
-                    <p class="truncate">
+                    <p class="chatTime text-gray-700 truncate">
                         ${timestamp.toLocaleTimeString()}
                     </p>
                 </div>
@@ -115,9 +108,14 @@ function displayMessage(message) {
         `;
     }
 
-    // Scroll to the bottom if already at the bottom before the new message
-    if (isScrolledToBottom) {
-        chatMessages.scrollTop = chatMessages.scrollHeight - chatMessages.clientHeight;
-    }
+    // // Scroll to the bottom if already at the bottom before the new message
+    // if (isScrolledToBottom) {
+    //     chatMessages.scrollTop = chatMessages.scrollHeight - chatMessages.clientHeight;
+    // }
+    scrollToBottom()
 }
-        
+    
+function scrollToBottom(){
+    console.log(chatMessages.scrollHeight)
+    chatMessages.scrollTo(0, chatMessages.scrollHeight)
+}
