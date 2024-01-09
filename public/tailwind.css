@@ -34,3 +34,22 @@ div.selected{
     border-right-color: red;
     background-color: rgb(165, 165, 165);
 }
+
+.right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 0.5rem;
+    overflow-wrap: break-word;
+}
+
+.left{
+    display: flex;
+    /* justify-content: flex-end;
+    align-items: flex-end; */
+    margin: 0.5rem;
+}
+
+.text-wrap{
+    text-wrap: wrap;
+}

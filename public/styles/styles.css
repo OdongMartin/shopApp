@@ -656,11 +656,6 @@ video {
 .justify-between {
   justify-content: space-between;
 }
-.space-y-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
-}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -951,6 +946,25 @@ div.selected{
     border-right-width: 2px;
     border-right-color: red;
     background-color: rgb(165, 165, 165);
+}
+
+.right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 0.5rem;
+    overflow-wrap: break-word;
+}
+
+.left{
+    display: flex;
+    /* justify-content: flex-end;
+    align-items: flex-end; */
+    margin: 0.5rem;
+}
+
+.text-wrap{
+    text-wrap: wrap;
 }
 
 .hover\:scale-105:hover {

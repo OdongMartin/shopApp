@@ -70,12 +70,12 @@ const chats = require('../models/chatsDB');
     //     res.status(500).send("Internal Server Error");
     // })
     
-    chatDB.deleteMany().then(()=>{
-        console.log ("removed all data in chat");
-    }).catch((err)=>{
-        console.error("Error removing data:", err);
-        res.status(500).send("Internal Server Error");
-    })
+    // chatDB.deleteMany().then(()=>{
+    //     console.log ("removed all data in chat");
+    // }).catch((err)=>{
+    //     console.error("Error removing data:", err);
+    //     res.status(500).send("Internal Server Error");
+    // })
 
     messageDB.deleteMany().then(()=>{
         console.log ("removed all data in messages");

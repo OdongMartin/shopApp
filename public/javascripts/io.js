@@ -1,7 +1,9 @@
 const socket = io();
 
 const chatId = document.getElementById('chatId').innerHTML.toString();
-const message_input = document.getElementById('message-input')
+const message_input = document.getElementById('message-input');
+const senderId = document.getElementById('senderId').innerHTML;
+
 // user join chat
 socket.emit('join', chatId);
 // Listen for chat history from the server
@@ -10,9 +12,9 @@ socket.on('chat history', (history) => {
     //history.forEach((message) => {
     // displayMessage(message);
     // });
-
+    
     for (let i=0; i<history.length; i++){
-         displayMessage(history[i]);
+        displayMessage(history[i]);
     }
 });
 
@@ -21,42 +23,6 @@ socket.on('send_message', (msg) => {
     //Display the received message
     displayMessage(msg);
 });
-
-// const socket = io()
-
-// const user = "odong";//document.getElementById('name').innerHTML
-// const chat_window = document.getElementById('chat_messages');
-// const chat_input = document.getElementById('message_input');
-// const send_button = document.getElementById('send');
-
-// const send = ()=>{
-//     if(chat_input.value.length >= 1){
-//         socket.emit('message',{
-//             chat_input: chat_input.value,
-//             user: user
-//         })
-
-//         chat_input.value = ''
-//     }
-// }
-
-// send_button.addEventListener('click',()=>{
-//     console.log("button clicked");
-//    send()
-// })
-
-// socket.on('send_message',(msg)=>{
-
-//     chat_window.innerHTML += `
-//     <div> 
-//         <div id='message'>
-//             <p>
-//                 <strong>${msg.user}:</strong> ${msg.chat_input}
-//             </p>
-//         </div>
-//     </div>
-//     `
-// })
 
 // User typing
 const type = () =>{
@@ -90,6 +56,7 @@ function sendMessage() {
     const message = {
         content : messageInput.value.toString(),
         timestamp: new Date(),
+        senderId: senderId,
     }
 
     //Emit the message to the server
@@ -110,14 +77,16 @@ function displayMessage(message) {
     const isScrolledToBottom = chatMessages.scrollHeight - chatMessages.clientHeight <= chatMessages.scrollTop + 1;
 
     const timestamp = new Date(message.timestamp);
-
-    chatMessages.innerHTML += `
-        <div> 
-            <div class="p-2">
+    console.log("message: "+message)
+    console.log("mes senderid: "+message.senderId +" senderId: "+ senderId);
+    if (message.senderId === senderId) {
+        chatMessages.innerHTML += `
+        <div class="right"> 
+            <div class="p-2 bg-blue-500 text-white rounded-lg">
                 <p class="truncate">
-                    ${message.sender}
+                    ${message.senderId}
                 </p>
-                <p class="break-words">
+                <p class="break-words text-wrap">
                     ${message.content}
                 </p>
                 <p class="truncate">
@@ -126,6 +95,25 @@ function displayMessage(message) {
             </div>
         </div>
     `;
+    }
+
+    if (message.senderId !== senderId) {
+        chatMessages.innerHTML += `
+            <div class="left"> 
+                <div class="p-2 bg-gray-300 rounded-lg">
+                    <p class="truncate">
+                        ${message.senderId}
+                    </p>
+                    <p class="break-words text-wrap">
+                        ${message.content}
+                    </p>
+                    <p class="truncate">
+                        ${timestamp.toLocaleTimeString()}
+                    </p>
+                </div>
+            </div>
+        `;
+    }
 
     // Scroll to the bottom if already at the bottom before the new message
     if (isScrolledToBottom) {

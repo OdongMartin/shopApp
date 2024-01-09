@@ -154,8 +154,8 @@ io.on('connection', (socket) => {
             var newMessage = new messageDB({
                 chatId: chatId,
                 productId: chatId.substr(0,24),
-                sender: chatId.slice(24,48),
-                receiver: chatId.substr(48,72),
+                senderId: message.senderId,
+                //receiver: chatId.substr(48,72),
                 content: message.content,
             });
     
