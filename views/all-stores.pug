@@ -4,12 +4,12 @@ block content
     div(class="grid grid-cols-4")
         div(class="col-span-3 m-4")
             if(!stores)
-                div(class="m-8 col-span-4 text-5xl text-[#30335f] text-center leading-loose")
+                div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
                     p No stores available at the moment. Try again later
             if(stores)
                     each store in stores
                         //-store card
-                        div(class="m-6 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                        div(class="mr-3 ml-3 overflow-hidden rounded-lg bg-gray-200 h-40 w-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                             a(href= `/shop/${userId}/stores/${store._id}`)
                                 div(class="flex")
                                     img(src=`${store.imagePath1}`, alt=`${store.name}` class="w-40 h-40 object-cover rounded-l-lg")
