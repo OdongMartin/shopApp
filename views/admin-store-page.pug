@@ -8,13 +8,13 @@ block content
                 div(class="absolute bottom-0 mt-8 ml-4 border bg-gray-300 rounded-2xl")
                     img(src=`${stores.imagePath1}`, alt=`${stores.name}` class="w-20 h-20 rounded-2xl p-1")
 
-            p(class="text-xl m-2") #{stores.name}
-            p(class="m-2") #{stores.description}
+            p(class="text-xl text-white m-2") #{stores.name}
+            p(class="m-2 text-white") #{stores.description}
             
             //-p Posted: #{product.timePosted.toLocaleTimeString()} on #{product.timePosted.toDateString()}
         div(class="m-2")
             form(action=`/shop/${userId}/myStores/${stores._id}/products/create` method='GET')
-                    button(type='submit' class="bg-green-600 hover:bg-green-900 text-white p-1.5 rounded-lg ")
+                    button(type='submit' class="border border-white bg-green-600 hover:bg-green-900 text-white p-1.5 rounded-lg ")
                         <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
                         </svg> Post Product
@@ -23,7 +23,7 @@ block content
     div(class="inline-block")
         div(class="grid grid-cols-4")
             each product in products
-                div(class="col-span-1 m-2 overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                div(class="col-span-1 m-2 bg-gray-300 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                     a(href= `/shop/${userId}/products/${product._id}`)
                         div
                             img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")

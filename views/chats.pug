@@ -14,9 +14,9 @@ block content
                                 img(src=`${chat.storeImagePath}`, alt=` ` class="w-20 h-20 object-cover rounded-full")
                                 div(class="ml-6" style="width:80%; font-size:vw;")
                                     div(class="flex justify-between")
-                                        p(class="font-bold truncate") #{chat.storeName}
-                                        p(class=" text-gray-700") #{chat.time.toLocaleTimeString()}
-                                    p(class="text-sm font-bold truncate") #{chat.productName}
+                                        p(class="font-bold truncate text-xl") #{chat.storeName}
+                                        p(class=" text-gray-700 text-xs") #{chat.time.toLocaleTimeString()}
+                                    p(class=" font-bold truncate text-lg") #{chat.productName}
                                     p(class=" text-gray-700 break-words truncate") #{chat.latestMessage}
                                     
 

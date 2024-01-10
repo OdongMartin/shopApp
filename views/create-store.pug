@@ -1,64 +1,71 @@
 extends layout
 
 block content
-  div(class="m-4")
-    h1.font-bold.text-xl Create Store
-    br
-    div
-      form(action=`/shop/${userId}/myStores/create`, method='POST', enctype='multipart/form-data')
-        div
+  div(class="grid grid-cols-4 text-white")
+    div(class="col-span-3  m-4")
+      h1.font-bold.text-xl Create Store
+      br
+      div
+        form(action=`/shop/${userId}/myStores/create`, method='POST', enctype='multipart/form-data')
           div
-            label(for='title') Name
-            span(class=" text-red-700 font-bold") *
-          div
-            input(type='text', name='title', id='title', maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
-          br
-          div
-            label(for='category') Category
-            span(class=" text-red-700 font-bold") *
-          div
-            select(name='category', id='category', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-              option(value='Art and Crafts') Art and Crafts
-              option(value='Automotive') Automotive
-              option(value='Beauty and Personal Care') Beauty and Personal Care
-              option(value='Books and Stationery') Books and Stationery
-              option(value='Electronics and Gadgets') Electronics and Gadgets
-              option(value='Fashion and Apparel') Fashion and Apparel
-              option(value='Food and Beverages') Food and Beverages
-              option(value='Gifts and Specialty Items') Gifts and Specialty Items
-              option(value='Health and Wellness') Health and Wellness
-              option(value='Home and Furniture') Home and Furniture
-              option(value='Jewelry and Accessories') Jewelry and Accessories
-              option(value='Pet Supplies') Pet Supplies
-              option(value='Sports and Outdoors') Sports and Outdoors
-              option(value='Tech and Gadgets') Tech and Gadgets
-              option(value='Toys and Games') Toys and Games
-          br
-          div
-            label(for='image1') Store Profile Image
-            span(class=" text-red-700 font-bold") *
-          div  
-            input(type='file' name='images' id="image1" accept="image/*" required)
-            span Image maximum size is 5MB
-          br
+            div
+              label(for='title') Name
+              span(class=" text-red-700 font-bold") *
+            div
+              input(type='text', name='title', id='title', maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96")
+            br
+            div
+              label(for='category') Category
+              span(class=" text-red-700 font-bold") *
+            div
+              select(name='category', id='category', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+                option(value='Art and Crafts') Art and Crafts
+                option(value='Automotive') Automotive
+                option(value='Beauty and Personal Care') Beauty and Personal Care
+                option(value='Books and Stationery') Books and Stationery
+                option(value='Electronics and Gadgets') Electronics and Gadgets
+                option(value='Fashion and Apparel') Fashion and Apparel
+                option(value='Food and Beverages') Food and Beverages
+                option(value='Gifts and Specialty Items') Gifts and Specialty Items
+                option(value='Health and Wellness') Health and Wellness
+                option(value='Home and Furniture') Home and Furniture
+                option(value='Jewelry and Accessories') Jewelry and Accessories
+                option(value='Pet Supplies') Pet Supplies
+                option(value='Sports and Outdoors') Sports and Outdoors
+                option(value='Tech and Gadgets') Tech and Gadgets
+                option(value='Toys and Games') Toys and Games
+            br
+            div
+              label(for='image1') Store Profile Image
+              span(class=" text-red-700 font-bold") *
+            div  
+              input(type='file' name='images' id="image1" accept="image/*" required)
+              span Image maximum size is 5MB
+            br
 
-          div
-            label(for="image2") Store Header Image
-            span(class=" text-red-700 font-bold") *
-          div  
-            input(type="file" name="images" id="image2" accept="image/*" required)
-            span Image maximum size is 5MB
-          br
-          
-          div
-            label(for='description') Store Description
-            span(class=" text-red-700 font-bold") *
-          div
-            textarea(cols='50' rows='5' type='text', name='description', maxlength="99" id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
-          br
-          //- create store button
-          div
-            button(type='submit' class="startChat transition ease-out duration-700") 
-              <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
-              </svg> Create Store
+            div
+              label(for="image2") Store Header Image
+              span(class=" text-red-700 font-bold") *
+            div  
+              input(type="file" name="images" id="image2" accept="image/*" required)
+              span Image maximum size is 5MB
+            br
+            
+            div
+              label(for='description') Store Description
+              span(class=" text-red-700 font-bold") *
+            div
+              textarea(cols='50' rows='5' type='text', name='description', maxlength="99" id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white")
+            br
+            //- create store button
+            div
+              button(type='submit' class=" border rounded-lg p-1.5 bg-white text-black hover:bg-[#181a33] hover:text-white transition ease-out duration-700") 
+                <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg> Create Store
+
+    div(class="col-span-1 bg-white text-black" style="width:auto;height:auto;")
+      div(class="m-3")
+          h(class=" text-lg font-bold") Information 
+          ul(class="list-disc p-2")
+              li(class="mb-2") Create a Store and sell your products.
