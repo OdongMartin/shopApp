@@ -137,20 +137,19 @@ router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, uploa
     }
 
     //if image not provided
-    if(req.files[1] === 'undefined'){
+    if(!req.files[1]){
         image_path2 = 'undefined'
     }
     else{
         image_path2 = '/uploads/' + req.files[1].filename;
     }
-    if(req.files[2] === 'undefined'){
+    if(!req.files[2]){
         image_path3 = 'undefined'
     }
     else{
         image_path3 = '/uploads/' + req.files[2].filename;
     }
 
-    console.log(req.files[3])
     if(!req.files[3])
     {
         image_path4 = 'undefined'
@@ -170,17 +169,46 @@ router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, uploa
             name: req.body.title,
             category: req.body.category,
             subcategory: req.body.subcategory,
-            brand: req.body.brand,
+            
             description: req.body.description,
             condition: req.body.condition,
-            size: req.body.size,
+            
             currency: req.body.currency,
             price: req.body.price,
+        
             formattedPrice: formatPriceWithCommas(req.body.price),
             imagePath1: '/uploads/' + req.files[0].filename,
             imagePath2: image_path2,
             imagePath3: image_path3,
             imagePath4: image_path4,
+
+            ageGroup: req.body.agegroup,
+            artist: req.body.artist,
+            brand: req.body.brand,
+            color: req.body.color,
+            compatibility: req.body.compatibility,
+            design: req.body.design,
+            dimensions: req.body.dimensions,
+            educationalValue: req.body.educationalvalue,
+            expiryDate: req.body.expirydate,
+            features: req.body.features,
+            flavor: req.body.flavor,
+            format: req.body.format,
+            genre: req.body.genre,
+            healthBenefits: req.body.healthbenefits,
+            ingredients: req.body.ingredients,
+            material: req.body.material,
+            model: req.body.model,
+            occasion: req.body.occasion,
+            petType: req.body.pettype,
+            publisher: req.body.publisher,
+            size: req.body.size,
+            skinType: req.body.skintype,
+            specifications: req.body.specifications,
+            sportsType: req.body.sportstype,
+            type: req.body.type,
+            usageInstructions: req.body.usageinstructions,
+            warranty: req.body.warranty,
         });
 
         await newProduct.save()

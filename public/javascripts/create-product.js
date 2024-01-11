@@ -43,63 +43,63 @@ function getSelectedSubCategory() {
     const categories = {
         'Art Prints': ['Artist','Type','Material', 'Size','Features'],
         'DIY Supplies': ['Type','Material', 'Size','Features'],
-        'Handmade Crafts': ['Type','Material', 'Size','Features']
+        'Handmade Crafts': ['Type','Material', 'Size','Features'],
 
-        // 'Auto Parts', 
-        // 'Car Accessories', 
-        // 'Tools and Equipment',
+        'Auto Parts' : ['Brand', 'Model', 'Type', 'Compatibility', 'Warranty'], 
+        'Car Accessories' : ['Brand', 'Model', 'Type', 'Compatibility', 'Warranty'],
+        'Tools and Equipment' : ['Brand', 'Model', 'Type', 'Compatibility', 'Warranty'],
 
-        // 'Haircare', 
-        // 'Makeup', 
-        // 'Skincare',
+        'Haircare' :['Brand', 'Type', 'Ingredients', 'Skin Type', 'Usage Instructions'], 
+        'Makeup' :['Brand', 'Type', 'Ingredients', 'Skin Type', 'Usage Instructions'], 
+        'Skincare' :['Brand', 'Type', 'Ingredients', 'Skin Type', 'Usage Instructions'],
 
-        // 'Art Supplies', 
-        // 'Books', 
-        // 'Office Supplies',
+        'Art Supplies' :['Author', 'Genre', 'Format', 'Publisher', 'Type'], 
+        'Books':['Author', 'Genre', 'Format', 'Publisher', 'Type'], 
+        'Office Supplies':['Author', 'Genre', 'Format', 'Publisher', 'Type'], 
 
-        // 'Computers and Laptops', 
-        // 'Consumer Electronics', 
-        // 'Smartphones and Accessories',
+        'Computers and Laptops' : ['Brand', 'Model', 'Specifications', 'Compatibility', 'Warranty'], 
+        'Consumer Electronics' : ['Brand', 'Model', 'Specifications', 'Compatibility', 'Warranty'], 
+        'Smartphones and Accessories' : ['Brand', 'Model', 'Specifications', 'Compatibility', 'Warranty'],
 
-        // 'Accessories', 
-        // 'Clothing', 
-        // 'Shoes',
+        'Accessories' :['Brand', 'Type', 'Size', 'Color', 'Material'], 
+        'Clothing' :['Brand', 'Type', 'Size', 'Color', 'Material'], 
+        'Shoes' :['Brand', 'Type', 'Size', 'Color', 'Material'],
 
-        // 'Beverages', 
-        // 'Gourmet Foods', 
-        // 'Snacks',
+        'Beverages' : ['Brand', 'Type', 'Flavor', 'Ingredients', 'Expiry Date'], 
+        'Gourmet Foods' : ['Brand', 'Type', 'Flavor', 'Ingredients', 'Expiry Date'],  
+        'Snacks' : ['Brand', 'Type', 'Flavor', 'Ingredients', 'Expiry Date'], 
 
-        // 'Customized Items', 
-        // 'Specialty Products', 
-        // 'Unique Gifts',
+        'Customized Items' : ['Brand', 'Type', 'Occasion', 'Features'], 
+        'Specialty Products' : ['Brand', 'Type', 'Occasion', 'Features'], 
+        'Unique Gifts': ['Brand', 'Type', 'Occasion', 'Features'], 
 
-        // 'Fitness Equipment',
-        // 'Supplements', 
-        // 'Wellness Products',
+        'Fitness Equipment' : ['Brand', 'Type', 'Usage Instructions'],
+        'Supplements' : ['Brand', 'Type', 'Ingredients', 'Health Benefits', 'Usage Instructions'], 
+        'Wellness Products' : ['Brand', 'Type', 'Ingredients', 'Health Benefits', 'Usage Instructions'],
 
-        // 'Furniture', 
-        // 'Home Decor', 
-        // 'Kitchen and Dining',
+        'Furniture' : ['Brand', 'Type', 'Material', 'Dimensions', 'Finish'], 
+        'Home Decor': ['Brand', 'Type', 'Material', 'Dimensions', 'Finish'], 
+        'Kitchen and Dining' : ['Brand', 'Type', 'Material', 'Dimensions', 'Finish'],
 
-        // 'Fashion Accessories', 
-        // 'Fine Jewelry', 
-        // 'Watches',
+        'Fashion Accessories' : ['Brand', 'Material', 'Type', 'Size', 'Design'], 
+        'Fine Jewelry' : ['Brand', 'Material', 'Type', 'Size', 'Design'],  
+        'Watches' : ['Brand', 'Material', 'Type', 'Size', 'Design'], 
 
-        // 'Pet Accessories', 
-        // 'Pet Care Products', 
-        // 'Pet Food',
+        'Pet Accessories' : ['Brand', 'Pet Type', 'Type', 'Size'], 
+        'Pet Care Products' : ['Brand', 'Pet Type', 'Type', 'Size', 'Ingredients'], 
+        'Pet Food' : ['Brand', 'Pet Type', 'Type', 'Size', 'Ingredients'],
 
-        // 'Activewear', 
-        // 'Outdoor Gear', 
-        // 'Sports Equipment',
+        'Activewear' : ['Brand', 'Sports Type', 'Size', 'Material', 'Features'], 
+        'Outdoor Gear' : ['Brand', 'Sports Type', 'Size', 'Material', 'Features'],  
+        'Sports Equipment' : ['Brand', 'Sports Type', 'Size', 'Material', 'Features'], 
 
-        // 'Innovative Gadgets', 
-        // 'Smart Home Devices', 
-        // 'Tech Accessories',
+        'Innovative Gadgets' : ['Brand', 'Model', 'Specifications', 'Compatibility', 'Warranty'], 
+        'Smart Home Devices' : ['Brand', 'Model', 'Specifications', 'Compatibility', 'Warranty'],  
+        'Tech Accessories' : ['Brand', 'Model', 'Specifications', 'Compatibility', 'Warranty'], 
 
-        // 'Board Games', 
-        // 'Puzzles', 
-        // 'Toys for Kids'
+        'Board Games' : ['Brand', 'Age Group', 'Type', 'Features', 'Educational Value'],
+        'Puzzles' : ['Brand', 'Age Group', 'Type', 'Features', 'Educational Value'], 
+        'Toys for Kids' : ['Brand', 'Age Group', 'Type', 'Features', 'Educational Value'],
     
     }
 
@@ -113,6 +113,10 @@ function getSelectedSubCategory() {
             var label = document.createElement("label");
             label.textContent = optionValue;
             label.appendChild(document.createElement("br"));
+
+            // var span = document.createElement("span");
+            // span.textContent = "*";
+            // span.className="text-red-700 font-bold";
             
             var input = document.createElement("input");
             input.type = "text";
@@ -120,8 +124,10 @@ function getSelectedSubCategory() {
             input.id = optionValue.toLowerCase().replace(/\s/g, "");
             input.maxlength = 30;
             input.className = "mb-3 p-2 rounded-xl bg-gray-700 text-white w-96";
+            //input.required = true;
 
             additionalFields.appendChild(label);
+            //additionalFields.appendChild(span);
             additionalFields.appendChild(input);
             additionalFields.appendChild(document.createElement("br"));
         });
