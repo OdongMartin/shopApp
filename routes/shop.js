@@ -455,6 +455,11 @@ router.get('/:userId/products/search', async (req, res)=>{
     try {
         const searchTerm = req.query.q;
         const productData = await Product.find({ownerId: {$ne: req.params.userId}, name: { $regex: searchTerm, $options: 'i' }}) //Case-insensitive partial search
+        
+        if(!productData[0]){
+            res.render('home', {userId: req.params.userId, searchTerm  ,loggedIn: req.isAuthenticated()});
+        }
+        
         res.render('home', { products: productData, userId: req.params.userId, searchTerm  ,loggedIn: req.isAuthenticated()}); //should be person's profile 
     } catch(err){
         console.log(err);
