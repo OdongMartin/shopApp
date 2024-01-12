@@ -298,6 +298,7 @@ router.post('/:userId/cart/add/:productId', isAuthenticated, async(req, res)=>{
 //homepage -- /shop/ ......should display items
 router.get('/', (req, res)=>{
     Product.find().then((productData)=>{
+        console.log(productData);
         //no products yet
         if(!productData[0]){
             return res.render('home', {loggedIn: req.isAuthenticated(), current:"home"}); //should be person's profile

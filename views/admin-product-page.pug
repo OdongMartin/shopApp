@@ -25,14 +25,85 @@ block content
 
             div(class="border-t border-b m-2 pt-2 pb-2")
                 div(class="flex items-center")
-                    div(class="font-bold")
-                        p(class="mb-2") Catergory 
-                        p(class="mb-2") Condition 
-                        p Size 
-                    div(class="ml-8")
-                        p(class="mb-2") #{products.category}
-                        p(class="mb-2") #{products.condition}
-                        p #{products.size}
+                    //- div(class="font-bold")
+                    //-     p(class="mb-2")  
+                    //-     p(class="mb-2") Condition 
+                    //-     p Size 
+                    div(class="")
+                        div(class="mb-2")
+                            span(class="font-bold") Catergory: 
+                            span #{products.category}
+                        div(class="mb-2")
+                            span(class="font-bold") Subcatergory: 
+                            span #{products.subcategory}
+                        div(class="mb-2")
+                            span(class="font-bold") Condition: 
+                            span #{products.condition}
+
+                        if(products.subcategory === 'Art Prints')
+                            if(products.artist != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Artist: 
+                                    span #{products.artist}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}               
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+
+                        if(products.subcategory === 'DIY Supplies')
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}               
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}  
+
+                        if(products.subcategory === 'Handmade Crafts')
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}               
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}  
+
+                    //- div
+                    //-     //- if(products.brand != '')
+                    //-     //-     p #{product.brand}
+
+                    //-     if(products.size != '')
+                    //-         p size #{products.size}
 
             div(class="border-b m-2 pb-2")
                 p(class="font-bold text-lg mb-2") About this product 
