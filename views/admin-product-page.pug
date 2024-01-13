@@ -98,6 +98,72 @@ block content
                                     span(class="font-bold") Features: 
                                     span #{products.features}  
 
+                        if(products.subcategory === 'Auto Parts')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+
+                        if(products.subcategory === 'Car Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+
+                        if(products.subcategory === 'Tools and Equipment')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+                    
                     //- div
                     //-     //- if(products.brand != '')
                     //-     //-     p #{product.brand}
