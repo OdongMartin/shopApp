@@ -26,14 +26,993 @@ block content
 
             div(class="border-t border-b m-2 pt-2 pb-2")
                 div(class="flex items-center")
-                    div(class="font-bold")
-                        p(class="mb-2") Catergory 
-                        p(class="mb-2") Condition 
-                        p Size 
-                    div(class="ml-8")
-                        p(class="mb-2") #{products.category}
-                        p(class="mb-2") #{products.condition}
-                        p #{products.size}
+                    //- div(class="font-bold")
+                    //-     p(class="mb-2")  
+                    //-     p(class="mb-2") Condition 
+                    //-     p Size 
+                    div(class="")
+                        div(class="mb-2")
+                            span(class="font-bold") Catergory: 
+                            span #{products.category}
+                        div(class="mb-2")
+                            span(class="font-bold") Subcatergory: 
+                            span #{products.subcategory}
+                        div(class="mb-2")
+                            span(class="font-bold") Condition: 
+                            span #{products.condition}
+
+                        if(products.subcategory === 'Art Prints')
+                            if(products.artist != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Artist: 
+                                    span #{products.artist}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}               
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+
+                        if(products.subcategory === 'DIY Supplies')
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}               
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}  
+
+                        if(products.subcategory === 'Handmade Crafts')
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}               
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}  
+
+
+                        if(products.subcategory === 'Auto Parts')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+
+                        if(products.subcategory === 'Car Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+
+                        if(products.subcategory === 'Tools and Equipment')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+
+
+                        if(products.subcategory === 'Haircare')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.skintype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions}               
+
+                        if(products.subcategory === 'Makeup')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.skintype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions} 
+                    
+                        if(products.subcategory === 'Skincare')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.skintype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions}                     
+
+
+                        if(products.subcategory === 'Art Supplies')
+                            if(products.author != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Author: 
+                                    span #{products.author}
+                            if(products.genre != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Genre: 
+                                    span #{products.genre}
+                            if(products.format != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Format: 
+                                    span #{products.format}
+                            if(products.publisher != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Publisher: 
+                                    span #{products.publisher}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type} 
+                    
+                        if(products.subcategory === 'Books')
+                            if(products.author != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Author: 
+                                    span #{products.author}
+                            if(products.genre != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Genre: 
+                                    span #{products.genre}
+                            if(products.format != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Format: 
+                                    span #{products.format}
+                            if(products.publisher != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Publisher: 
+                                    span #{products.publisher}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type} 
+                    
+                        if(products.subcategory === 'Office Supplies')
+                            if(products.author != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Author: 
+                                    span #{products.author}
+                            if(products.genre != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Genre: 
+                                    span #{products.genre}
+                            if(products.format != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Format: 
+                                    span #{products.format}
+                            if(products.publisher != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Publisher: 
+                                    span #{products.publisher}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type} 
+                    
+
+                        if(products.subcategory === 'Computers and Laptops')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.specifications != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Specifications: 
+                                    span #{products.specifications}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+                    
+                        if(products.subcategory === 'Consumer Electronics')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.specifications != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Specifications: 
+                                    span #{products.specifications}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+                    
+                        if(products.subcategory === 'Smartphones and Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.specifications != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Specifications: 
+                                    span #{products.specifications}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}                    
+                    
+
+                        if(products.subcategory === 'Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.color != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Color: 
+                                    span #{products.color}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+
+                        if(products.subcategory === 'Clothing')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.color != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Color: 
+                                    span #{products.color}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}  
+
+                        if(products.subcategory === 'Shoes')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.color != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Color: 
+                                    span #{products.color}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material}                   
+                    
+
+                        if(products.subcategory === 'Beverages')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.flavor != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Flavor: 
+                                    span #{products.flavor}
+                            if(products.expirydate != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Expiry Date: 
+                                    span #{products.expirydate}               
+
+                        if(products.subcategory === 'Gourmet Foods')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.flavor != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Flavor: 
+                                    span #{products.flavor}
+                            if(products.expirydate != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Expiry Date: 
+                                    span #{products.expirydate}               
+
+                        if(products.subcategory === 'Snacks')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.flavor != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Flavor: 
+                                    span #{products.flavor}
+                            if(products.expirydate != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Expiry Date: 
+                                    span #{products.expirydate} 
+                    
+
+                        if(products.subcategory === 'Customized Items')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.occasion != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Occasion: 
+                                    span #{products.occasion}
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+                    
+                        if(products.subcategory === 'Specialty Products')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.occasion != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Occasion: 
+                                    span #{products.occasion}
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+                        
+                        if(products.subcategory === 'Unique Gifts')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.occasion != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Occasion: 
+                                    span #{products.occasion}
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+                    
+
+                        if(products.subcategory === 'Fitness Equipment')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions}   
+                    
+                        if(products.subcategory === 'Supplements')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.healthbenefits != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Health Benefits: 
+                                    span #{products.healthbenefits}
+                            if(products.skintype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions}   
+
+                        if(products.subcategory === 'Wellness Products')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.healthbenefits != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Health Benefits: 
+                                    span #{products.healthbenefits}
+                            if(products.skintype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions} 
+                    
+                    
+                        if(products.subcategory === 'Furniture')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.dimensions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Dimensions: 
+                                    span #{products.dimensions}
+                            if(products.finish != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Finish: 
+                                    span #{products.finish}
+
+                        if(products.subcategory === 'Home Decor')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.dimensions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Dimensions: 
+                                    span #{products.dimensions}
+                            if(products.finish != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Finish: 
+                                    span #{products.finish}
+
+                        if(products.subcategory === 'Kitchen and Dining')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.dimensions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Dimensions: 
+                                    span #{products.dimensions}
+                            if(products.finish != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Finish: 
+                                    span #{products.finish}
+                    
+
+                        if(products.subcategory === 'Fashion Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.design != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Design: 
+                                    span #{products.design}
+                        
+                        if(products.subcategory === 'Fine Jewelry')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.design != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Design: 
+                                    span #{products.design}
+
+                        if(products.subcategory === 'Watches')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.design != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Design: 
+                                    span #{products.design}
+
+
+                        if(products.subcategory === 'Pet Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.pettype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Pet Type: 
+                                    span #{products.pettype }
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+
+                        if(products.subcategory === 'Pet Care Products')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.pettype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Pet Type: 
+                                    span #{products.pettype }
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+
+                        if(products.subcategory === 'Pet Food')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.pettype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Pet Type: 
+                                    span #{products.pettype }
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+
+                    
+                        if(products.subcategory === 'Activewear')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.sportstype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Sports Type: 
+                                    span #{products.sportstype}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+
+                        if(products.subcategory === 'Outdoor Gear')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.sportstype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Sports Type: 
+                                    span #{products.sportstype}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+
+                        if(products.subcategory === 'Sports Equipment')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.sportstype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Sports Type: 
+                                    span #{products.sportstype}
+                            if(products.size != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Size: 
+                                    span #{products.size}
+                            if(products.material != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Material: 
+                                    span #{products.material} 
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}
+
+
+                        if(products.subcategory === 'Innovative Gadgets')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.specifications != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Specifications: 
+                                    span #{products.specifications}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+                    
+                        if(products.subcategory === 'Smart Home Devices')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.specifications != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Specifications: 
+                                    span #{products.specifications}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+                    
+                        if(products.subcategory === 'Tech Accessories')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.model != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Model: 
+                                    span #{products.model}
+                            if(products.specifications != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Specifications: 
+                                    span #{products.specifications}
+                            if(products.compatibility != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Compatibility: 
+                                    span #{products.compatibility}               
+                            if(products.warranty != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Warranty: 
+                                    span #{products.warranty}
+                    
+                   
+                        if(products.subcategory === 'Board Games')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.agegroup != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Age Group: 
+                                    span #{products.agegroup}                                   
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}                                    
+                            if(products.educationalvalue != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Educational Value: 
+                                    span #{products.educationalvalue}
+                        
+                        if(products.subcategory === 'Puzzles')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.agegroup != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Age Group: 
+                                    span #{products.agegroup}                                   
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}                                    
+                            if(products.educationalvalue != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Educational Value: 
+                                    span #{products.educationalvalue}
+
+                        if(products.subcategory === 'Toys for Kids')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.agegroup != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Age Group: 
+                                    span #{products.agegroup}                                   
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.features != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Features: 
+                                    span #{products.features}                                    
+                            if(products.educationalvalue != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Educational Value: 
+                                    span #{products.educationalvalue}
+
 
             div(class="border-b m-2 pb-2")
                 p(class="font-bold text-lg mb-2") About this product 
