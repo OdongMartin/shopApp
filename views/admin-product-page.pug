@@ -98,6 +98,7 @@ block content
                                     span(class="font-bold") Features: 
                                     span #{products.features}  
 
+
                         if(products.subcategory === 'Auto Parts')
                             if(products.brand != '')
                                 div(class="mb-2")
@@ -163,7 +164,8 @@ block content
                                 div(class="mb-2")
                                     span(class="font-bold") Warranty: 
                                     span #{products.warranty}
-                    
+
+
                         if(products.subcategory === 'Haircare')
                             if(products.brand != '')
                                 div(class="mb-2")
@@ -176,19 +178,126 @@ block content
                             if(products.skintype != '')
                                 div(class="mb-2")
                                     span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions}               
+
+                        if(products.subcategory === 'Makeup')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
                                     span #{products.type}
-                            if(products.model != '')
+                            if(products.skintype != '')
                                 div(class="mb-2")
-                                    span(class="font-bold") Model: 
-                                    span #{products.model}
-                            if(products.compatibility != '')
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.ingredients != '')
                                 div(class="mb-2")
-                                    span(class="font-bold") Compatibility: 
-                                    span #{products.compatibility}               
-                            if(products.warranty != '')
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.usageinstructions != '')
                                 div(class="mb-2")
-                                    span(class="font-bold") Warranty: 
-                                    span #{products.warranty}
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions} 
+                    
+                        if(products.subcategory === 'Skincare')
+                            if(products.brand != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Brand: 
+                                    span #{products.brand}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type}
+                            if(products.skintype != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Skin Type: 
+                                    span #{products.skintype}
+                            if(products.ingredients != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Ingredients: 
+                                    span #{products.ingredients}
+                            if(products.usageinstructions != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Usage Instructions: 
+                                    span #{products.usageinstructions}                     
+
+
+                        if(products.subcategory === 'Art Supplies')
+                            if(products.author != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Author: 
+                                    span #{products.author}
+                            if(products.genre != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Genre: 
+                                    span #{products.genre}
+                            if(products.format != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Format: 
+                                    span #{products.format}
+                            if(products.publisher != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Publisher: 
+                                    span #{products.publisher}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type} 
+                    
+                        if(products.subcategory === 'Books')
+                            if(products.author != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Author: 
+                                    span #{products.author}
+                            if(products.genre != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Genre: 
+                                    span #{products.genre}
+                            if(products.format != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Format: 
+                                    span #{products.format}
+                            if(products.publisher != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Publisher: 
+                                    span #{products.publisher}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type} 
+                    
+                        if(products.subcategory === 'Office Supplies')
+                            if(products.author != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Author: 
+                                    span #{products.author}
+                            if(products.genre != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Genre: 
+                                    span #{products.genre}
+                            if(products.format != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Format: 
+                                    span #{products.format}
+                            if(products.publisher != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Publisher: 
+                                    span #{products.publisher}
+                            if(products.type != '')
+                                div(class="mb-2")
+                                    span(class="font-bold") Type: 
+                                    span #{products.type} 
                     //- div
                     //-     //- if(products.brand != '')
                     //-     //-     p #{product.brand}
