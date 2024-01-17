@@ -1,19 +1,19 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4")
+    div(class="grid grid-cols-4" style="width:100%; height:100%;")
         if(!chats)
             div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
                 p No Chats at the moment.
         if(chats)
-            div(class="p-3 col-span-3" style="width:820px;")
+            div(class="p-3 col-span-3" style="width:auto;")
                 each chat in chats
-                    div(style="width:820px;" class="m-3 p-4 overflow-hidden rounded-lg bg-gray-200 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(class="m-3 p-4 overflow-hidden rounded-lg bg-gray-200 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                         a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message/${chat.chatId}`)
                             div(class="flex")
                                 img(src=`${chat.storeImagePath}`, alt=` ` class="w-20 h-20 object-cover rounded-full")
-                                div(class="ml-6" style="width:80%; font-size:vw;")
-                                    div(class="flex justify-between")
+                                div(class="ml-6" style="width:100%; font-size:vw;")
+                                    div(class="flex justify-between w-auto")
                                         p(class="font-bold truncate text-xl") #{chat.storeName}
                                         p(class=" text-gray-700 text-xs") #{chat.time.toLocaleTimeString()}
                                     p(class=" font-bold truncate text-lg") #{chat.productName}
@@ -34,7 +34,7 @@ block content
                             //-     div
                             //-     button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Add to Cart
 
-            div(class="col-span-1 bg-white" style="width:auto;height:590px;")
+            div(class="col-span-1 bg-white min-h-screen")
                 div(class="m-3")
                     h(class=" text-lg font-bold") Information 
                     ul(class="list-disc p-2")

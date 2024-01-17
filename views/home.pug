@@ -1,28 +1,29 @@
 extends layout 
 
 block content
-    div(class="p-2" style="width:1093px;")
+    div(class="p-2 grid grid-cols-4" style="width:1093px;")
         if(!products)
-            div(class="m-8  text-5xl text-white text-center leading-loose")
+            div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
                 p No products available at the moment. Try again later
         if(products)
-            each product in products
-                //- product card
-                div(class="bg-gray-300 col-span m-2 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
-                    a(href= `/shop/${userId}/products/${product._id}`)
-                        div
-                            img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 rounded-t-lg object-cover ")
-                            p(class="m-2 text-lg truncate") #{product.name}
-                            p(class="m-2 truncate") #{product.currency} #{product.formattedPrice}
-                        
-                    //- submit button
-                    div(class="m-2")
-                        form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
-                            button(type='submit' class="addToCart transition ease-out duration-500")
-                                div(class="shadow-md hover:shadow-2xl")
-                                    <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                    </svg> Add to Cart
+            div(class="" style="width:auto;")
+                each product in products
+                    //- product card
+                    div(style="height:275px" class="col-span bg-gray-300 m-2 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                        a(href= `/shop/${userId}/products/${product._id}`)
+                            div
+                                img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 rounded-t-lg object-cover ")
+                                p(class="m-2 text-lg truncate") #{product.name}
+                                p(class="m-2 truncate") #{product.currency} #{product.formattedPrice}
+                            
+                        //- submit button
+                        div(class="m-2")
+                            form(action=`/shop/${userId}/cart/add/${product._id}` method='POST')
+                                button(type='submit' class="addToCart transition ease-out duration-500")
+                                    div(class="shadow-md hover:shadow-2xl")
+                                        <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                        </svg> Add to Cart
 
                 //- div(class="col-span-1 bg-white" style="width:auto;height:590px;")
                 //-     div(class="m-3")
