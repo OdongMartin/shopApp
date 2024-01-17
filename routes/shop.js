@@ -225,6 +225,7 @@ router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, uploa
     }
 });
 
+
 // Shopping Cart
 
 router.get('/:userId/cart', isAuthenticated, (req, res)=>{
@@ -526,6 +527,27 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
         res.status(500).send('Internal Server Error');
     }
 }); 
+
+//delete product
+router.post('/:userId/products/:productId/delete',isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.productId)) { //if product id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId);
+    }
+
+    try{
+        await Product.deleteOne({_id: req.params.productId});
+
+        res.redirect('/shop/' + req.params.userId + '/myStores');
+
+    } catch(err){
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 router.get('/:userId/products/:productId/message/:chatId',isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){

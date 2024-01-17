@@ -6,9 +6,9 @@ block content
             div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
                 p No Chats at the moment.
         if(chats)
-            div(class="p-3 col-span-3" style="width:auto;")
+            div(class="p-3 col-span-3" style="width:820px;")
                 each chat in chats
-                    div(class="m-3 p-4 overflow-hidden rounded-lg bg-gray-200 h-auto shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(style="width:820px;" class="m-3 p-4 overflow-hidden rounded-lg bg-gray-200 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                         a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message/${chat.chatId}`)
                             div(class="flex")
                                 img(src=`${chat.storeImagePath}`, alt=` ` class="w-20 h-20 object-cover rounded-full")
@@ -35,7 +35,7 @@ block content
                             //-     button(type='submit' class="bg-green-600 text-white px-4 py-2 rounded-3xl border border-blue-900 hover:bg-green-800") Add to Cart
 
             div(class="col-span-1 bg-white" style="width:auto;height:590px;")
-                    div(class="m-3")
-                        h(class=" text-lg font-bold") Information 
-                        ul(class="list-disc p-2")
-                            li(class="mb-2") Chat with the store and discuss how you can get the products to you.
+                div(class="m-3")
+                    h(class=" text-lg font-bold") Information 
+                    ul(class="list-disc p-2")
+                        li(class="mb-2") Chat with the store and discuss how you can get the products to you.

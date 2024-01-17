@@ -1,9 +1,9 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4 p-2")
+    div(class="p-2" style="width:1093px;")
         if(!products)
-            div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
+            div(class="m-8  text-5xl text-white text-center leading-loose")
                 p No products available at the moment. Try again later
         if(products)
             each product in products
