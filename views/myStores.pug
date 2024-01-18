@@ -1,7 +1,7 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4")
+    div(class="grid grid-cols-4 min-h-screen")
         if(!stores)
             div(class="col-span-3 m-4 text-white")
                 div(class="m-8 col-span-4 text-5xl  text-center leading-loose")
@@ -37,7 +37,7 @@ block content
                                     p(class="mb-2 break-words") #{store.description}
                         
 
-            div(class="col-span-1 bg-white" style="width:auto;height:590px;")
+            div(class="col-span-1 bg-white min-h-screen" style="width:auto;")
                 form(action=`/shop/${userId}/myStores/create` method='GET')
                     div(class="m-4")
                         button(type='submit' class="startChat w-full transition ease-out duration-700") 

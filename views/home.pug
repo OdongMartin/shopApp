@@ -1,15 +1,15 @@
 extends layout 
 
 block content
-    div(class="p-2 grid grid-cols-4" style="width:1093px;")
+    div(class="p-2 grid grid-cols-4 min-h-screen w-full")
         if(!products)
             div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
                 p No products available at the moment. Try again later
         if(products)
-            div(class="" style="width:auto;")
+            div(class="")
                 each product in products
                     //- product card
-                    div(style="height:275px" class="col-span bg-gray-300 m-2 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(class=" h-72 w-56 col-span bg-gray-300 m-3 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                         a(href= `/shop/${userId}/products/${product._id}`)
                             div
                                 img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 rounded-t-lg object-cover ")

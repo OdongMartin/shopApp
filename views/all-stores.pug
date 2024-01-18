@@ -1,7 +1,7 @@
 extends layout 
 
 block content
-    div(class="grid grid-cols-4")
+    div(class="grid grid-cols-4 min-h-screen", style="width:1080px;")
         div(class="col-span-3 m-4")
             if(!stores)
                 div(class="m-8 col-span-4 text-5xl text-white text-center leading-loose")
@@ -18,7 +18,7 @@ block content
                                         p(class="mb-2 font-bold text-lg truncate") #{store.category}
                                         p(class="mb-2 break-words") #{store.description}
 
-        div(class="col-span-1 bg-white" style="width:auto;height:590px;")
+        div(class="col-span-1 bg-white min-h-screen" style="width:auto;")
             div(class="m-3")
                 h(class=" text-lg font-bold") Information 
                 ul(class="list-disc p-2")

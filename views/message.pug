@@ -3,7 +3,7 @@ extends layout
 block content
     div(class="hidden")#chatId #{chatId}
     div(class="hidden")#senderId #{userId}
-    div(class=" grid grid-cols-4")
+    div(class=" grid grid-cols-4 min-h-screen", style="width:1080px;")
         div(class=" col-span-3")
             //Display chat messages
             div(class="h-screen bg-[#383c77]")

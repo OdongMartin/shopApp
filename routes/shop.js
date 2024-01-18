@@ -478,6 +478,49 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
     }
 })
 
+//delete store
+router.post('/:userId/myStores/:storeId/delete', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId + '/myStores');
+    }
+
+    try{
+        //check if store exists for user
+        const store = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!store){
+            return res.redirect('/shop/'+ req.params.userId + '/myStores');
+        }
+
+        await store.deleteOne({_id : req.params.storeId})
+
+        if (store) {
+            const imagePaths = [
+                store.imagePath1,
+                store.imagePath2,
+            ]}
+
+            for (const imagePath of imagePaths) {
+                if (imagePath) {
+
+                    if(imagePath != 'undefined'){
+                        const fullPath = path.join('public', imagePath);
+                        await fs.unlink(fullPath);
+                    }
+                }
+            }
+        // const storesData = await store.findById(req.params.storeId);
+        // const productData = await Product.find({storeId: req.params.storeId})
+        // res.render('admin-store-page', { stores: storesData, userId: req.params.userId, products:productData  ,loggedIn: req.isAuthenticated()})
+        
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
+    }
+})
 
 //User Product Listings
 //search product
@@ -528,6 +571,8 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
     }
 }); 
 
+const fs = require('fs').promises;
+const path = require('path');
 //delete product
 router.post('/:userId/products/:productId/delete',isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
@@ -538,7 +583,29 @@ router.post('/:userId/products/:productId/delete',isAuthenticated, async(req, re
     }
 
     try{
+        const product = await Product.findById(req.params.productId);
+
         await Product.deleteOne({_id: req.params.productId});
+
+        //fetch all product images and delete them
+        if (product) {
+            const imagePaths = [
+                product.imagePath1,
+                product.imagePath2,
+                product.imagePath3,
+                product.imagePath4,
+            ];
+
+            for (const imagePath of imagePaths) {
+                if (imagePath) {
+
+                    if(imagePath != 'undefined'){
+                        const fullPath = path.join('public', imagePath);
+                        await fs.unlink(fullPath);
+                    }
+                }
+            }
+        }
 
         res.redirect('/shop/' + req.params.userId + '/myStores');
 
