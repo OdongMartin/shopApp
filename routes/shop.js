@@ -534,7 +534,6 @@ router.post('/:userId/products/:productId/delete',isAuthenticated, async(req, re
         res.redirect('/auth/logout');
     }
     if (!mongoose.isValidObjectId(req.params.productId)) { //if product id is not valid
-        //return res.status(400).send('Invalid user ID');
         return res.redirect('/shop/'+ req.params.userId);
     }
 
