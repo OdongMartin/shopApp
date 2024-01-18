@@ -31,10 +31,10 @@ block content
                             </svg> Delete Store
 
 
-        div(class="inline-block")
+        div(class="flex justify-center items-center")
             div(class="grid grid-cols-4")
                 each product in products
-                    div(class="col-span-1 m-2 bg-gray-300 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(class="col-span-1 m-2 h-72 w-60 bg-gray-300 rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                         a(href= `/shop/${userId}/products/${product._id}`)
                             div
                                 img(src=`${product.imagePath1}`, alt=`${product.name}` class="mx-auto w-full h-40 object-cover rounded-t-lg")
