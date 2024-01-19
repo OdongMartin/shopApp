@@ -15,67 +15,36 @@ const upload = require('../middleware/upload');
 const isAuthenticated = require('../middleware/authMiddleware');
 const chats = require('../models/chatsDB');
 
-// Delete product route //try this later plrease
-/*router.post('/products/delete/:productId', async (req, res) => {
-    const productId = req.params.productId;
-
-    try {
-        const product = await Product.findById(productId);
-
-        if (!product) {
-            return res.status(404).json({ error: 'Product not found' });
-        }
-
-        // Remove the associated image file
-        await fs.unlink(`public${product.imagePath}`);
-
-        // Delete the product from the database
-        await product.remove();
-
-        res.json({ success: true, message: 'Product deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-*/
-/*function Authenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-  
-    res.redirect('/auth/login');
-}*/
 
 //delete entire DB expect usrDB
- //router.get('/DB/delete', function(req, res) {
-    // Product.deleteMany().then(()=>{
-    //     console.log ("removed all data in products");
-    // }).catch((err)=>{
-    //     console.error("Error removing data:", err);
-    //     res.status(500).send("Internal Server Error");
-    // })
+//  router.get('/DB/delete', function(req, res) {
+//     Product.deleteMany().then(()=>{
+//         console.log ("removed all data in products");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
 
-    // cart.deleteMany().then(()=>{
-    //     console.log ("removed all data in cart");
-    // }).catch((err)=>{
-    //     console.error("Error removing data:", err);
-    //     res.status(500).send("Internal Server Error");
-    // })
+//     cart.deleteMany().then(()=>{
+//         console.log ("removed all data in cart");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
 
-    // store.deleteMany().then(()=>{
-    //     console.log ("removed all data in store");
-    // }).catch((err)=>{
-    //     console.error("Error removing data:", err);
-    //     res.status(500).send("Internal Server Error");
-    // })
+//     store.deleteMany().then(()=>{
+//         console.log ("removed all data in store");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
     
-    // chatDB.deleteMany().then(()=>{
-    //     console.log ("removed all data in chat");
-    // }).catch((err)=>{
-    //     console.error("Error removing data:", err);
-    //     res.status(500).send("Internal Server Error");
-    // })
+//     chatDB.deleteMany().then(()=>{
+//         console.log ("removed all data in chat");
+//     }).catch((err)=>{
+//         console.error("Error removing data:", err);
+//         res.status(500).send("Internal Server Error");
+//     })
 
 //     messageDB.deleteMany().then(()=>{
 //         console.log ("removed all data in messages");
@@ -490,32 +459,58 @@ router.post('/:userId/myStores/:storeId/delete', isAuthenticated, async(req, res
 
     try{
         //check if store exists for user
-        const store = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
-        if(!store){
+        const storeData = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeData){
             return res.redirect('/shop/'+ req.params.userId + '/myStores');
         }
 
+        //delete stor
         await store.deleteOne({_id : req.params.storeId})
 
-        if (store) {
+        //find products that belong to that store
+        const products = await Product.find({ storeId: req.params.storeId });
+
+        //delete each product and its associated images
+        for (const product of products) {
+            //Delete product images
+            const productImagePaths = [
+                product.imagePath1,
+                product.imagePath2,
+                product.imagePath3,
+                product.imagePath4,
+            ];
+
+            for (const imagePath of productImagePaths) {
+                if (imagePath !== 'undefined') {
+                    const fullPath = path.join('public', imagePath);
+                    await fs.unlink(fullPath);
+                }
+            }
+
+            // Delete the product
+            await Product.deleteOne({ _id: product._id });
+        }
+
+
+        if (storeData) {
             const imagePaths = [
-                store.imagePath1,
-                store.imagePath2,
-            ]}
+                storeData.imagePath1,
+                storeData.imagePath2,
+            ]
 
             for (const imagePath of imagePaths) {
                 if (imagePath) {
 
-                    if(imagePath != 'undefined'){
+                    if(imagePath !== 'undefined'){
                         const fullPath = path.join('public', imagePath);
                         await fs.unlink(fullPath);
                     }
                 }
             }
-        // const storesData = await store.findById(req.params.storeId);
-        // const productData = await Product.find({storeId: req.params.storeId})
-        // res.render('admin-store-page', { stores: storesData, userId: req.params.userId, products:productData  ,loggedIn: req.isAuthenticated()})
-        
+        }
+
+        return res.redirect('/shop/'+ req.params.userId + '/myStores');
+                
     } catch(err){
         console.log(err);
         res.status(500).send("internal server error");
