@@ -447,6 +447,34 @@ router.get('/:userId/stores/:storeId', isAuthenticated, async(req, res)=>{
     }
 })
 
+//edit store
+router.get('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId + '/myStores');
+    }
+
+    try{
+        //check if store exists for user
+        const storeData = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeData){
+            return res.redirect('/shop/'+ req.params.userId + '/myStores');
+        }
+
+        return res.render('edit-store', {store: storeData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+
+
+       
+                
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
+    }
+})
+
 //delete store
 router.post('/:userId/myStores/:storeId/delete', isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){

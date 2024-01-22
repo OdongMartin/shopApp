@@ -3,7 +3,7 @@ extends layout
 block content
   div(class="grid grid-cols-4 text-white min-h-screen", style="width:1080px;")
     div(class="col-span-3  m-4")
-      h1.font-bold.text-xl Create Store
+      h1.font-bold.text-xl Edit Store
       br
       div
         form(action=`/shop/${userId}/myStores/create`, method='POST', enctype='multipart/form-data')
@@ -12,7 +12,7 @@ block content
               label(for='title') Name
               span(class=" text-red-700 font-bold") *
             div
-              input(type='text', name='title', id='title', maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96 focus:outline-none")
+              input(type='text', name='title', id='title', value=`${store.name}`, maxlength="69",required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white w-96 focus:outline-none")
             br
             div
               label(for='category') Category
@@ -40,7 +40,7 @@ block content
               label(for='image1') Store Profile Image
               span(class=" text-red-700 font-bold") *
             div  
-              input(type='file' name='images' id="image1" accept="image/*" required)
+              input(type='file' name='images' id="image1", value=`${store.imagePath1}`, accept="image/*" required)
               span Image maximum size is 5MB
             br
 
@@ -48,7 +48,7 @@ block content
               label(for="image2") Store Header Image
               span(class=" text-red-700 font-bold") *
             div  
-              input(type="file" name="images" id="image2" accept="image/*" required)
+              input(type="file" name="images" id="image2", value=`${store.imagePath2}`, accept="image/*" required)
               span Image maximum size is 5MB
             br
             
@@ -56,17 +56,17 @@ block content
               label(for='description') Store Description
               span(class=" text-red-700 font-bold") *
             div
-              textarea(cols='50' rows='5' type='text', name='description', maxlength="99" id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white focus:outline-none")
+              textarea(cols='50' rows='5' type='text', name='description', maxlength="99" id='description', required, class="mb-3 p-2 rounded-xl bg-gray-700 text-white focus:outline-none") #{store.description}
             br
             //- create store button
             div
               button(type='submit' class=" shadow-xl border border-[#181a33] hover:border-white rounded-lg p-1.5 bg-white text-black hover:bg-[#181a33] hover:text-white transition ease-out duration-700") 
                 <svg class='w-4 md:w-5 inline-block' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
-                </svg> Create Store
+                </svg> Edit Store
 
     div(class="col-span-1 bg-white text-black min-h-screen" style="width:auto;")
       div(class="m-3")
         h(class=" text-lg font-bold") Information 
         ul(class="list-disc p-2")
-            li(class="mb-2") Create a Store and sell your products.
+            li(class="mb-2") Edit your store.
