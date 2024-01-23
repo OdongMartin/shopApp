@@ -6,7 +6,7 @@ block content
       h1.font-bold.text-xl Edit Store
       br
       div
-        form(action=`/shop/${userId}/myStores/create`, method='POST', enctype='multipart/form-data')
+        form(action=`/shop/${userId}/myStores/${store._id}/edit`, method='POST', enctype='multipart/form-data')
           div
             div
               label(for='title') Name
@@ -97,17 +97,17 @@ block content
             br
             div
               label(for='image1') Store Profile Image
-              span(class=" text-red-700 font-bold") *
+              //span(class=" text-red-700 font-bold") *
             div  
-              input(type='file' name='images' id="image1", value=`${store.imagePath1}`, accept="image/*" required)
+              input(type='file' name='images' id="image1", value=`${store.imagePath1}`, accept="image/*")
               span Image maximum size is 5MB
             br
 
             div
               label(for="image2") Store Header Image
-              span(class=" text-red-700 font-bold") *
+              //span(class=" text-red-700 font-bold") *
             div  
-              input(type="file" name="images" id="image2", value=`${store.imagePath2}`, accept="image/*" required)
+              input(type="file" name="images" id="image2", value=`${store.imagePath2}`, accept="image/*")
               span Image maximum size is 5MB
             br
             

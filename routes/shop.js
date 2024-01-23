@@ -131,7 +131,7 @@ router.post('/:userId/myStores/:storeId/products/create', isAuthenticated, uploa
         //Check if there were errors related to file size
         if (req.fileValidationError) {
             return res.status(400).send(req.fileValidationError);
-      }
+        }
         var newProduct = new Product({
             storeId: req.params.storeId,
             ownerId: req.params.userId,
@@ -373,7 +373,7 @@ router.post('/:userId/myStores/create', isAuthenticated, upload.array('images', 
         //Check if there were errors related to file size
         if (req.fileValidationError) {
             return res.status(400).send(req.fileValidationError);
-      }
+        }
 
         const images = req.files;
         const imagePath1 = '/uploads/' + images[0].filename;
@@ -465,10 +465,62 @@ router.get('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=>
         }
 
         return res.render('edit-store', {store: storeData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+               
+    } catch(err){
+        console.log(err);
+        res.status(500).send("internal server error");
+    }
+})
+router.post('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=>{
+    if (req.params.userId != req.user._id){
+        res.redirect('/auth/logout');
+    }
+    if (!mongoose.isValidObjectId(req.params.storeId)) { //if store id is not valid
+        //return res.status(400).send('Invalid user ID');
+        return res.redirect('/shop/'+ req.params.userId + '/myStores');
+    }
 
+    try{
+        //check if store exists for user
+        const storeData = await store.findOne({ownerId: req.params.userId, _id:req.params.storeId})
+        if(!storeData){
+            return res.redirect('/shop/'+ req.params.userId + '/myStores');
+        }    
 
-       
-                
+        console.log(req.files[0]);
+
+        //if image not provided
+        if(!req.files[0]){
+            image_path1 = storeData.imagePath1
+        }
+        else{
+            image_path1 = '/uploads/' + req.files[0].filename;
+        }
+        if(!req.files[1]){
+            image_path2 = storeData.imagePath2
+        }
+        else{
+            image_path2 = '/uploads/' + req.files[1].filename;
+        }
+
+        //Update store information
+        const updatedStore = await store.findOneAndUpdate(
+            { ownerId: req.params.userId, _id: req.params.storeId },
+            {
+                $set: {
+                    ownerId: req.params.userId,
+                    name: req.body.title,
+                    description: req.body.description,
+                    category: req.body.category,
+                    imagePath1: image_path1,
+                    imagePath2: image_path2,
+                },
+            },
+            { new: true } //Return the updated document
+        );
+
+        return res.render('edit-store', {store: storeData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+               
     } catch(err){
         console.log(err);
         res.status(500).send("internal server error");
