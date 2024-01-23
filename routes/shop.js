@@ -15,6 +15,8 @@ const upload = require('../middleware/upload');
 const isAuthenticated = require('../middleware/authMiddleware');
 const chats = require('../models/chatsDB');
 
+const fs = require('fs').promises;
+const path = require('path');
 
 //delete entire DB expect usrDB
 //  router.get('/DB/delete', function(req, res) {
@@ -471,7 +473,7 @@ router.get('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=>
         res.status(500).send("internal server error");
     }
 })
-router.post('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=>{
+router.post('/:userId/myStores/:storeId/edit', isAuthenticated, upload.array('images', 2), async(req, res)=>{
     if (req.params.userId != req.user._id){
         res.redirect('/auth/logout');
     }
@@ -487,7 +489,8 @@ router.post('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=
             return res.redirect('/shop/'+ req.params.userId + '/myStores');
         }    
 
-        console.log(req.files[0]);
+        console.log(req.files.id);
+        console.log(req.files.id);
 
         //if image not provided
         if(!req.files[0]){
@@ -495,14 +498,26 @@ router.post('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=
         }
         else{
             image_path1 = '/uploads/' + req.files[0].filename;
+
+
+            //delete old image
+            const fullPath = path.join('public', storeData.imagePath1);
+            await fs.unlink(fullPath);
         }
+
         if(!req.files[1]){
             image_path2 = storeData.imagePath2
         }
         else{
             image_path2 = '/uploads/' + req.files[1].filename;
+            //delete old image
+            const fullPath = path.join('public', storeData.imagePath2);
+            await fs.unlink(fullPath);
         }
-
+        //same as above
+        // const image_path1 = req.files[0] ? '/uploads/' + req.files[0].filename : storeData.imagePath1;
+        // const image_path2 = req.files[1] ? '/uploads/' + req.files[1].filename : storeData.imagePath2;
+        
         //Update store information
         const updatedStore = await store.findOneAndUpdate(
             { ownerId: req.params.userId, _id: req.params.storeId },
@@ -519,7 +534,7 @@ router.post('/:userId/myStores/:storeId/edit', isAuthenticated, async(req, res)=
             { new: true } //Return the updated document
         );
 
-        return res.render('edit-store', {store: storeData, userId: req.params.userId ,loggedIn: req.isAuthenticated()});
+        return res.redirect('/shop/'+ req.params.userId + '/myStores/' + req.params.storeId);
                
     } catch(err){
         console.log(err);
@@ -646,8 +661,8 @@ router.get('/:userId/products/:productId',isAuthenticated, async(req, res)=>{
     }
 }); 
 
-const fs = require('fs').promises;
-const path = require('path');
+// const fs = require('fs').promises;
+// const path = require('path');
 //delete product
 router.post('/:userId/products/:productId/delete',isAuthenticated, async(req, res)=>{
     if (req.params.userId != req.user._id){
