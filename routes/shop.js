@@ -489,8 +489,7 @@ router.post('/:userId/myStores/:storeId/edit', isAuthenticated, upload.array('im
             return res.redirect('/shop/'+ req.params.userId + '/myStores');
         }    
 
-        console.log(req.files.id);
-        console.log(req.files.id);
+        //console.log(req.files[1].id);
 
         //if image not provided
         if(!req.files[0]){
