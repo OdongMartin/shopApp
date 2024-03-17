@@ -12,7 +12,7 @@ Simple and intuitive user interface.
 
 ### Images
 #### Home
-![home](public\img\Screenshot 2023-12-31 at 22-14-43 The Ugandan Plug.png)
+![home](public\img\home.png)
 
 #### Store
 ![store](public\img\store.png)
