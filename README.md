@@ -12,7 +12,7 @@ Simple and intuitive user interface.
 
 ### Images
 #### Home
-![home](public\img\home.png)
+![home](public/img/home.png)
 
 #### Store
-![store](public\img\store.png)
+![store](public/img/store.png)
