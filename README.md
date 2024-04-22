@@ -1,5 +1,5 @@
 # The Plug E-commerce web app
-### Online platform for users to create and manage their stores.
+### Online platform for users to create and manage their stores
 
 ## Features
 User registration and authentication.
