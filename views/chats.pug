@@ -8,7 +8,7 @@ block content
         if(chats)
             div(class="p-3 col-span-3" style="width:auto;")
                 each chat in chats
-                    div(class="m-3 p-4 overflow-hidden rounded-lg bg-gray-200 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
+                    div(class="m-3 p-4  overflow-hidden rounded-lg bg-gray-200 shadow-xl hover:shadow-2xl hover:scale-105 transition ease-in-out duration-400")
                         a(href= `/shop/${userId}/products/${chat.chatId.substr(0,24)}/message/${chat.chatId}`)
                             div(class="flex")
                                 img(src=`${chat.storeImagePath}`, alt=` ` class="w-20 h-20 object-cover rounded-full")
